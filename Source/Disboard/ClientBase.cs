@@ -46,184 +46,6 @@ namespace Disboard
             _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
         }
 
-        #region HTTP Request
-
-        /// <summary>
-        ///     Send a GET request to endpoint with parameters.
-        /// </summary>
-        /// <typeparam name="T">JSON deserialized class.</typeparam>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response deserialized to T</returns>
-        public async Task<T> GetAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return JsonConvert.DeserializeObject<T>(await GetAsync(endpoint, parameters).Stay());
-        }
-
-        /// <summary>
-        ///     Send a GET request to endpoint with parameters.
-        /// </summary>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response</returns>
-        public async Task<string> GetAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, parameters);
-            if (parameters != null && parameters.Any())
-                endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
-
-            var response = await _httpClient.GetAsync(_baseUrl + endpoint).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync().Stay();
-        }
-
-        /// <summary>
-        ///     Send a POST request to endpoint with parameters.
-        /// </summary>
-        /// <typeparam name="T">JSON deserialized class.</typeparam>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response deserialized to T</returns>
-        public async Task<T> PostAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return await SendAsync<T>(HttpMethod.Post, endpoint, parameters).Stay();
-        }
-
-        /// <summary>
-        ///     Send a POST request to endpoint with parameters.
-        /// </summary>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response</returns>
-        public async Task<string> PostAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return await SendAsync(HttpMethod.Post, endpoint, parameters).Stay();
-        }
-
-        /// <summary>
-        ///     Send a PUT request to endpoint with parameters.
-        /// </summary>
-        /// <typeparam name="T">JSON deserialized class.</typeparam>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response deserialized to T</returns>
-        public async Task<T> PutAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return await SendAsync<T>(HttpMethod.Put, endpoint, parameters).Stay();
-        }
-
-        /// <summary>
-        ///     Send a PUT request to endpoint with parameters.
-        /// </summary>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response</returns>
-        public async Task<string> PutAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return await SendAsync(HttpMethod.Put, endpoint, parameters);
-        }
-
-        /// <summary>
-        ///     Send a DELETE request to endpoint with parameters.
-        /// </summary>
-        /// <typeparam name="T">JSON deserialized class.</typeparam>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response deserialized to T</returns>
-        public async Task<T> DeleteAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return JsonConvert.DeserializeObject<T>(await DeleteAsync(endpoint, parameters).Stay());
-        }
-
-        /// <summary>
-        ///     Send a DELETE request to endpoint with parameters.
-        /// </summary>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response</returns>
-        public async Task<string> DeleteAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            PrepareForAuthenticate(HttpMethod.Delete, _baseUrl + endpoint, parameters);
-            if (parameters != null && parameters.Any())
-                endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
-
-            var response = await _httpClient.DeleteAsync(_baseUrl + endpoint).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync().Stay();
-        }
-
-        /// <summary>
-        ///     Send a PATCH request to endpoint with parameters.
-        /// </summary>
-        /// <typeparam name="T">JSON deserialized class.</typeparam>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response deserialized to T</returns>
-        public async Task<T> PatchAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return await SendAsync<T>(new HttpMethod("PATCH"), endpoint, parameters).Stay();
-        }
-
-        /// <summary>
-        ///     Send a PATCH request to endpoint with parameters.
-        /// </summary>
-        /// <param name="endpoint">Endpoint of API without base url.</param>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>API response</returns>
-        public async Task<string> PatchAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return await SendAsync(new HttpMethod("PATCH"), endpoint, parameters).Stay();
-        }
-
-        private async Task<T> SendAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return JsonConvert.DeserializeObject<T>(await SendAsync(method, endpoint, parameters).Stay());
-        }
-
-        private async Task<string> SendAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            HttpContent content;
-            if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
-            {
-                PrepareForAuthenticate(method, _baseUrl + endpoint, new List<KeyValuePair<string, object>>());
-                content = new MultipartFormDataContent();
-
-                foreach (var parameter in parameters)
-                {
-                    HttpContent formDataContent;
-                    if (BinaryParameters.Contains(parameter.Key))
-                    {
-                        formDataContent = new StreamContent(new FileStream(parameter.Value.ToString(), FileMode.Open));
-                        formDataContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                        formDataContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                        {
-                            FileName = $"\"{Path.GetFileName(parameter.Value.ToString())}\""
-                        };
-                    }
-                    else
-                    {
-                        formDataContent = new StringContent(UrlEncode(parameter.Value.ToString()));
-                    }
-                    ((MultipartFormDataContent)content).Add(formDataContent, parameter.Key);
-                }
-            }
-            else
-            {
-                PrepareForAuthenticate(method, _baseUrl + endpoint, parameters);
-                var kvpCollection = parameters?.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
-                content = new FormUrlEncodedContent(kvpCollection);
-            }
-
-            var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) { Content = content }).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync().Stay();
-        }
-
-        #endregion
-
         private void PrepareForAuthenticate(HttpMethod method, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             // ReSharper disable NotResolvedInText
@@ -308,6 +130,184 @@ namespace Disboard
         {
             return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
         }
+
+        #region HTTP Request
+
+        /// <summary>
+        ///     Send a GET request to endpoint with parameters.
+        /// </summary>
+        /// <typeparam name="T">JSON deserialized class.</typeparam>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response deserialized to T</returns>
+        public async Task<T> GetAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await GetAsync(endpoint, parameters).Stay());
+        }
+
+        /// <summary>
+        ///     Send a GET request to endpoint with parameters.
+        /// </summary>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response</returns>
+        public async Task<string> GetAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, parameters);
+            if (parameters != null && parameters.Any())
+                endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
+
+            var response = await _httpClient.GetAsync(_baseUrl + endpoint).Stay();
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync().Stay();
+        }
+
+        /// <summary>
+        ///     Send a POST request to endpoint with parameters.
+        /// </summary>
+        /// <typeparam name="T">JSON deserialized class.</typeparam>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response deserialized to T</returns>
+        public async Task<T> PostAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await SendAsync<T>(HttpMethod.Post, endpoint, parameters).Stay();
+        }
+
+        /// <summary>
+        ///     Send a POST request to endpoint with parameters.
+        /// </summary>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response</returns>
+        public async Task<string> PostAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await SendAsync(HttpMethod.Post, endpoint, parameters).Stay();
+        }
+
+        /// <summary>
+        ///     Send a PUT request to endpoint with parameters.
+        /// </summary>
+        /// <typeparam name="T">JSON deserialized class.</typeparam>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response deserialized to T</returns>
+        public async Task<T> PutAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await SendAsync<T>(HttpMethod.Put, endpoint, parameters).Stay();
+        }
+
+        /// <summary>
+        ///     Send a PUT request to endpoint with parameters.
+        /// </summary>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response</returns>
+        public async Task<string> PutAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await SendAsync(HttpMethod.Put, endpoint, parameters);
+        }
+
+        /// <summary>
+        ///     Send a DELETE request to endpoint with parameters.
+        /// </summary>
+        /// <typeparam name="T">JSON deserialized class.</typeparam>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response deserialized to T</returns>
+        public async Task<T> DeleteAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await DeleteAsync(endpoint, parameters).Stay());
+        }
+
+        /// <summary>
+        ///     Send a DELETE request to endpoint with parameters.
+        /// </summary>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response</returns>
+        public async Task<string> DeleteAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            PrepareForAuthenticate(HttpMethod.Delete, _baseUrl + endpoint, parameters);
+            if (parameters != null && parameters.Any())
+                endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
+
+            var response = await _httpClient.DeleteAsync(_baseUrl + endpoint).Stay();
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync().Stay();
+        }
+
+        /// <summary>
+        ///     Send a PATCH request to endpoint with parameters.
+        /// </summary>
+        /// <typeparam name="T">JSON deserialized class.</typeparam>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response deserialized to T</returns>
+        public async Task<T> PatchAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await SendAsync<T>(new HttpMethod("PATCH"), endpoint, parameters).Stay();
+        }
+
+        /// <summary>
+        ///     Send a PATCH request to endpoint with parameters.
+        /// </summary>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response</returns>
+        public async Task<string> PatchAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await SendAsync(new HttpMethod("PATCH"), endpoint, parameters).Stay();
+        }
+
+        private async Task<T> SendAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await SendAsync(method, endpoint, parameters).Stay());
+        }
+
+        private async Task<string> SendAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            HttpContent content;
+            if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
+            {
+                PrepareForAuthenticate(method, _baseUrl + endpoint, new List<KeyValuePair<string, object>>());
+                content = new MultipartFormDataContent();
+
+                foreach (var parameter in parameters)
+                {
+                    HttpContent formDataContent;
+                    if (BinaryParameters.Contains(parameter.Key))
+                    {
+                        formDataContent = new StreamContent(new FileStream(parameter.Value.ToString(), FileMode.Open));
+                        formDataContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                        formDataContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                        {
+                            FileName = $"\"{Path.GetFileName(parameter.Value.ToString())}\""
+                        };
+                    }
+                    else
+                    {
+                        formDataContent = new StringContent(UrlEncode(parameter.Value.ToString()));
+                    }
+                    ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
+                }
+            }
+            else
+            {
+                PrepareForAuthenticate(method, _baseUrl + endpoint, parameters);
+                var kvpCollection = parameters?.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
+                content = new FormUrlEncodedContent(kvpCollection);
+            }
+
+            var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync().Stay();
+        }
+
+        #endregion
 
         #region Application Keys
 
