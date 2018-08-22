@@ -99,18 +99,6 @@ namespace Disboard
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
         }
 
-        private static string UrlEncode(string str)
-        {
-            const string reservedLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
-            var sb = new StringBuilder();
-            foreach (var b in Encoding.UTF8.GetBytes(str))
-                if (reservedLetters.Contains(((char) b).ToString()))
-                    sb.Append((char) b);
-                else
-                    sb.Append($"%{b:X2}");
-            return sb.ToString();
-        }
-
         private static string GenerateTimestamp()
         {
             return Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalSeconds).ToString();
@@ -126,9 +114,21 @@ namespace Disboard
             return sb.ToString();
         }
 
-        private static IEnumerable<string> AsUrlParameter<T>(IEnumerable<KeyValuePair<string, T>> parameters)
+        public static IEnumerable<string> AsUrlParameter<T>(IEnumerable<KeyValuePair<string, T>> parameters)
         {
             return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
+        }
+
+        public static string UrlEncode(string str)
+        {
+            const string reservedLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+            var sb = new StringBuilder();
+            foreach (var b in Encoding.UTF8.GetBytes(str))
+                if (reservedLetters.Contains(((char) b).ToString()))
+                    sb.Append((char) b);
+                else
+                    sb.Append($"%{b:X2}");
+            return sb.ToString();
         }
 
         #region HTTP Request

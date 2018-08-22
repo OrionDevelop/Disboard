@@ -17,12 +17,16 @@ namespace Disboard.Mastodon.Clients
             {
                 new KeyValuePair<string, object>("client_name", clientName),
                 new KeyValuePair<string, object>("redirect_uris", redirectUris),
-                new KeyValuePair<string, object>("scopes", scopes.ToString().ToLower().Replace(", ", ""))
+                new KeyValuePair<string, object>("scopes", scopes.ToString().ToLower().Replace(",", ""))
             };
             if (!string.IsNullOrWhiteSpace(website))
                 parameters.Add(new KeyValuePair<string, object>("website", website));
 
-            return await PostAsync<Application>("", parameters).Stay();
+            var response = await PostAsync<Application>("", parameters).Stay();
+            Client.ClientId = response.ClientId;
+            Client.ClientSecret = response.ClientSecret;
+
+            return response;
         }
     }
 }
