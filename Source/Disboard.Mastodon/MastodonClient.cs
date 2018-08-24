@@ -4,6 +4,7 @@ namespace Disboard.Mastodon
 {
     public class MastodonClient : ClientBase
     {
+        public AccountsClient Account { get; }
         public AppsClient Apps { get; }
         public AuthClient Auth { get; }
 
@@ -13,6 +14,7 @@ namespace Disboard.Mastodon
         {
             Domain = domain;
 
+            Account = new AccountsClient(this);
             Apps = new AppsClient(this);
             Auth = new AuthClient(this);
         }
