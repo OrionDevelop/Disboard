@@ -7,6 +7,7 @@ namespace Disboard.Mastodon
         public AccountsClient Account { get; }
         public AppsClient Apps { get; }
         public AuthClient Auth { get; }
+        public CustomEmojisClient CustomEmojis { get; }
         public InstanceClient Instance { get; }
 
         internal string Domain { get; }
@@ -18,6 +19,7 @@ namespace Disboard.Mastodon
             Account = new AccountsClient(this);
             Apps = new AppsClient(this);
             Auth = new AuthClient(this);
+            CustomEmojis = new CustomEmojisClient(this);
             Instance = new InstanceClient(this);
         }
     }
