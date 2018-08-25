@@ -9,6 +9,6 @@ namespace Disboard.Mastodon.Enums
 
         Write = 0x0002,
 
-        Follow = 0x0003
+        Follow = 0x0004
     }
 }

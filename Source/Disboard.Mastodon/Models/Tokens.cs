@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
+using Disboard.Converters;
 using Disboard.Mastodon.Enums;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
@@ -16,7 +16,7 @@ namespace Disboard.Mastodon.Models
         public string TokenType { get; set; }
 
         [JsonProperty("scope")]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(StringFlagConverter))]
         public List<AccessScope> Scope { get; set; }
 
         // unused
