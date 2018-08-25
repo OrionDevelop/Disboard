@@ -15,12 +15,9 @@ namespace Disboard.Mastodon.Clients
         public async Task<List<Notification>> ListAsync(long? maxId = null, long? sinceId = null, int? limit = null, NotificationType? excludeTypes = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
-            if (maxId.HasValue)
-                parameters.Add(new KeyValuePair<string, object>("max_id", maxId.Value));
-            if (sinceId.HasValue)
-                parameters.Add(new KeyValuePair<string, object>("since_id", sinceId.Value));
-            if (limit.HasValue)
-                parameters.Add(new KeyValuePair<string, object>("limit", limit.Value));
+            parameters.AddIfValidValue("max_id", maxId);
+            parameters.AddIfValidValue("since_id", sinceId);
+            parameters.AddIfValidValue("limit", limit);
             if (excludeTypes.HasValue)
                 foreach (var excludeType in EnumSeparator.Separate(excludeTypes))
                     parameters.Add(new KeyValuePair<string, object>("exclude_types[]", excludeType));
