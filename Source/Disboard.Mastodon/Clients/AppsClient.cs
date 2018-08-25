@@ -28,5 +28,10 @@ namespace Disboard.Mastodon.Clients
 
             return response;
         }
+
+        public async Task<Application> VerifyCredentialsAsync()
+        {
+            return await GetAsync<Application>("/verify_credentials").Stay();
+        }
     }
 }
