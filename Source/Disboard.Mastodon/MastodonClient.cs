@@ -9,6 +9,7 @@ namespace Disboard.Mastodon
         public AuthClient Auth { get; }
         public CustomEmojisClient CustomEmojis { get; }
         public InstanceClient Instance { get; }
+        public NotificationsClient Notifications { get; }
 
         internal string Domain { get; }
 
@@ -21,6 +22,7 @@ namespace Disboard.Mastodon
             Auth = new AuthClient(this);
             CustomEmojis = new CustomEmojisClient(this);
             Instance = new InstanceClient(this);
+            Notifications = new NotificationsClient(this);
         }
     }
 }

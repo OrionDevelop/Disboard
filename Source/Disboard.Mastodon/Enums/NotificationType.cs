@@ -1,13 +1,16 @@
-﻿namespace Disboard.Mastodon.Enums
+﻿using System;
+
+namespace Disboard.Mastodon.Enums
 {
+    [Flags]
     public enum NotificationType
     {
-        Mention,
+        Mention = 0,
 
-        Reblog,
+        Reblog = 1 << 0,
 
-        Favourite,
+        Favourite = 1 << 2,
 
-        Follow
+        Follow = 1 << 3
     }
 }

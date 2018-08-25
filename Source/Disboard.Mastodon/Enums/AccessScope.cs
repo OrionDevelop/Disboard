@@ -5,10 +5,10 @@ namespace Disboard.Mastodon.Enums
     [Flags]
     public enum AccessScope
     {
-        Read = 0x0001,
+        Read = 0,
 
-        Write = 0x0002,
+        Write = 1 << 0,
 
-        Follow = 0x0004
+        Follow = 1 << 1
     }
 }
