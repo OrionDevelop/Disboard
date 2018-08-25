@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Disboard.Extensions;
+using Disboard.Mastodon.Enums;
 using Disboard.Mastodon.Models;
 
 namespace Disboard.Mastodon.Clients
@@ -12,6 +14,16 @@ namespace Disboard.Mastodon.Clients
         public async Task<Instance> FetchAsync()
         {
             return await GetAsync<Instance>("").Stay();
+        }
+
+        public async Task<List<string>> PeersAsync()
+        {
+            return await GetAsync<List<string>>("/peers").Stay();
+        }
+
+        public async Task<List<Activity>> ActivityAsync()
+        {
+            return await GetAsync<List<Activity>>("/activity").Stay();
         }
     }
 }
