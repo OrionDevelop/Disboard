@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
-using Disboard.Mastodon.Enums;
 using Disboard.Mastodon.Models;
 
 namespace Disboard.Mastodon.Clients

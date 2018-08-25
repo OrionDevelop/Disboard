@@ -4,7 +4,7 @@ using Disboard.Converters;
 
 using Newtonsoft.Json;
 
-namespace Disboard.Mastodon.Enums
+namespace Disboard.Mastodon.Models
 {
     public class Activity
     {
