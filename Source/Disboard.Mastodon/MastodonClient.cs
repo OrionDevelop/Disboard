@@ -7,6 +7,7 @@ namespace Disboard.Mastodon
         public AccountsClient Account { get; }
         public AppsClient Apps { get; }
         public AuthClient Auth { get; }
+        public BlocksClient Blocks { get; }
         public CustomEmojisClient CustomEmojis { get; }
         public EndorsementsClient Endorsements { get; }
         public InstanceClient Instance { get; }
@@ -21,6 +22,7 @@ namespace Disboard.Mastodon
             Account = new AccountsClient(this);
             Apps = new AppsClient(this);
             Auth = new AuthClient(this);
+            Blocks = new BlocksClient(this);
             CustomEmojis = new CustomEmojisClient(this);
             Endorsements = new EndorsementsClient(this);
             Instance = new InstanceClient(this);
