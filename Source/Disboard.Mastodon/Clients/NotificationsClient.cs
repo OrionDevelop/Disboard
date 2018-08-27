@@ -22,7 +22,7 @@ namespace Disboard.Mastodon.Clients
                 foreach (var excludeType in EnumSeparator.Separate(excludeTypes))
                     parameters.Add(new KeyValuePair<string, object>("exclude_types[]", excludeType));
 
-            return await GetAsync<List<Notification>>("", parameters).Stay();
+            return await GetAsync<List<Notification>>(parameters: parameters).Stay();
         }
 
         public async Task<Notification> ShowAsync(long id)

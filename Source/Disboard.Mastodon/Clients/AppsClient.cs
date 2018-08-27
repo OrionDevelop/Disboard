@@ -21,7 +21,7 @@ namespace Disboard.Mastodon.Clients
             };
             parameters.AddIfValidValue("website", website);
 
-            var response = await PostAsync<Application>("", parameters).Stay();
+            var response = await PostAsync<Application>(parameters: parameters).Stay();
             Client.ClientId = response.ClientId;
             Client.ClientSecret = response.ClientSecret;
 

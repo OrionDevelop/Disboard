@@ -12,7 +12,7 @@ namespace Disboard.Mastodon.Clients
 
         public async Task<List<Emoji>> FetchAsync()
         {
-            return await GetAsync<List<Emoji>>("").Stay();
+            return await GetAsync<List<Emoji>>().Stay();
         }
     }
 }

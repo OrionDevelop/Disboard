@@ -16,7 +16,7 @@ namespace Disboard.Mastodon.Clients
             parameters.AddIfValidValue("since_id", sinceId);
             parameters.AddIfValidValue("max_id", maxId);
 
-            return await GetAsync("", parameters).Stay();
+            return await GetAsync(parameters: parameters).Stay();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Disboard.Mastodon.Clients
 
         public async Task<Instance> FetchAsync()
         {
-            return await GetAsync<Instance>("").Stay();
+            return await GetAsync<Instance>().Stay();
         }
 
         public async Task<List<string>> PeersAsync()
