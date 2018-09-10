@@ -1,11 +1,12 @@
 ﻿using Disboard.Mastodon.Enums;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Card
+    public class Card : ApiResponse
     {
         [JsonProperty("url")]
         public string Url { get; set; }

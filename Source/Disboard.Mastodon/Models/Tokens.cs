@@ -2,12 +2,13 @@
 
 using Disboard.Converters;
 using Disboard.Mastodon.Enums;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Tokens
+    public class Tokens : ApiResponse
     {
         [JsonProperty("access_token")]
         public string AccessToken { get; set; }

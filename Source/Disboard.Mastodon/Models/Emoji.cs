@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Emoji
+    public class Emoji : ApiResponse
     {
         [JsonProperty("shortcode")]
         public string Shortcode { get; set; }

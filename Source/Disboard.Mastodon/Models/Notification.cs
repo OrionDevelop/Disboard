@@ -1,13 +1,14 @@
 ﻿using System;
 
 using Disboard.Mastodon.Enums;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Notification
+    public class Notification : ApiResponse
     {
         [JsonProperty("id")]
         public int Id { get; set; }

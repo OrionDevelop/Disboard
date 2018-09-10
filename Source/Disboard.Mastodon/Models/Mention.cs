@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Mention
+    public class Mention : ApiResponse
     {
         [JsonProperty("url")]
         public string Url { get; set; }

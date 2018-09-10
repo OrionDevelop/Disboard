@@ -1,12 +1,13 @@
 ﻿using System;
 
 using Disboard.Converters;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Activity
+    public class Activity : ApiResponse
     {
         [JsonProperty("week")]
         [JsonConverter(typeof(UnixTimeToDateTimeConverter))]

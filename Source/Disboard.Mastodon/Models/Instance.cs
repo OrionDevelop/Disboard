@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 
+using Disboard.Models;
+
 using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Instance
+    public class Instance : ApiResponse
     {
         [JsonProperty("uri")]
         public string Url { get; set; }

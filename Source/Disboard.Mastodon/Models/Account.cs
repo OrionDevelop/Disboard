@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Disboard.Models;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Account
+    public class Account : ApiResponse
     {
         [JsonProperty("id")]
         public long Id { get; set; }

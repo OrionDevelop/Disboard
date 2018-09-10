@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 
 using Disboard.Mastodon.Enums;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Status
+    public class Status : ApiResponse
     {
         [JsonProperty("id")]
         public int Id { get; set; }

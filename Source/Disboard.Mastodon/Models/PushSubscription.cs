@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class PushSubscription
+    public class PushSubscription : ApiResponse
     {
         [JsonProperty("id")]
         public long Id { get; set; }
