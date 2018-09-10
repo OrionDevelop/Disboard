@@ -25,3 +25,5 @@ Process.Start(mastodon.Auth.AuthorizeUrl(Constants.RedirectUriForClient, scopes)
 var code = Console.ReadLine();
 await mastodon.Auth.AccessTokenAsync(Constants.RedirectUriForClient, code);
 ```
+
+Note: If some requests retuens 403, please check instance's configuration.

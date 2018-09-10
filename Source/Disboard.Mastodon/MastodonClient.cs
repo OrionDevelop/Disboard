@@ -16,6 +16,7 @@ namespace Disboard.Mastodon
             Blocks = new BlocksClient(this);
             CustomEmojis = new CustomEmojisClient(this);
             Endorsements = new EndorsementsClient(this);
+            Favorites = new FavoritesClient(this);
             Instance = new InstanceClient(this);
             Notifications = new NotificationsClient(this);
         }
@@ -28,6 +29,7 @@ namespace Disboard.Mastodon
         public BlocksClient Blocks { get; }
         public CustomEmojisClient CustomEmojis { get; }
         public EndorsementsClient Endorsements { get; }
+        public FavoritesClient Favorites { get; }
         public InstanceClient Instance { get; }
         public NotificationsClient Notifications { get; }
 
