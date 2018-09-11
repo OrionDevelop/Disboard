@@ -19,8 +19,7 @@ namespace Disboard.Mastodon.Clients
             parameters.AddIfValidValue("since_id", sinceId);
             parameters.AddIfValidValue("limit", limit);
             if (excludeTypes.HasValue)
-                foreach (var excludeType in EnumSeparator.Separate(excludeTypes))
-                    parameters.Add(new KeyValuePair<string, object>("exclude_types[]", excludeType));
+                parameters.AddRangeOfValues("exclude_types[]", excludeTypes.Value.Separate());
 
             return await GetAsync<List<Notification>>(parameters: parameters).Stay();
         }

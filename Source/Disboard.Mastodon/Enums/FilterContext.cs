@@ -1,13 +1,16 @@
-﻿namespace Disboard.Mastodon.Enums
+﻿using System;
+
+namespace Disboard.Mastodon.Enums
 {
+    [Flags]
     public enum FilterContext
     {
-        Home,
+        Home = 1 << 0,
 
-        Notifications,
+        Notifications = 1 << 1,
 
-        Public,
+        Public = 1 << 2,
 
-        Thread
+        Thread = 1 << 3
     }
 }

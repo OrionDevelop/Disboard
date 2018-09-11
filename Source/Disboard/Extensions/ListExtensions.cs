@@ -20,5 +20,17 @@ namespace Disboard.Extensions
                 return;
             obj.AddIfValidValue(key, value.Value);
         }
+
+        //
+        public static void AddIfValidValue(this List<KeyValuePair<string, object>> obj, string key, bool? value)
+        {
+            obj.AddIfValidValue(key, value.HasValue ? value.ToString().ToLower() : null);
+        }
+
+        public static void AddRangeOfValues<T>(this List<KeyValuePair<string, object>> obj, string key, List<T> values)
+        {
+            foreach (var value in values)
+                obj.AddIfValidValue(key, value);
+        }
     }
 }

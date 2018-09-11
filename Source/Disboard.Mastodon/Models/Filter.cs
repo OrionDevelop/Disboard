@@ -18,8 +18,7 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("phrase")]
         public string Phrase { get; set; }
 
-        [JsonProperty("context")]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("context", ItemConverterType = typeof(StringEnumConverter))]
         public IEnumerable<FilterContext> Context { get; set; }
 
         [JsonProperty("whole_word")]
@@ -27,7 +26,7 @@ namespace Disboard.Mastodon.Models
 
         [JsonProperty("expires_at")]
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        public DateTime ExpiresAt { get; set; }
+        public DateTime? ExpiresAt { get; set; }
 
         [JsonProperty("irreversible")]
         public bool IsIrreversible { get; set; }

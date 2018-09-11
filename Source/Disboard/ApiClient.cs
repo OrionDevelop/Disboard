@@ -35,5 +35,35 @@ namespace Disboard
         {
             return await Client.PostAsync($"{_base}{endpoint}", parameters).Stay();
         }
+
+        protected async Task<TR> PatchAsync<TR>(string endpoint = "", IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Client.PatchAsync<TR>($"{_base}{endpoint}", parameters).Stay();
+        }
+
+        protected async Task<string> PatchAsync(string endpoint = "", IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Client.PatchAsync($"{_base}{endpoint}", parameters).Stay();
+        }
+
+        protected async Task<TR> PutAsync<TR>(string endpoint = "", IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Client.PutAsync<TR>($"{_base}{endpoint}", parameters).Stay();
+        }
+
+        protected async Task<string> PutAsync(string endpoint = "", IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Client.PutAsync($"{_base}{endpoint}", parameters).Stay();
+        }
+
+        protected async Task<TR> DeleteAsync<TR>(string endpoint = "", IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Client.DeleteAsync<TR>($"{_base}{endpoint}", parameters).Stay();
+        }
+
+        protected async Task<string> DeleteAsync(string endpoint = "", IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Client.DeleteAsync($"{_base}{endpoint}", parameters).Stay();
+        }
     }
 }
