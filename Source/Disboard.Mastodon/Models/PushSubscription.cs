@@ -15,6 +15,6 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("server_key")]
         public string ServerKey { get; set; }
 
-        // alerts
+        // TODO: alerts
     }
 }

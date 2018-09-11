@@ -14,6 +14,6 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        // history
+        // TODO: history
     }
 }

@@ -36,8 +36,7 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Filter>($"/{id}").Stay();
         }
 
-        public async Task<Filter> UpdateAsync(long id, string phrase = null, FilterContext? context = null, long? expiresIn = null, bool? isIrreversible = null,
-                                              bool? isWholeWord = null)
+        public async Task<Filter> UpdateAsync(long id, string phrase = null, FilterContext? context = null, long? expiresIn = null, bool? isIrreversible = null, bool? isWholeWord = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("phrase", phrase);

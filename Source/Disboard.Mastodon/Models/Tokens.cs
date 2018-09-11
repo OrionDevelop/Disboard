@@ -20,7 +20,6 @@ namespace Disboard.Mastodon.Models
         [JsonConverter(typeof(StringFlagConverter))]
         public List<AccessScope> Scope { get; set; }
 
-        // unused
         [JsonProperty("created_at")]
         public int CreatedAt { get; set; }
     }
