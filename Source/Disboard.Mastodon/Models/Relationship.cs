@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
+    // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/relationship_serializer.rb
     public class Relationship : ApiResponse
     {
         [JsonProperty("id")]
@@ -11,6 +12,9 @@ namespace Disboard.Mastodon.Models
 
         [JsonProperty("following")]
         public bool IsFollowing { get; set; }
+
+        [JsonProperty("showing_reblogs")]
+        public bool IsShowingReblogs { get; set; }
 
         [JsonProperty("followed_by")]
         public bool IsFollowedBy { get; set; }
@@ -30,7 +34,7 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("domain_blocking")]
         public bool IsDomainBlocking { get; set; }
 
-        [JsonProperty("showing_reblogs")]
-        public bool IsShowingReblogs { get; set; }
+        [JsonProperty("endorsed")]
+        public bool IsEndorsed { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
+    // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/notification_serializer.rb
     public class Notification : ApiResponse
     {
         [JsonProperty("id")]

@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
+    // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/status_serializer.rb#L118-L126
+    // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/tag_serializer.rb
     public class Tag : ApiResponse
     {
         [JsonProperty("name")]

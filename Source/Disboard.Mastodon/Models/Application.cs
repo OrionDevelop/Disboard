@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
+    // https://github.com/tootsuite/mastodon/blob/master/app/serializers/rest/application_serializer.rb
     public class Application : ApiResponse
     {
         [JsonProperty("id")]

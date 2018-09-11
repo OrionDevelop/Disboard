@@ -6,6 +6,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
+    // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/preview_card_serializer.rb
     public class Card : ApiResponse
     {
         [JsonProperty("url")]
@@ -16,9 +17,6 @@ namespace Disboard.Mastodon.Models
 
         [JsonProperty("description")]
         public string Description { get; set; }
-
-        [JsonProperty("image")]
-        public string Image { get; set; }
 
         [JsonProperty("type")]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -44,5 +42,11 @@ namespace Disboard.Mastodon.Models
 
         [JsonProperty("height")]
         public int? Height { get; set; }
+
+        [JsonProperty("image")]
+        public string Image { get; set; }
+
+        [JsonProperty("embed_url")]
+        public string EmbedUrl { get; set; }
     }
 }

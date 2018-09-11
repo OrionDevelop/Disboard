@@ -6,6 +6,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
+    // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/media_attachment_serializer.rb
     public class Attachment : ApiResponse
     {
         [JsonProperty("id")]
@@ -18,11 +19,11 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        [JsonProperty("remote_url")]
-        public string RemoteUrl { get; set; }
-
         [JsonProperty("preview_url")]
         public string PreviewUrl { get; set; }
+
+        [JsonProperty("remote_url")]
+        public string RemoteUrl { get; set; }
 
         [JsonProperty("text_url")]
         public string TextUrl { get; set; }
