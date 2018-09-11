@@ -1,7 +1,12 @@
 ﻿Disboard.Mastodon
 ----
 
-Mastodon API wrapper for .NET Standard 2.0.
+[![License](https://img.shields.io/github/license/mika-f/Disboard.svg?style=flat-square)](../../LICENSE)
+[![Disboard.Mastodon](https://img.shields.io/nuget/v/Disboard.Mastodon.svg?style=flat-square)](https://nuget.org/packages/Disboard.Mastodon)
+
+
+Mastodon API wrapper for .NET Standard 2.0.  
+Based on Mastodon 2.5.0.
 
 
 ## Note
