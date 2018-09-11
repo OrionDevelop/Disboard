@@ -28,7 +28,8 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("text_url")]
         public string TextUrl { get; set; }
 
-        // TODO: meta
+        [JsonProperty("meta")]
+        public Meta Meta { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }

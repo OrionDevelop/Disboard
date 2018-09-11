@@ -13,17 +13,17 @@ namespace Disboard.Mastodon.Models
     public class Status : ApiResponse
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("created_at")]
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime CreatedAt { get; set; }
 
         [JsonProperty("in_reply_to_id")]
-        public int? InReplyToId { get; set; }
+        public long? InReplyToId { get; set; }
 
         [JsonProperty("in_reply_to_account_id")]
-        public int? InReplyToAccountId { get; set; }
+        public long? InReplyToAccountId { get; set; }
 
         [JsonProperty("sensitive")]
         public bool IsSensitive { get; set; }

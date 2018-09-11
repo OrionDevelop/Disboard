@@ -21,6 +21,7 @@ namespace Disboard.Mastodon
             Filters = new FiltersClient(this);
             Instance = new InstanceClient(this);
             Notifications = new NotificationsClient(this);
+            Timelines = new TimelinesClient(this);
         }
 
         // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -36,6 +37,7 @@ namespace Disboard.Mastodon
         public FiltersClient Filters { get; }
         public InstanceClient Instance { get; }
         public NotificationsClient Notifications { get; }
+        public TimelinesClient Timelines { get; }
 
         // ReSharper restore UnusedAutoPropertyAccessor.Global
     }
