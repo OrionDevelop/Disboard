@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Disboard.Extensions;
 using Disboard.Mastodon.Enums;
 using Disboard.Mastodon.Models;
+using Disboard.Models;
 using Disboard.Utils;
 
 namespace Disboard.Mastodon.Clients
@@ -12,7 +13,7 @@ namespace Disboard.Mastodon.Clients
     {
         internal NotificationsClient(MastodonClient client) : base(client, "/api/v1/notifications") { }
 
-        public async Task<List<Notification>> ListAsync(long? maxId = null, long? sinceId = null, int? limit = null, NotificationType? excludeTypes = null)
+        public async Task<Pagenator<Notification>> ListAsync(long? maxId = null, long? sinceId = null, int? limit = null, NotificationType? excludeTypes = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("max_id", maxId);
@@ -21,7 +22,7 @@ namespace Disboard.Mastodon.Clients
             if (excludeTypes.HasValue)
                 parameters.AddRangeOfValues("exclude_types[]", excludeTypes.Value.Separate());
 
-            return await GetAsync<List<Notification>>(parameters: parameters).Stay();
+            return await GetAsync<Pagenator<Notification>>(parameters: parameters).Stay();
         }
 
         public async Task<Notification> ShowAsync(long id)

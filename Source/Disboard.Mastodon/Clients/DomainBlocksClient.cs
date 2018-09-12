@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
+using Disboard.Models;
 
 namespace Disboard.Mastodon.Clients
 {
@@ -9,14 +10,14 @@ namespace Disboard.Mastodon.Clients
     {
         internal DomainBlocksClient(MastodonClient client) : base(client, "/api/v1/domain_blocks") { }
 
-        public async Task<List<string>> ListAsync(long? limit = null, long? sinceId = null, long? maxId = null)
+        public async Task<Pagenator<string>> ListAsync(long? limit = null, long? sinceId = null, long? maxId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("since_id", sinceId);
             parameters.AddIfValidValue("max_id", maxId);
 
-            return await GetAsync<List<string>>(parameters: parameters).Stay();
+            return await GetAsync<Pagenator<string>>(parameters: parameters).Stay();
         }
 
         public async Task CreateAsync(string domain)
