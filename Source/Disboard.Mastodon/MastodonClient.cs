@@ -22,6 +22,7 @@ namespace Disboard.Mastodon
             Endorsements = new EndorsementsClient(this);
             Favorites = new FavoritesClient(this);
             Filters = new FiltersClient(this);
+            Follows = new FollowsClient(this);
             Instance = new InstanceClient(this);
             Notifications = new NotificationsClient(this);
             Statuses = new StatusesClient(this);
@@ -40,6 +41,7 @@ namespace Disboard.Mastodon
         public EndorsementsClient Endorsements { get; }
         public FavoritesClient Favorites { get; }
         public FiltersClient Filters { get; }
+        public FollowsClient Follows { get; }
         public InstanceClient Instance { get; }
         public NotificationsClient Notifications { get; }
         public StatusesClient Statuses { get; }
