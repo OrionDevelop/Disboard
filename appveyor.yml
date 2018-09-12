@@ -10,8 +10,6 @@ build:
   publish_nuget: true
   include_nuget_references: true
   verbosity: minimal
-artifacts:
-- path: /Disboard.*\.nupkg/
 deploy:
 - provider: NuGet
   api_key:

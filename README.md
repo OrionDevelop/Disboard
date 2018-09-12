@@ -1,6 +1,8 @@
 # Disboard
 
 [![License](https://img.shields.io/github/license/mika-f/Disboard.svg?style=flat-square)](LICENSE)
+[![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/disboard.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/disboard)
+
 
 Collection of Microblog Client Libraries.
 
