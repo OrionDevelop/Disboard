@@ -12,6 +12,9 @@ namespace Disboard.Mastodon.Clients
         public async Task<Account> VerifyCredentials()
         {
             return await GetAsync<Account>("/verify_credentials").Stay();
+        public async Task<CredentialAccount> VerifyCredentials()
+        {
+            return await GetAsync<CredentialAccount>("/verify_credentials").Stay();
         }
     }
 }
