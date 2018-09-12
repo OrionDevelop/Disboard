@@ -11,7 +11,7 @@ namespace Disboard.Mastodon
         public MastodonClient(string domain) : base($"https://{domain}", "2.0")
         {
             Domain = domain;
-            BinaryParameters = new List<string> {"avatar", "header"};
+            BinaryParameters = new List<string> {"avatar", "header", "file"};
 
             Account = new AccountsClient(this);
             Apps = new AppsClient(this);
@@ -24,6 +24,7 @@ namespace Disboard.Mastodon
             Filters = new FiltersClient(this);
             Follows = new FollowsClient(this);
             Instance = new InstanceClient(this);
+            Media = new MediaClient(this);
             Notifications = new NotificationsClient(this);
             Statuses = new StatusesClient(this);
             Suggestions = new SuggestionsClient(this);
@@ -43,6 +44,7 @@ namespace Disboard.Mastodon
         public FiltersClient Filters { get; }
         public FollowsClient Follows { get; }
         public InstanceClient Instance { get; }
+        public MediaClient Media { get; }
         public NotificationsClient Notifications { get; }
         public StatusesClient Statuses { get; }
         public SuggestionsClient Suggestions { get; }
