@@ -116,23 +116,6 @@ namespace Disboard
             return sb.ToString();
         }
 
-        public static IEnumerable<string> AsUrlParameter<T>(IEnumerable<KeyValuePair<string, T>> parameters)
-        {
-            return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
-        }
-
-        public static string UrlEncode(string str)
-        {
-            const string reservedLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
-            var sb = new StringBuilder();
-            foreach (var b in Encoding.UTF8.GetBytes(str))
-                if (reservedLetters.Contains(((char) b).ToString()))
-                    sb.Append((char) b);
-                else
-                    sb.Append($"%{b:X2}");
-            return sb.ToString();
-        }
-
         private void ProcessLinkHeader(HttpResponseMessage response, object obj)
         {
             if (!response.Headers.Contains("link"))
@@ -147,6 +130,39 @@ namespace Disboard
             pagenator.Prev = links.FirstOrDefault(w => w.Rel == "prev")?.Uri;
             pagenator.Last = links.FirstOrDefault(w => w.Rel == "last")?.Uri;
         }
+
+        #region Utilities
+
+        public static IEnumerable<string> AsUrlParameter<T>(IEnumerable<KeyValuePair<string, T>> parameters)
+        {
+            return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
+        }
+
+        private static string UrlEncode(string str)
+        {
+            const string reservedLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+            var sb = new StringBuilder();
+            foreach (var b in Encoding.UTF8.GetBytes(str))
+                if (reservedLetters.Contains(((char) b).ToString()))
+                    sb.Append((char) b);
+                else
+                    sb.Append($"%{b:X2}");
+            return sb.ToString();
+        }
+
+        private static byte[] ReadAsByteArray(Stream stream)
+        {
+            var buffer = new byte[16 * 1024];
+            using (var ms = new MemoryStream())
+            {
+                int read;
+                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    ms.Write(buffer, 0, read);
+                return ms.ToArray();
+            }
+        }
+
+        #endregion
 
         #region HTTP Request
 
@@ -317,16 +333,13 @@ namespace Disboard
                     HttpContent formDataContent;
                     if (BinaryParameters.Contains(parameter.Key))
                     {
-                        formDataContent = new StreamContent(new FileStream(parameter.Value.ToString(), FileMode.Open));
-                        formDataContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                        formDataContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                        {
-                            FileName = $"\"{Path.GetFileName(parameter.Value.ToString())}\""
-                        };
+                        using (var stream = new FileStream(parameter.Value.ToString(), FileMode.Open))
+                            formDataContent = new ByteArrayContent(ReadAsByteArray(stream));
+                        formDataContent.Headers.Add("Content-Disposition", $"form-data; name=\"{parameter.Key}\"; filename=\"{Path.GetFileName(parameter.Value.ToString())}\"");
                     }
                     else
                     {
-                        formDataContent = new StringContent(UrlEncode(parameter.Value.ToString()));
+                        formDataContent = new StringContent(parameter.Value.ToString());
                     }
                     ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
                 }
