@@ -9,9 +9,7 @@ namespace Disboard.Mastodon.Clients
     {
         internal AccountsClient(MastodonClient client) : base(client, "/api/v1/accounts") { }
 
-        public async Task<Account> VerifyCredentials()
         {
-            return await GetAsync<Account>("/verify_credentials").Stay();
         public async Task<CredentialAccount> VerifyCredentials()
         {
             return await GetAsync<CredentialAccount>("/verify_credentials").Stay();
