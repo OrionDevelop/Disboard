@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
+using Disboard.Models;
+using Disboard.Utils;
 
 using Newtonsoft.Json;
 
@@ -131,6 +133,21 @@ namespace Disboard
             return sb.ToString();
         }
 
+        private void ProcessLinkHeader(HttpResponseMessage response, object obj)
+        {
+            if (!response.Headers.Contains("link"))
+                return;
+            if (!(obj is IPagenator pagenator))
+                return;
+
+            var links = SimpleWebLinkParser.Parse(response.Headers.GetValues("link").FirstOrDefault());
+            pagenator.Client = this;
+            pagenator.First = links.FirstOrDefault(w => w.Rel == "first")?.Uri;
+            pagenator.Next = links.FirstOrDefault(w => w.Rel == "next")?.Uri;
+            pagenator.Prev = links.FirstOrDefault(w => w.Rel == "prev")?.Uri;
+            pagenator.Last = links.FirstOrDefault(w => w.Rel == "last")?.Uri;
+        }
+
         #region HTTP Request
 
         /// <summary>
@@ -142,7 +159,11 @@ namespace Disboard
         /// <returns>API response deserialized to T</returns>
         public async Task<T> GetAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            return JsonConvert.DeserializeObject<T>(await GetAsync(endpoint, parameters).Stay());
+            var response = await GetAsyncInternal(endpoint, parameters).Stay();
+            var obj = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
+            ProcessLinkHeader(response, obj);
+
+            return obj;
         }
 
         /// <summary>
@@ -153,6 +174,12 @@ namespace Disboard
         /// <returns>API response</returns>
         public async Task<string> GetAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
+            var response = await GetAsyncInternal(endpoint, parameters).Stay();
+            return await response.Content.ReadAsStringAsync().Stay();
+        }
+
+        private async Task<HttpResponseMessage> GetAsyncInternal(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
             PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
@@ -160,7 +187,7 @@ namespace Disboard
             var response = await _httpClient.GetAsync(_baseUrl + endpoint).Stay();
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsStringAsync().Stay();
+            return response;
         }
 
         /// <summary>
@@ -264,10 +291,20 @@ namespace Disboard
 
         private async Task<T> SendAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            return JsonConvert.DeserializeObject<T>(await SendAsync(method, endpoint, parameters).Stay());
+            var response = await SendAsyncInternal(method, endpoint, parameters).Stay();
+            var obj = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
+
+            ProcessLinkHeader(response, obj);
+            return obj;
         }
 
         private async Task<string> SendAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            var response = await SendAsyncInternal(method, endpoint, parameters).Stay();
+            return await response.Content.ReadAsStringAsync().Stay();
+        }
+
+        private async Task<HttpResponseMessage> SendAsyncInternal(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
             HttpContent content;
             if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
@@ -304,7 +341,7 @@ namespace Disboard
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsStringAsync().Stay();
+            return response;
         }
 
         #endregion
