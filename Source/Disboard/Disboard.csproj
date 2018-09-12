@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <Authors>Fuyuno Mikazuki</Authors>
+    <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
