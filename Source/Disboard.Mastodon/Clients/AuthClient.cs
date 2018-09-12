@@ -20,7 +20,7 @@ namespace Disboard.Mastodon.Clients
                 new KeyValuePair<string, object>("redirect_uri", redirectUri),
                 new KeyValuePair<string, object>("client_id", Client.ClientId)
             };
-            return $"https://{Client.Domain}/oauth/authorize?{string.Join("&", ClientBase.AsUrlParameter(parameters))}";
+            return $"https://{Client.Domain}/oauth/authorize?{string.Join("&", AppClient.AsUrlParameter(parameters))}";
         }
 
         public async Task<Tokens> AccessTokenAsync(string redirectUri, string code)

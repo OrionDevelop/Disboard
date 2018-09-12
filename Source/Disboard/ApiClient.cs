@@ -5,7 +5,7 @@ using Disboard.Extensions;
 
 namespace Disboard
 {
-    public class ApiClient<T> where T : ClientBase
+    public class ApiClient<T> where T : AppClient
     {
         private readonly string _base;
         protected T Client { get; }

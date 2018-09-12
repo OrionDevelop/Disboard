@@ -22,7 +22,7 @@ namespace Disboard
     /// <summary>
     ///     Client Base Implementation
     /// </summary>
-    public class ClientBase
+    public class AppClient
     {
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
@@ -39,7 +39,7 @@ namespace Disboard
         /// </summary>
         /// <param name="baseUrl">API base url</param>
         /// <param name="version">1.0a or 2.0</param>
-        protected ClientBase(string baseUrl, string version)
+        protected AppClient(string baseUrl, string version)
         {
             _baseUrl = baseUrl;
             _version = version;

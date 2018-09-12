@@ -18,7 +18,7 @@ namespace Disboard.Models
         [JsonProperty("next_url")]
         public string NextUrl { get; set; }
 
-        internal ClientBase Client { get; set; }
+        internal AppClient Client { get; set; }
 
         /// <summary>
         ///     Query next page

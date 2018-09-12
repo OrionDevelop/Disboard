@@ -11,7 +11,7 @@ namespace Disboard.Models
         /// <summary>
         ///     Valid client
         /// </summary>
-        ClientBase Client { get; set; }
+        AppClient Client { get; set; }
 
         /// <summary>
         ///     First page
@@ -40,14 +40,14 @@ namespace Disboard.Models
     public class Pagenator<T> : List<T>, IPagenator
     {
         // aliases
-        private ClientBase Client => ((IPagenator) this).Client;
+        private AppClient Client => ((IPagenator) this).Client;
         private string First => ((IPagenator) this).First;
         private string Next => ((IPagenator) this).Next;
         private string Prev => ((IPagenator) this).Prev;
         private string Last => ((IPagenator) this).Last;
 
         // implements
-        ClientBase IPagenator.Client { get; set; }
+        AppClient IPagenator.Client { get; set; }
         string IPagenator.First { get; set; }
         string IPagenator.Next { get; set; }
         string IPagenator.Prev { get; set; }
