@@ -24,6 +24,7 @@ namespace Disboard.Mastodon
             Filters = new FiltersClient(this);
             Follows = new FollowsClient(this);
             Instance = new InstanceClient(this);
+            Lists = new ListsClient(this);
             Media = new MediaClient(this);
             Notifications = new NotificationsClient(this);
             Statuses = new StatusesClient(this);
@@ -44,6 +45,7 @@ namespace Disboard.Mastodon
         public FiltersClient Filters { get; }
         public FollowsClient Follows { get; }
         public InstanceClient Instance { get; }
+        public ListsClient Lists { get; }
         public MediaClient Media { get; }
         public NotificationsClient Notifications { get; }
         public StatusesClient Statuses { get; }
