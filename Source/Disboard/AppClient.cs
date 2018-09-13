@@ -138,7 +138,7 @@ namespace Disboard
             return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
         }
 
-        private static string UrlEncode(string str)
+        public static string UrlEncode(string str)
         {
             const string reservedLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
             var sb = new StringBuilder();
@@ -204,6 +204,21 @@ namespace Disboard
             response.EnsureSuccessStatusCode();
 
             return response;
+        }
+
+        /// <summary>
+        ///     Send a GET request to endpoint with parameters.
+        /// </summary>
+        /// <param name="endpoint">Endpoint of API without base url.</param>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>API response (Stream)</returns>
+        public async Task<Stream> GetStreamAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, parameters);
+            if (parameters != null && parameters.Any())
+                endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
+
+            return await _httpClient.GetStreamAsync(endpoint).Stay();
         }
 
         /// <summary>
