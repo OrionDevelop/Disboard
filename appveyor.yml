@@ -8,7 +8,6 @@ before_build:
 build:
   project: Source\Disboard.sln
   publish_nuget: true
-  include_nuget_references: true
   verbosity: minimal
 deploy:
 - provider: NuGet
