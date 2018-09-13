@@ -6,11 +6,11 @@ using Disboard.Mastodon.Models;
 
 namespace Disboard.Mastodon.Clients
 {
-    public class SearchV1Client : ApiClient<MastodonClient>
+    public class SearchV2Client : ApiClient<MastodonClient>
     {
-        internal SearchV1Client(MastodonClient client) : base(client, "/api/v1/search") { }
+        internal SearchV2Client(MastodonClient client) : base(client, "/api/v2/search") { }
 
-        public async Task<SearchV1> SearchAsync(string q, bool? resolve = null)
+        public async Task<SearchV2> SearchAsync(string q, bool? resolve = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -18,7 +18,7 @@ namespace Disboard.Mastodon.Clients
             };
             parameters.AddIfValidValue("resolve", resolve);
 
-            return await GetAsync<SearchV1>(parameters: parameters).Stay();
+            return await GetAsync<SearchV2>(parameters: parameters).Stay();
         }
     }
 }

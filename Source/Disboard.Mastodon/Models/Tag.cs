@@ -1,4 +1,6 @@
-﻿using Disboard.Models;
+﻿using System.Collections.Generic;
+
+using Disboard.Models;
 
 using Newtonsoft.Json;
 
@@ -14,6 +16,7 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        // TODO: history
+        [JsonProperty("history")]
+        public IEnumerable<History> History { get; set; }
     }
 }
