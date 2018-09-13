@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
     {
         internal CustomEmojisClient(MastodonClient client) : base(client, "/api/v1/custom_emojis") { }
 
-        public async Task<List<Emoji>> FetchAsync()
+        public async Task<List<Emoji>> ShowAsync()
         {
             return await GetAsync<List<Emoji>>().Stay();
         }

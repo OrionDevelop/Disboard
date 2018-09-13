@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
     {
         internal InstanceClient(MastodonClient client) : base(client, "/api/v1/instance") { }
 
-        public async Task<Instance> FetchAsync()
+        public async Task<Instance> ShowAsync()
         {
             return await GetAsync<Instance>().Stay();
         }
