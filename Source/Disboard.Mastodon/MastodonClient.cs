@@ -27,6 +27,7 @@ namespace Disboard.Mastodon
             Lists = new ListsClient(this);
             Media = new MediaClient(this);
             Notifications = new NotificationsClient(this);
+            Reports = new ReportsClient(this);
             SearchV1 = new SearchV1Client(this);
             SearchV2 = new SearchV2Client(this);
             Statuses = new StatusesClient(this);
@@ -50,6 +51,7 @@ namespace Disboard.Mastodon
         public ListsClient Lists { get; }
         public MediaClient Media { get; }
         public NotificationsClient Notifications { get; }
+        public ReportsClient Reports { get; }
         public SearchV1Client SearchV1 { get; }
         public SearchV2Client SearchV2 { get; }
         public StatusesClient Statuses { get; }
