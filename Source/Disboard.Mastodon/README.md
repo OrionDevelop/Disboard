@@ -23,6 +23,9 @@ For example, pixiv's instance "pawoo.net" implements unique features, we do not 
 
 ## Usage
 
+Note: If some requests retuens 403, please check instance's configuration.
+
+
 ```csharp
 var mastodon = new MastodonClient("mastodon.cloud");
 
@@ -35,6 +38,16 @@ Process.Start(mastodon.Auth.AuthorizeUrl(Constants.RedirectUriForClient, scopes)
 
 var code = Console.ReadLine();
 await mastodon.Auth.AccessTokenAsync(Constants.RedirectUriForClient, code);
+
+// send new status
+await mastodon.Statuses.UpdateAsync("Hello, Mastodon!");
+
+// get timeline using streaming api (needs System.Reactive)
+var disposable = mastodon.Streaming.PublicAsObservable(false).Subscribe((w) => {
+	w.Dump();
+});
+
+await Task.Delay(1000 * 60);
+disposable.Dispose();
 ```
 
-Note: If some requests retuens 403, please check instance's configuration.
