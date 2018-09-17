@@ -8,6 +8,7 @@
     <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mika-f/Disboard</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
