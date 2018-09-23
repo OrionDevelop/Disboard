@@ -1,4 +1,5 @@
-﻿using Disboard.Mastodon.Clients.Push;
+﻿using Disboard.Clients;
+using Disboard.Mastodon.Clients.Push;
 
 namespace Disboard.Mastodon.Clients
 {

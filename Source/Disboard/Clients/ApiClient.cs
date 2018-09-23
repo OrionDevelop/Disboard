@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using Disboard.Extensions;
 
-namespace Disboard
+namespace Disboard.Clients
 {
     public class ApiClient<T> where T : AppClient
     {

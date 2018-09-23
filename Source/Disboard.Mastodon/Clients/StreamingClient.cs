@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Disboard.Clients;
 using Disboard.Mastodon.Clients.Streaming;
-using Disboard.Mastodon.Models.Streaming;
+using Disboard.Models;
 
 namespace Disboard.Mastodon.Clients
 {

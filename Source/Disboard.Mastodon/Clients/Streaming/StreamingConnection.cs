@@ -1,59 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reactive.Linq;
 
-using Disboard.Extensions;
+using Disboard.Clients;
 using Disboard.Mastodon.Models.Streaming;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Clients.Streaming
 {
-    internal class StreamingConnection
+    internal class StreamingConnection : HttpStreamingConnection<MastodonClient>
     {
-        private readonly MastodonClient _client;
         private readonly string _endpoint;
         private readonly IEnumerable<KeyValuePair<string, object>> _parameters;
 
-        public StreamingConnection(MastodonClient client, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        public StreamingConnection(MastodonClient client, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null) : base(client)
         {
-            _client = client;
             _endpoint = endpoint;
             _parameters = parameters;
         }
 
         public IObservable<IStreamMessage> Connect()
         {
-            return Observable.Create<IStreamMessage>(async (observer, token) =>
-            {
-                try
-                {
-                    var stream = await _client.GetStreamAsync(_endpoint, _parameters).Stay();
-                    using (var sr = new StreamReader(stream))
-                    {
-                        while (!sr.EndOfStream)
-                        {
-                            if (token.IsCancellationRequested)
-                                break;
-
-                            var payload = sr.ReadLine();
-                            if (string.IsNullOrWhiteSpace(payload) || payload.StartsWith(":"))
-                                continue;
-
-                            observer.OnNext(payload.StartsWith("event") ? ParseEvent(payload, sr.ReadLine()) : ParseData(payload));
-                        }
-                    }
-                    observer.OnCompleted();
-                }
-                catch (Exception e)
-                {
-                    observer.OnError(e);
-                }
-            });
+            return Connect(_endpoint, _parameters);
         }
 
-        private IStreamMessage ParseEvent(string @event, string payload)
+        protected override IStreamMessage ParseEvent(string @event, string payload)
         {
             var data = payload.Substring(payload.IndexOf(":", StringComparison.Ordinal) + ": ".Length);
             switch (@event.Substring(@event.IndexOf(":", StringComparison.Ordinal) + ": ".Length))
@@ -75,7 +47,7 @@ namespace Disboard.Mastodon.Clients.Streaming
             }
         }
 
-        private IStreamMessage ParseData(string payload)
+        protected override IStreamMessage ParseData(string payload)
         {
             throw new NotSupportedException();
         }
