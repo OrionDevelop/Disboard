@@ -24,9 +24,10 @@ namespace Disboard
     /// </summary>
     public class AppClient
     {
+        private readonly AuthMode _authMode;
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
-        private readonly string _version;
+        private readonly RequestMode _requestMode;
         public static string Version => "1.0";
 
         /// <summary>
@@ -38,11 +39,13 @@ namespace Disboard
         ///     Constructor
         /// </summary>
         /// <param name="baseUrl">API base url</param>
-        /// <param name="version">1.0a or 2.0</param>
-        protected AppClient(string baseUrl, string version)
+        /// <param name="authMode">Authentication mode</param>
+        /// <param name="requestMode">Serialization mode</param>
+        protected AppClient(string baseUrl, AuthMode authMode, RequestMode requestMode)
         {
             _baseUrl = baseUrl;
-            _version = version;
+            _authMode = authMode;
+            _requestMode = requestMode;
 
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
@@ -51,18 +54,21 @@ namespace Disboard
         private void PrepareForAuthenticate(HttpMethod method, string url, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             // ReSharper disable NotResolvedInText
-            switch (_version)
+            switch (_authMode)
             {
-                case "1.0a":
+                case AuthMode.OAuth1:
                     PrepareForOAuth1A(method, url, parameters);
                     break;
 
-                case "2.0":
+                case AuthMode.OAuth2:
                     PrepareForOAuth2();
                     break;
 
+                case AuthMode.Myself:
+                    break;
+
                 default:
-                    throw new ArgumentOutOfRangeException("version", _version, null);
+                    throw new ArgumentOutOfRangeException(nameof(AuthMode), _authMode, null);
             }
 
             // ReSharper restore NotResolvedInText
@@ -337,6 +343,21 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> SendAsyncInternal(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
+            switch (_requestMode)
+            {
+                case RequestMode.FormUrlEncoded:
+                    return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
+
+                case RequestMode.Json:
+                    return await SendAsJsonAsync(method, endpoint, parameters).Stay();
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(RequestMode), _requestMode, null);
+            }
+        }
+
+        private async Task<HttpResponseMessage> SendAsFormDataAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
             HttpContent content;
             if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
             {
@@ -366,6 +387,24 @@ namespace Disboard
                 content = new FormUrlEncodedContent(kvpCollection);
             }
 
+            var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
+            response.EnsureSuccessStatusCode();
+
+            return response;
+        }
+
+        private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            var dict = new Dictionary<string, object>();
+            if (parameters != null)
+                foreach (var kvp in parameters)
+                {
+                    if (dict.ContainsKey(kvp.Key))
+                        throw new InvalidOperationException();
+                    dict.Add(kvp.Key, kvp.Value);
+                }
+            var body = JsonConvert.SerializeObject(dict);
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             response.EnsureSuccessStatusCode();
 

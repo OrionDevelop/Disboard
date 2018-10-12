@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using Disboard.Mastodon.Clients;
+using Disboard.Models;
 
 namespace Disboard.Mastodon
 {
@@ -8,7 +9,7 @@ namespace Disboard.Mastodon
     {
         internal string Domain { get; }
 
-        public MastodonClient(string domain) : base($"https://{domain}", "2.0")
+        public MastodonClient(string domain) : base($"https://{domain}", AuthMode.OAuth2, RequestMode.FormUrlEncoded)
         {
             Domain = domain;
             BinaryParameters = new List<string> {"avatar", "header", "file"};
