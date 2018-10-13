@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class StreamingClient : ApiClient<MastodonClient>
     {
-        internal StreamingClient(MastodonClient client) : base(client, "") { }
+        protected internal StreamingClient(MastodonClient client) : base(client, "") { }
 
         public IObservable<IStreamMessage> HealthAsObservable(string host = null)
         {

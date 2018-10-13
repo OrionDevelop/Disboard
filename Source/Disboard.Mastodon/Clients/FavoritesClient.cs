@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class FavoritesClient : ApiClient<MastodonClient>
     {
-        internal FavoritesClient(MastodonClient client) : base(client, "/api/v1/favourites") { }
+        protected internal FavoritesClient(MastodonClient client) : base(client, "/api/v1/favourites") { }
 
         public async Task<Pagenator<Status>> ListAsync(long? limit = null, long? sinceId = null, long? maxId = null)
         {

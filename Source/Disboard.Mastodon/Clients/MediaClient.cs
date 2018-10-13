@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class MediaClient : ApiClient<MastodonClient>
     {
-        internal MediaClient(MastodonClient client) : base(client, "/api/v1/media") { }
+        protected internal MediaClient(MastodonClient client) : base(client, "/api/v1/media") { }
 
         public async Task<Attachment> CreateAsync(string file, string description = null, Point? focus = null)
         {

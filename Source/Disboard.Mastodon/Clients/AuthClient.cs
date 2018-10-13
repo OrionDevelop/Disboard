@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class AuthClient : ApiClient<MastodonClient>
     {
-        internal AuthClient(MastodonClient client) : base(client, "/oauth") { }
+        protected internal AuthClient(MastodonClient client) : base(client, "/oauth") { }
 
         public string AuthorizeUrl(string redirectUri, AccessScope scopes)
         {

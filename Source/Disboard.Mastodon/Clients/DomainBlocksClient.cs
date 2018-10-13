@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class DomainBlocksClient : ApiClient<MastodonClient>
     {
-        internal DomainBlocksClient(MastodonClient client) : base(client, "/api/v1/domain_blocks") { }
+        protected internal DomainBlocksClient(MastodonClient client) : base(client, "/api/v1/domain_blocks") { }
 
         public async Task<Pagenator<string>> ListAsync(long? limit = null, long? sinceId = null, long? maxId = null)
         {

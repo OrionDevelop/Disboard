@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class ReportsClient : ApiClient<MastodonClient>
     {
-        internal ReportsClient(MastodonClient client) : base(client, "/api/v1/reports") { }
+        protected internal ReportsClient(MastodonClient client) : base(client, "/api/v1/reports") { }
 
         public async Task<List<Report>> ListAsync()
         {

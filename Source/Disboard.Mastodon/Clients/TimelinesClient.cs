@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class TimelinesClient : ApiClient<MastodonClient>
     {
-        internal TimelinesClient(MastodonClient client) : base(client, "/api/v1/timelines") { }
+        protected internal TimelinesClient(MastodonClient client) : base(client, "/api/v1/timelines") { }
 
         public async Task<Pagenator<Status>> DirectAsync(bool? isLocal = null, long? limit = null, long? sinceId = null, long? maxId = null)
         {

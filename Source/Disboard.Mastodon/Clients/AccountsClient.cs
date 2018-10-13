@@ -11,7 +11,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class AccountsClient : ApiClient<MastodonClient>
     {
-        internal AccountsClient(MastodonClient client) : base(client, "/api/v1/accounts") { }
+        protected internal AccountsClient(MastodonClient client) : base(client, "/api/v1/accounts") { }
 
         public async Task<CredentialAccount> UpdateCredentialsAsync(string displayName = null, string note = null, string avatar = null, string header = null, bool? isLocked = null, bool? isBot = null,
                                                                     List<Field> fields = null, Source source = null)

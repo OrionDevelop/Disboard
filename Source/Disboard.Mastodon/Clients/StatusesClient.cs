@@ -11,7 +11,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class StatusesClient : ApiClient<MastodonClient>
     {
-        internal StatusesClient(MastodonClient client) : base(client, "/api/v1/statuses") { }
+        protected internal StatusesClient(MastodonClient client) : base(client, "/api/v1/statuses") { }
 
         public async Task<Pagenator<Account>> RebloggedBy(long id, long? limit = null, long? sinceId = null, long? maxId = null)
         {

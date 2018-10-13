@@ -12,7 +12,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class NotificationsClient : ApiClient<MastodonClient>
     {
-        internal NotificationsClient(MastodonClient client) : base(client, "/api/v1/notifications") { }
+        protected internal NotificationsClient(MastodonClient client) : base(client, "/api/v1/notifications") { }
 
         public async Task<Pagenator<Notification>> ListAsync(long? maxId = null, long? sinceId = null, int? limit = null, NotificationType? excludeTypes = null)
         {

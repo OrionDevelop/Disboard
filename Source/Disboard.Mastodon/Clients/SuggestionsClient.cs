@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class SuggestionsClient : ApiClient<MastodonClient>
     {
-        internal SuggestionsClient(MastodonClient client) : base(client, "/api/v1/suggestions") { }
+        protected internal SuggestionsClient(MastodonClient client) : base(client, "/api/v1/suggestions") { }
 
         public async Task<List<Account>> ListAsync(long? limit = null)
         {

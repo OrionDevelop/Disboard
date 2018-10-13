@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class ListsClient : ApiClient<MastodonClient>
     {
-        internal ListsClient(MastodonClient client) : base(client, "/api/v1/lists") { }
+        protected internal ListsClient(MastodonClient client) : base(client, "/api/v1/lists") { }
 
         public async Task<Pagenator<Account>> AccountsAsync(long id, long? limit = null, long? sinceId = null, long? maxId = null)
         {

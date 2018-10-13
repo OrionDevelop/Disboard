@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class EndorsementsClient : ApiClient<MastodonClient>
     {
-        internal EndorsementsClient(MastodonClient client) : base(client, "/api/v1/endorsements") { }
+        protected internal EndorsementsClient(MastodonClient client) : base(client, "/api/v1/endorsements") { }
 
         public async Task<Pagenator<Account>> ListAsync(long? limit = null, long? sinceId = null, long? maxId = null)
         {

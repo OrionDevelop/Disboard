@@ -11,7 +11,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class FiltersClient : ApiClient<MastodonClient>
     {
-        internal FiltersClient(MastodonClient client) : base(client, "/api/v1/filters") { }
+        protected internal FiltersClient(MastodonClient client) : base(client, "/api/v1/filters") { }
 
         public async Task<List<Filter>> ListAsync()
         {

@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class FollowsClient : ApiClient<MastodonClient>
     {
-        internal FollowsClient(MastodonClient client) : base(client, "/api/v1/follows") { }
+        protected internal FollowsClient(MastodonClient client) : base(client, "/api/v1/follows") { }
 
         public async Task<Account> RemoteAsync(string uri)
         {

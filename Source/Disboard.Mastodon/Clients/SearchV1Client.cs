@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class SearchV1Client : ApiClient<MastodonClient>
     {
-        internal SearchV1Client(MastodonClient client) : base(client, "/api/v1/search") { }
+        protected internal SearchV1Client(MastodonClient client) : base(client, "/api/v1/search") { }
 
         public async Task<SearchV1> SearchAsync(string q, bool? resolve = null)
         {

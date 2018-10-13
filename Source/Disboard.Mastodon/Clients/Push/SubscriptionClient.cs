@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients.Push
 {
     public class SubscriptionClient : ApiClient<MastodonClient>
     {
-        internal SubscriptionClient(MastodonClient client) : base(client, "/api/v1/push/subscription") { }
+        protected internal SubscriptionClient(MastodonClient client) : base(client, "/api/v1/push/subscription") { }
 
         public async Task<PushSubscription> CreateAsync(string endpoint, Keys keys, Alerts alerts)
         {

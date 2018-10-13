@@ -9,7 +9,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class InstanceClient : ApiClient<MastodonClient>
     {
-        internal InstanceClient(MastodonClient client) : base(client, "/api/v1/instance") { }
+        protected internal InstanceClient(MastodonClient client) : base(client, "/api/v1/instance") { }
 
         public async Task<Instance> ShowAsync()
         {

@@ -10,7 +10,7 @@ namespace Disboard.Mastodon.Clients
 {
     public class AppsClient : ApiClient<MastodonClient>
     {
-        internal AppsClient(MastodonClient client) : base(client, "/api/v1/apps") { }
+        protected internal AppsClient(MastodonClient client) : base(client, "/api/v1/apps") { }
 
         public async Task<Application> RegisterAsync(string clientName, string redirectUris, AccessScope scopes, string website = null)
         {

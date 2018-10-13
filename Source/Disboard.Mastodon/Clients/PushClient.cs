@@ -7,7 +7,7 @@ namespace Disboard.Mastodon.Clients
     {
         public SubscriptionClient Subscription { get; }
 
-        internal PushClient(MastodonClient client) : base(client, "")
+        protected internal PushClient(MastodonClient client) : base(client, "")
         {
             Subscription = new SubscriptionClient(client);
         }
