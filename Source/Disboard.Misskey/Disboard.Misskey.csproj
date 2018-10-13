@@ -21,9 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Enums\" />
-    <Folder Include="Clients\" />
   </ItemGroup>
 
 </Project>
