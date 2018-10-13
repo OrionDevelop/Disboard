@@ -10,43 +10,25 @@ namespace Disboard.Models
     /// <summary>
     ///     Cursorable object with `next_url` property.
     /// </summary>
-    public interface ICursorable<T>
+    public class Cursorable<T> : ApiResponse
     {
         /// <summary>
         ///     Next url
         /// </summary>
-        string NextUrl { get; set; }
+        [JsonProperty("next_url")]
+        public string NextUrl { get; set; }
 
-        /// <summary>
-        ///     Instance of <see cref="ClientBase" />
-        /// </summary>
-        ClientBase Client { set; }
+        internal AppClient Client { get; set; }
 
         /// <summary>
         ///     Query next page
         /// </summary>
         /// <returns></returns>
-        Task<T> NextAsync();
-    }
-
-    /// <summary>
-    ///     ICursorable implementation
-    /// </summary>
-    public class Cursorable<T> : ICursorable<T>
-    {
-        /// <inheritdoc />
-        [JsonProperty("next_url")]
-        public string NextUrl { get; set; }
-
-        /// <inheritdoc />
-        public ClientBase Client { get; set; }
-
-        /// <inheritdoc />
         public async Task<T> NextAsync()
         {
             if (string.IsNullOrWhiteSpace(NextUrl))
                 throw new InvalidOperationException();
-            return await Client.GetAsync<T>(NextUrl, null).Stay();
+            return await Client.GetAsync<T>(NextUrl).Stay();
         }
     }
 }

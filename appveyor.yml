@@ -1,0 +1,21 @@
+version: 1.0.{build}
+skip_tags: true
+only_commits:
+  message: /docs/
+image: Visual Studio 2017
+configuration: Release
+nuget:
+  disable_publish_on_pr: true
+before_build:
+- cmd: nuget restore .\Source\
+build:
+  project: Source\Disboard.sln
+  publish_nuget: true
+  verbosity: minimal
+deploy:
+- provider: NuGet
+  api_key:
+    secure: +a9+GBTx9qVZ/LD2Rj+kB8XOHGIqz7yCU9n3cOwFoamoT3MAb/ueKA3NQ4aqRKQE
+  artifact: /Disboard.*\nupkg/
+  on:
+    branch: /master/

@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
 
 namespace Disboard.Models
 {
-    /// <summary>
-    ///     RFC 5988 Web Linking Object
-    /// </summary>
-    public interface IPagenator<T>
+    internal interface IPagenator
     {
+        /// <summary>
+        ///     Valid client
+        /// </summary>
+        AppClient Client { get; set; }
+
         /// <summary>
         ///     First page
         /// </summary>
@@ -29,83 +32,71 @@ namespace Disboard.Models
         ///     Last page
         /// </summary>
         string Last { get; set; }
+    }
 
-        /// <summary>
-        ///     Instance of <see cref="ClientBase" />
-        /// </summary>
-        ClientBase Client { set; }
+    /// <summary>
+    ///     RFC 5988 Web Linking Object
+    /// </summary>
+    public class Pagenator<T> : List<T>, IPagenator
+    {
+        // aliases
+        private AppClient Client => ((IPagenator) this).Client;
+        private string First => ((IPagenator) this).First;
+        private string Next => ((IPagenator) this).Next;
+        private string Prev => ((IPagenator) this).Prev;
+        private string Last => ((IPagenator) this).Last;
+
+        // implements
+        AppClient IPagenator.Client { get; set; }
+        string IPagenator.First { get; set; }
+        string IPagenator.Next { get; set; }
+        string IPagenator.Prev { get; set; }
+        string IPagenator.Last { get; set; }
 
         /// <summary>
         ///     Query first page
         /// </summary>
-        Task<T> FirstAsync();
+        public async Task<Pagenator<T>> FirstAsync()
+        {
+            if (string.IsNullOrWhiteSpace(First))
+                throw new InvalidOperationException();
+            return await Client.GetAsync<Pagenator<T>>(AsEndpoint(First)).Stay();
+        }
 
         /// <summary>
         ///     Query next page
         /// </summary>
-        Task<T> NextAsync();
+        public async Task<Pagenator<T>> NextAsync()
+        {
+            if (string.IsNullOrWhiteSpace(Next))
+                throw new InvalidOperationException();
+            return await Client.GetAsync<Pagenator<T>>(AsEndpoint(Next)).Stay();
+        }
 
         /// <summary>
         ///     Query previous page
         /// </summary>
-        Task<T> PrevAsync();
+        public async Task<Pagenator<T>> PrevAsync()
+        {
+            if (string.IsNullOrWhiteSpace(Prev))
+                throw new InvalidOperationException();
+            return await Client.GetAsync<Pagenator<T>>(AsEndpoint(Prev)).Stay();
+        }
 
         /// <summary>
         ///     Query last page
         /// </summary>
-        Task<T> LastAsync();
-    }
-
-    /// <summary>
-    ///     IPagenator implementation
-    /// </summary>
-    public class Pagenator<T> : IPagenator<T>
-    {
-        /// <inheritdoc />
-        public string First { get; set; }
-
-        /// <inheritdoc />
-        public string Next { get; set; }
-
-        /// <inheritdoc />
-        public string Prev { get; set; }
-
-        /// <inheritdoc />
-        public string Last { get; set; }
-
-        /// <inheritdoc />
-        public ClientBase Client { get; set; }
-
-        /// <inheritdoc />
-        public async Task<T> FirstAsync()
-        {
-            if (string.IsNullOrWhiteSpace(First))
-                throw new InvalidOperationException();
-            return await Client.GetAsync<T>(First, null).Stay();
-        }
-
-        /// <inheritdoc />
-        public async Task<T> NextAsync()
-        {
-            if (string.IsNullOrWhiteSpace(Next))
-                throw new InvalidOperationException();
-            return await Client.GetAsync<T>(Next, null).Stay();
-        }
-
-        /// <inheritdoc />
-        public async Task<T> PrevAsync()
-        {
-            if (string.IsNullOrWhiteSpace(Prev))
-                throw new InvalidOperationException();
-            return await Client.GetAsync<T>(Prev, null).Stay();
-        }
-
-        /// <inheritdoc />
-        public async Task<T> LastAsync()
+        public async Task<Pagenator<T>> LastAsync()
         {
             if (string.IsNullOrWhiteSpace(Last))
                 throw new InvalidOperationException();
-            return await Client.GetAsync<T>(Last, null).Stay();
+            return await Client.GetAsync<Pagenator<T>>(AsEndpoint(Last)).Stay();
+        }
+
+        // https://example.com/api/v1/... を /api/v1/... にするあれ
+        private static string AsEndpoint(string str)
+        {
+            return new Uri(str).AbsolutePath;
         }
     }
 }
