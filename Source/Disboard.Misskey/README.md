@@ -17,6 +17,15 @@ Based on Misskey 8.x.
 ## Usage
 
 ```csharp
-var misskey = new MisskeyClient("misskey.xyz");
+var misskey = new MisskeyClient("misskey.xyz", "YOUR_CLIENT_SECRET");
+
+// Authentication process
+var session = await misskey.Auth.Session.Generate();
+Process.Start(session.Url);
+
+// Wait for user accepts client that access to your info
+Console.ReadLine();
+
+var tokens = await misskey.Auth.Session.UserKeyAsync(session.Token);
 ```
 
