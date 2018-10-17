@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mika-f/Disboard</RepositoryUrl>
     <LangVersion>latest</LangVersion>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
