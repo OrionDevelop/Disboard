@@ -20,9 +20,9 @@ namespace Disboard.Clients
     {
         protected T ApiClient { get; }
 
-        protected HttpStreamingConnection(T apiClient)
+        protected HttpStreamingConnection(T client)
         {
-            ApiClient = apiClient;
+            ApiClient = client;
         }
 
         protected IObservable<IStreamMessage> Connect(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
