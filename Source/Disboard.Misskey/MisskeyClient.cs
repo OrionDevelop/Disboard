@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 
 using Disboard.Misskey.Clients;
 using Disboard.Models;
@@ -18,6 +22,38 @@ namespace Disboard.Misskey
             BinaryParameters = new List<string>();
 
             Auth = new AuthClient(this);
+
+            RegisterCustomAuthenticator(MisskeyAuthentication);
         }
+
+        // Add "i" parameter to all request.
+        private void MisskeyAuthentication(HttpClient client, string url, ref IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            if (string.IsNullOrWhiteSpace(AccessToken))
+                return;
+            if (parameters == null)
+                parameters = new List<KeyValuePair<string, object>>();
+            (parameters as List<KeyValuePair<string, object>>)?.Add(new KeyValuePair<string, object>("i", EncryptedAccessToken));
+        }
+
+        #region EncryptedAccessToken
+
+        private string _encryptedAccessToken;
+
+        public string EncryptedAccessToken
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(_encryptedAccessToken))
+                    return _encryptedAccessToken;
+
+                var bytes = Encoding.UTF8.GetBytes(AccessToken + ClientSecret);
+                var sha256 = new SHA256CryptoServiceProvider();
+
+                return _encryptedAccessToken = string.Join("", sha256.ComputeHash(bytes).Select(w => $"{w:x2}"));
+            }
+        }
+
+        #endregion
     }
 }

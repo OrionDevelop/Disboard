@@ -24,10 +24,13 @@ namespace Disboard
     /// </summary>
     public class AppClient
     {
+        public delegate void CustomAuthFunc(HttpClient client, string url, ref IEnumerable<KeyValuePair<string, object>> parameters);
+
         private readonly AuthMode _authMode;
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
         private readonly RequestMode _requestMode;
+        private CustomAuthFunc _customAuth;
         public static string Version => "1.0";
 
         /// <summary>
@@ -51,7 +54,12 @@ namespace Disboard
             _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
         }
 
-        private void PrepareForAuthenticate(HttpMethod method, string url, IEnumerable<KeyValuePair<string, object>> parameters)
+        protected void RegisterCustomAuthenticator(CustomAuthFunc action)
+        {
+            _customAuth = action;
+        }
+
+        private void PrepareForAuthenticate(HttpMethod method, string url, ref IEnumerable<KeyValuePair<string, object>> parameters)
         {
             // ReSharper disable NotResolvedInText
             switch (_authMode)
@@ -65,6 +73,7 @@ namespace Disboard
                     break;
 
                 case AuthMode.Myself:
+                    _customAuth?.Invoke(_httpClient, url, ref parameters);
                     break;
 
                 default:
@@ -202,7 +211,7 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> GetAsyncInternal(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, parameters);
+            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, ref parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
@@ -220,7 +229,7 @@ namespace Disboard
         /// <returns>API response (Stream)</returns>
         public async Task<Stream> GetStreamAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, parameters);
+            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, ref parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
@@ -293,7 +302,7 @@ namespace Disboard
         /// <returns>API response</returns>
         public async Task<string> DeleteAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(HttpMethod.Delete, _baseUrl + endpoint, parameters);
+            PrepareForAuthenticate(HttpMethod.Delete, _baseUrl + endpoint, ref parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
@@ -361,7 +370,7 @@ namespace Disboard
             HttpContent content;
             if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
             {
-                PrepareForAuthenticate(method, _baseUrl + endpoint, new List<KeyValuePair<string, object>>());
+                PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
                 content = new MultipartFormDataContent();
 
                 foreach (var parameter in parameters)
@@ -382,7 +391,7 @@ namespace Disboard
             }
             else
             {
-                PrepareForAuthenticate(method, _baseUrl + endpoint, parameters);
+                PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
                 var kvpCollection = parameters?.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
                 content = new FormUrlEncodedContent(kvpCollection);
             }
@@ -395,6 +404,7 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
+            PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
             var dict = new Dictionary<string, object>();
             if (parameters != null)
                 foreach (var kvp in parameters)
