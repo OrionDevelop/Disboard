@@ -11,13 +11,10 @@ namespace Disboard.Misskey.Clients.Aggregation
     {
         protected internal UsersClient(MisskeyClient client) : base(client, "/api/aggregation/users") { }
 
-        public async Task<IEnumerable<PostAggregation>> ActivityAsync(uint limit, string userId)
+        public async Task<IEnumerable<PostAggregation>> ActivityAsync(string userId, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>>
-            {
-                new KeyValuePair<string, object>("limit", limit),
-                new KeyValuePair<string, object>("userId", userId)
-            };
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            parameters.AddIfValidValue("limit", limit);
 
             return await PostAsync<IEnumerable<PostAggregation>>("/activity", parameters).Stay();
         }
