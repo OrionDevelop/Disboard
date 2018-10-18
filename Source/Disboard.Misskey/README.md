@@ -11,7 +11,7 @@ Based on Misskey 8.x.
 
 ## Note
 
-[Misskey's documentation](https://misskey.xyz/docs/ja-JP/about) is not trustworthy.
+[Misskey's documentation](https://misskey.xyz/docs/ja-JP/about) is not trustworthy.  
 If you want to contribute to this library, you SHOULD read [Misskey's source code implementation](https://github.com/syuilo/misskey).
 
 **This is a generic Misskey API wrapper**, we do not implement features unique to the instance.  
