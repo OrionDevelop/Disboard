@@ -7,13 +7,16 @@ using System.Text;
 using Disboard.Misskey.Clients;
 using Disboard.Models;
 
+using MisskeyAppClient = Disboard.Misskey.Clients.AppClient;
+
 namespace Disboard.Misskey
 {
     public class MisskeyClient : AppClient
     {
         internal string Domain { get; }
 
-        public Clients.AppClient App { get; }
+        public AggregationClient Aggregation { get; }
+        public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
 
         public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
@@ -22,7 +25,8 @@ namespace Disboard.Misskey
             ClientSecret = secret;
             BinaryParameters = new List<string>();
 
-            App = new Clients.AppClient(this);
+            Aggregation = new AggregationClient(this);
+            App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
 
             RegisterCustomAuthenticator(MisskeyAuthentication);
