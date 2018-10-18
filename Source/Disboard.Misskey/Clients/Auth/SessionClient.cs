@@ -29,7 +29,10 @@ namespace Disboard.Misskey.Clients.Auth
                 new KeyValuePair<string, object>("token", token)
             };
 
-            return await PostAsync<Credential>("/userkey", parameters).Stay();
+            var response = await PostAsync<Credential>("/userkey", parameters).Stay();
+            Client.AccessToken = response.AccessToken;
+
+            return response;
         }
     }
 }

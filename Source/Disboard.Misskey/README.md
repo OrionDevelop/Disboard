@@ -9,23 +9,33 @@ Misskey API wrapper for .NET Standard 2.0.
 Based on Misskey 8.x.
 
 
-## Caution
+## Note
 
-**This is a generic Misskey API wrapper**, We do not implement features unique to the instance.  
+[Misskey's documentation](https://misskey.xyz/docs/ja-JP/about) is not trustworthy.
+If you want to contribute to this library, you SHOULD read [Misskey's source code implementation](https://github.com/syuilo/misskey).
+
+**This is a generic Misskey API wrapper**, we do not implement features unique to the instance.  
 
 
 ## Usage
 
 ```csharp
-var misskey = new MisskeyClient("misskey.xyz", "YOUR_CLIENT_SECRET");
+var misskey = new MisskeyClient("misskey.xyz");
 
-// Authentication process
+// register app
+var permissions = new string[] {"account-read", "account-write", "note-write", "reaction-write", "following-write", "drive-read", "drive-write", "notification-write", "notification-read"};
+await misskey.App.CreateAsync("Orion", "Orion is generic microblogging client", permissions, "https://static.mochizuki.moe/callback.html");
+
+// auth
 var session = await misskey.Auth.Session.Generate();
 Process.Start(session.Url);
 
 // Wait for user accepts client that access to your info
 Console.ReadLine();
+await misskey.Auth.Session.UserKeyAsync(session.Token);
 
-var tokens = await misskey.Auth.Session.UserKeyAsync(session.Token);
+// If you want to call REST API, please use method that has "Async()" suffix.
+await misskey.I.VerifyAsync();
+
 ```
 

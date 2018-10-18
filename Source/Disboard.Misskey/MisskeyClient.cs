@@ -13,14 +13,16 @@ namespace Disboard.Misskey
     {
         internal string Domain { get; }
 
+        public Clients.AppClient App { get; }
         public AuthClient Auth { get; }
 
-        public MisskeyClient(string domain, string secret) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
+        public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
         {
             Domain = domain;
             ClientSecret = secret;
             BinaryParameters = new List<string>();
 
+            App = new Clients.AppClient(this);
             Auth = new AuthClient(this);
 
             RegisterCustomAuthenticator(MisskeyAuthentication);
