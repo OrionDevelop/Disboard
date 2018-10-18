@@ -9,7 +9,7 @@ namespace Disboard.Misskey.Clients.Auth
 {
     public class SessionClient : ApiClient<MisskeyClient>
     {
-        internal SessionClient(MisskeyClient client) : base(client, "/api/auth/session") { }
+        protected internal SessionClient(MisskeyClient client) : base(client, "/api/auth/session") { }
 
         public async Task<Session> GenerateAsync()
         {

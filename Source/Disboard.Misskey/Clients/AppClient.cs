@@ -21,7 +21,7 @@ namespace Disboard.Misskey.Clients
                 new KeyValuePair<string, object>("permission", permissions)
             };
 
-            var response = await PostAsync<Application>("/create", parameters);
+            var response = await PostAsync<Application>("/create", parameters).Stay();
             Client.ClientSecret = response.Secret;
 
             return response;

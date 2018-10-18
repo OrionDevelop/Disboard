@@ -7,7 +7,7 @@ namespace Disboard.Misskey.Clients
     {
         public SessionClient Session { get; }
 
-        internal AuthClient(MisskeyClient client) : base(client, "/api/auth")
+        protected internal AuthClient(MisskeyClient client) : base(client, "/api/auth")
         {
             Session = new SessionClient(client);
         }
