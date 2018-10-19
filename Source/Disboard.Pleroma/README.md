@@ -2,7 +2,7 @@
 ----
 
 [![License](https://img.shields.io/github/license/mika-f/Disboard.svg?style=flat-square)](../../LICENSE)
-[![Disboard.Mastodon](https://img.shields.io/nuget/v/Disboard.Pleroma.svg?style=flat-square)](https://nuget.org/packages/Disboard.Pleroma)
+[![Disboard.Pleroma](https://img.shields.io/nuget/v/Disboard.Pleroma.svg?style=flat-square)](https://nuget.org/packages/Disboard.Pleroma)
 
 
 Pleroma API wrapper for .NET Standard 2.0.  
