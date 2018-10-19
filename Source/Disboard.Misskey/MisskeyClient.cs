@@ -15,9 +15,11 @@ namespace Disboard.Misskey
     {
         internal string Domain { get; }
 
+        // Skipped /admin (Administrator Only), /ap (ActivityPub)
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
+        public StreamingClient Streaming { get; }
 
         public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
         {
@@ -28,6 +30,7 @@ namespace Disboard.Misskey
             Aggregation = new AggregationClient(this);
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
+            Streaming = new StreamingClient(this);
 
             RegisterCustomAuthenticator(MisskeyAuthentication);
         }
