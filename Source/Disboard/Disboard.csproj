@@ -6,6 +6,8 @@
     <Authors>Fuyuno Mikazuki</Authors>
     <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
+    <Version>1.0.0</Version>
+    <Description>Collection of libraries for Fediverse APIs.</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace Disboard.Converters
 {
+    /// <summary>
+    ///     123456789 to DateTime
+    /// </summary>
     public class UnixTimeToDateTimeConverter : JsonConverter
     {
         private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

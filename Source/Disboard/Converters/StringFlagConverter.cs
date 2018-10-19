@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 
 namespace Disboard.Converters
 {
+    /// <summary>
+    ///     ["flagA", "flagB"] to { FlagA, FlagB }
+    /// </summary>
     public class StringFlagConverter : JsonConverter
     {
         private static readonly MethodInfo Parse = typeof(Enum).GetMethod("Parse", new[] {typeof(Type), typeof(string)});

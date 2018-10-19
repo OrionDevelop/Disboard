@@ -14,10 +14,7 @@ Based on Mastodon 2.5.0.
 [Mastodon's documentation](https://github.com/tootsuite/documentation) is not trustworthy.  
 If you want to contribute to this library, you SHOULD read [Mastodon's source code implementation](https://github.com/tootsuite/mastodon).
 
-
-## Caution
-
-**This is a generic Mastodon API wrapper**, We do not implement features unique to the instance.  
+**This is a generic Mastodon API wrapper**, we do not implement features unique to the instance.  
 For example, pixiv's instance "pawoo.net" implements unique features, we do not support one.
 
 

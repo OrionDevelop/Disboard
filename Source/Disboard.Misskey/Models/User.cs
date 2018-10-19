@@ -11,6 +11,25 @@ namespace Disboard.Misskey.Models
 {
     public class User : ApiResponse
     {
+        [JsonProperty("avatarColor")]
+        [JsonConverter(typeof(RgbArrayToColorConverter))]
+        public Color AvatarColor { get; set; }
+
+        [JsonProperty("avatarId")]
+        public string AvatarId { get; set; }
+
+        [JsonProperty("avatarUrl")]
+        public string AvatarUrl { get; set; }
+
+        [JsonProperty("bannerId")]
+        public string BannerId { get; set; }
+
+        [JsonProperty("hasUnreadNotification")]
+        public bool? HasUnreadNotification { get; set; }
+
+        [JsonProperty("isCat")]
+        public bool IsCat { get; set; }
+
         [JsonProperty("createdAt")]
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime CreatedAt { get; set; }
@@ -41,13 +60,6 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("lastUsedAt")]
         public DateTime LastUsedAt { get; set; }
-
-        [JsonProperty("avatarColor")]
-        [JsonConverter(typeof(RgbArrayToColorConverter))]
-        public Color AvatarColor { get; set; }
-
-        [JsonProperty("avatarUrl")]
-        public string AvatarUrl { get; set; }
 
         [JsonProperty("id")]
         public string Id { get; set; }

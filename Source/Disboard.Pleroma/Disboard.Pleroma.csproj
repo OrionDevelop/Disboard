@@ -2,21 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>Pleroma Client Library for .NET Standard 2.0.</Description>
     <Authors>Fuyuno Mikazuki</Authors>
     <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mika-f/Disboard</RepositoryUrl>
     <Version>1.0.0</Version>
-    <Description>Mastodon Client Library for .NET Standard 2.0.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Disboard.Mastodon\Disboard.Mastodon.csproj" />
     <ProjectReference Include="..\Disboard\Disboard.csproj" />
   </ItemGroup>
 

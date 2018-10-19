@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 
 namespace Disboard.Converters
 {
+    /// <summary>
+    ///     [r, g, b] to Color
+    /// </summary>
     public class RgbArrayToColorConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
