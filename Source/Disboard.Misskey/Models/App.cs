@@ -8,9 +8,9 @@ using Newtonsoft.Json.Converters;
 
 namespace Disboard.Misskey.Models
 {
-    public class Application : ApiResponse
+    public class App : ApiResponse
     {
-        [JsonProperty("callbackUr;")]
+        [JsonProperty("callbackUrl")]
         public string CallbackUrl { get; set; }
 
         [JsonProperty("createdAt")]
@@ -29,14 +29,14 @@ namespace Disboard.Misskey.Models
         [JsonProperty("isAuthorized")]
         public bool? IsAuthorized { get; set; }
 
-        [JsonProperty("secret")]
-        public string Secret { get; set; }
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("permission")]
         public List<string> Permissions { get; set; }
+
+        [JsonProperty("secret")]
+        public string Secret { get; set; }
 
         [JsonProperty("userId")]
         public string UserId { get; set; }
