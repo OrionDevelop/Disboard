@@ -19,17 +19,19 @@ namespace Disboard.Misskey
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
+        public DriveClient Drive { get; }
         public StreamingClient Streaming { get; }
 
         public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
         {
             Domain = domain;
             ClientSecret = secret;
-            BinaryParameters = new List<string>();
+            BinaryParameters = new List<string> {"file"};
 
             Aggregation = new AggregationClient(this);
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
+            Drive = new DriveClient(this);
             Streaming = new StreamingClient(this);
 
             RegisterCustomAuthenticator(MisskeyAuthentication);
@@ -42,7 +44,9 @@ namespace Disboard.Misskey
                 return;
             if (parameters == null)
                 parameters = new List<KeyValuePair<string, object>>();
-            (parameters as List<KeyValuePair<string, object>>)?.Add(new KeyValuePair<string, object>("i", EncryptedAccessToken));
+
+            if (parameters.All(w => w.Key != "i"))
+                (parameters as List<KeyValuePair<string, object>>)?.Add(new KeyValuePair<string, object>("i", EncryptedAccessToken));
         }
 
         #region EncryptedAccessToken
