@@ -9,5 +9,8 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("filesCount")]
         public int FilesCount { get; set; }
+
+        [JsonProperty("parent")]
+        public Folder Parent { get; set; }
     }
 }

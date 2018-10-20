@@ -11,10 +11,12 @@ namespace Disboard.Misskey.Clients
     public class DriveClient : ApiClient<MisskeyClient>
     {
         public FilesClient Files { get; }
+        public FoldersClient Folders { get; }
 
         protected internal DriveClient(MisskeyClient client) : base(client, "/api/drive")
         {
             Files = new FilesClient(client);
+            Folders = new FoldersClient(client);
         }
 
     }
