@@ -19,6 +19,11 @@ namespace Disboard.Misskey.Clients
             Folders = new FoldersClient(client);
         }
 
+        public async Task<Models.Drive> ShowAsync()
+        {
+            return await PostAsync<Models.Drive>().Stay();
+        }
+
         public async Task<IEnumerable<File>> FilesAsync(string folderId = null, string type = null, int? limit = null, int? sinceId = null, int? untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
