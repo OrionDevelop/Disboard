@@ -21,8 +21,7 @@ namespace Disboard.Converters
                 return DateTime.MinValue;
             if (reader.TokenType == JsonToken.StartObject)
                 return new DateObjectToDateTimeConverter().ReadJson(reader, objectType, existingValue, serializer);
-            var value = reader.Value as string;
-            return long.TryParse(value, out _)
+            return reader.TokenType == JsonToken.Integer
                 ? new UnixTimeToDateTimeConverter().ReadJson(reader, objectType, existingValue, serializer)
                 : new IsoDateTimeConverter().ReadJson(reader, objectType, existingValue, serializer);
         }
