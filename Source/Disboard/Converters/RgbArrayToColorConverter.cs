@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 using Newtonsoft.Json;
 
@@ -30,6 +31,8 @@ namespace Disboard.Converters
                 else
                     throw new NotSupportedException();
 
+            // XXX: たまーに 255 の範囲を超えるものが来る
+            array = array.Select(w => w >= 255 ? 255 : w).ToList();
             return Color.FromArgb(array[0], array[1], array[2]);
         }
 
