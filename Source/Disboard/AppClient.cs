@@ -384,7 +384,10 @@ namespace Disboard
                     }
                     else
                     {
-                        formDataContent = new StringContent(parameter.Value.ToString());
+                        var value = parameter.Value.ToString();
+                        if (parameter.Value is bool)
+                            value = value.ToLower();
+                        formDataContent = new StringContent(value);
                     }
                     ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
                 }
@@ -407,12 +410,15 @@ namespace Disboard
             PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
             var dict = new Dictionary<string, object>();
             if (parameters != null)
-                foreach (var kvp in parameters)
-                {
-                    if (dict.ContainsKey(kvp.Key))
-                        throw new InvalidOperationException();
-                    dict.Add(kvp.Key, kvp.Value);
-                }
+                if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
+                    return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
+                else
+                    foreach (var kvp in parameters)
+                    {
+                        if (dict.ContainsKey(kvp.Key))
+                            throw new InvalidOperationException();
+                        dict.Add(kvp.Key, kvp.Value);
+                    }
             var body = JsonConvert.SerializeObject(dict);
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
