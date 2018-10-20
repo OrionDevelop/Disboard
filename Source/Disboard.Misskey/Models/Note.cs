@@ -13,7 +13,7 @@ namespace Disboard.Misskey.Models
         public string AppId { get; set; }
 
         [JsonProperty("app")]
-        public object App { get; set; }
+        public App App { get; set; }
 
         [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
@@ -24,6 +24,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("deletedAt")]
         public DateTime DeletedAt { get; set; }
 
+        [JsonProperty("files")]
+        public List<Media> Files { get; set; }
+
         [JsonProperty("fileIds")]
         public List<string> FileIds { get; set; }
 
@@ -32,6 +35,9 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("id")]
         public string Id { get; set; }
+
+        [JsonProperty("media")]
+        public List<Media> Media { get; set; }
 
         [JsonProperty("mediaIds")]
         public List<string> MediaIds { get; set; }
@@ -47,10 +53,10 @@ namespace Disboard.Misskey.Models
         public string Next { get; set; }
 
         [JsonProperty("reactionCounts")]
-        public string ReactionCounts { get; set; }
+        public ReactionCount ReactionCounts { get; set; }
 
         [JsonProperty("repliesCount")]
-        public string ReplyCount { get; set; }
+        public long ReplyCount { get; set; }
 
         [JsonProperty("reply")]
         public Note Reply { get; set; }
@@ -62,7 +68,7 @@ namespace Disboard.Misskey.Models
         public Note Renote { get; set; }
 
         [JsonProperty("renoteCount")]
-        public int RenoteCount { get; set; }
+        public long RenoteCount { get; set; }
 
         [JsonProperty("renoteId")]
         public string RenoteId { get; set; }

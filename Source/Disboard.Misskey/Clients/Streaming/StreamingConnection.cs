@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
@@ -51,16 +52,22 @@ namespace Disboard.Misskey.Clients.Streaming
         protected override IStreamMessage ParseData(string message)
         {
             var json = JsonConvert.DeserializeObject<WsResponse>(message);
-            switch (json?.Body?.Type)
+            try
             {
-                case "note":
-                    json.Body.Decoded = json.Body.Body.ToObject<NoteMessage>();
-                    break;
+                switch (json?.Body?.Type)
+                {
+                    case "note":
+                        json.Body.Decoded = json.Body.Body.ToObject<NoteMessage>();
+                        break;
 
-                default:
-                    throw new ArgumentOutOfRangeException(json.Body?.Type);
+                    default:
+                        throw new ArgumentOutOfRangeException(json.Body?.Type);
+                }
             }
-
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
             return json;
         }
     }
