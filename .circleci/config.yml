@@ -16,23 +16,41 @@ jobs:
       - checkout
 
       - run:
-          name: Install dependencies
+          name: Install common dependencies
           command: |
             apt update
             apt install -yq unzip wget > /dev/null 2>&1
+
       - run:
-          name: Install docfx
+          name: Install test dependencies
+          command: |
+            wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+            dpkg -i packages-microsoft-prod.deb
+            apt install -yq pt-transport-https > /dev/null 2>&1
+            apt update
+            apt install -yq dotnet-sdk-2.1 > /dev/null 2>&1
+
+      - run:
+          name: Install document dependencies
           command: |
             wget -q 'https://github.com/dotnet/docfx/releases/download/v2.40/docfx.zip' -O docfx.zip
             unzip -q docfx.zip -d docfx/
+
+      - run:
+          name: Running Tests
+          comand: |
+            dotnet test ./Source/
+
       - run:
           name: Generate documents by docfx
           command: |
             mono ./docfx/docfx.exe ./Source/Disboard.AutoDocs/docfx.json
+
       - run:
-          name: Install netlifyctl
+          name: Install deployment dependencies
           command: |
             wget -qO- 'https://cli.netlify.com/download/latest/linux' | tar xz
+
       - deploy:
           name: Deployment task
           command: |
