@@ -40,8 +40,8 @@ namespace Disboard.Exceptions
                 // Parse as json
                 var json = JsonConvert.DeserializeObject<ApiResponse>(content);
 
-                // 決め打ちよくないけどもー...
-                return new DisboardException(response.StatusCode, new Uri(url), content, json.Extends["error"].ToString());
+                // for Mastodon
+                return json.Extends.ContainsKey("error") ? new DisboardException(response.StatusCode, new Uri(url), content, json.Extends["error"].ToString()) : new DisboardException(response.StatusCode, new Uri(url), content);
             }
 
             // unknown, parse as plain text
