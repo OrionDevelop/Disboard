@@ -4,7 +4,7 @@
 [![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/disboard.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/disboard)
 
 
-Collection of Microblog Client Libraries.
+Collection of fediverse client libraries for .NET Standard 2.0.
 
 
 ## Projects
