@@ -8,12 +8,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+using Disboard.Exceptions;
 using Disboard.Extensions;
 using Disboard.Models;
 using Disboard.Utils;
 
 using Newtonsoft.Json;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable UnusedParameter.Local
 // ReSharper disable PossibleMultipleEnumeration
 
@@ -38,15 +40,22 @@ namespace Disboard
         /// </summary>
         protected List<string> BinaryParameters { get; set; } = new List<string>();
 
+        #region Other Properties
+
+        public string Domain { get; }
+
+        #endregion
+
         /// <summary>
         ///     Constructor
         /// </summary>
-        /// <param name="baseUrl">API base url</param>
+        /// <param name="domain">Domain name</param>
         /// <param name="authMode">Authentication mode</param>
         /// <param name="requestMode">Serialization mode</param>
-        protected AppClient(string baseUrl, AuthMode authMode, RequestMode requestMode)
+        protected AppClient(string domain, AuthMode authMode, RequestMode requestMode)
         {
-            _baseUrl = baseUrl;
+            Domain = domain;
+            _baseUrl = $"https://{domain}";
             _authMode = authMode;
             _requestMode = requestMode;
 
@@ -216,9 +225,9 @@ namespace Disboard
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
             var response = await _httpClient.GetAsync(_baseUrl + endpoint).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return response;
+            if (response.IsSuccessStatusCode)
+                return response;
+            throw await DisboardException.Create(response, _baseUrl + endpoint);
         }
 
         /// <summary>
@@ -307,9 +316,9 @@ namespace Disboard
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
             var response = await _httpClient.DeleteAsync(_baseUrl + endpoint).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync().Stay();
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsStringAsync().Stay();
+            throw await DisboardException.Create(response, _baseUrl + endpoint);
         }
 
         /// <summary>
@@ -400,9 +409,9 @@ namespace Disboard
             }
 
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return response;
+            if (response.IsSuccessStatusCode)
+                return response;
+            throw await DisboardException.Create(response, _baseUrl + endpoint);
         }
 
         private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
@@ -422,9 +431,9 @@ namespace Disboard
             var body = JsonConvert.SerializeObject(dict);
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
-            response.EnsureSuccessStatusCode();
-
-            return response;
+            if (response.IsSuccessStatusCode)
+                return response;
+            throw await DisboardException.Create(response, _baseUrl + endpoint);
         }
 
         #endregion

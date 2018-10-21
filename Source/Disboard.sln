@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.Mastodon", "Disboa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.Misskey", "Disboard.Misskey\Disboard.Misskey.csproj", "{2CE2497D-0C2A-45D6-9194-5EB50139CE38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Pleroma", "Disboard.Pleroma\Disboard.Pleroma.csproj", "{678C42DD-5272-43A1-ABE0-FD965FEC68E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.Pleroma", "Disboard.Pleroma\Disboard.Pleroma.csproj", "{678C42DD-5272-43A1-ABE0-FD965FEC68E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.AutoDocs", "Disboard.AutoDocs\Disboard.AutoDocs.csproj", "{9FE95639-5356-4EC3-B30F-212AC7AACAF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{678C42DD-5272-43A1-ABE0-FD965FEC68E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{678C42DD-5272-43A1-ABE0-FD965FEC68E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{678C42DD-5272-43A1-ABE0-FD965FEC68E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
