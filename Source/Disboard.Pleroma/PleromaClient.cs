@@ -10,8 +10,6 @@ namespace Disboard.Pleroma
         public PleromaApi Pleroma { get; }
         public new StreamingClient Streaming { get; }
 
-        public new string Domain => base.Domain;
-
         public PleromaClient(string domain) : base(domain)
         {
             Pleroma = new PleromaApi(this);

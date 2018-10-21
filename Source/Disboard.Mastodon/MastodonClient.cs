@@ -7,7 +7,7 @@ namespace Disboard.Mastodon
 {
     public class MastodonClient : AppClient
     {
-        protected internal string Domain { get; }
+        public string Domain { get; }
 
         public MastodonClient(string domain) : base($"https://{domain}", AuthMode.OAuth2, RequestMode.FormUrlEncoded)
         {

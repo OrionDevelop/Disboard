@@ -13,7 +13,7 @@ namespace Disboard.Misskey
 {
     public class MisskeyClient : AppClient
     {
-        internal string Domain { get; }
+        public string Domain { get; }
 
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
