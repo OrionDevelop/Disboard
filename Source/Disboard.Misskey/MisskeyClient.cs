@@ -20,6 +20,7 @@ namespace Disboard.Misskey
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
         public DriveClient Drive { get; }
+        public FollowingClient Following { get; }
         public StreamingClient Streaming { get; }
 
         public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
@@ -32,6 +33,7 @@ namespace Disboard.Misskey
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
             Drive = new DriveClient(this);
+            Following = new FollowingClient(this);
             Streaming = new StreamingClient(this);
 
             RegisterCustomAuthenticator(MisskeyAuthentication);
