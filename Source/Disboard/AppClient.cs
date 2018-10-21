@@ -55,7 +55,7 @@ namespace Disboard
         protected AppClient(string domain, AuthMode authMode, RequestMode requestMode)
         {
             Domain = domain;
-            _baseUrl = $"https://${domain}";
+            _baseUrl = $"https://{domain}";
             _authMode = authMode;
             _requestMode = requestMode;
 
