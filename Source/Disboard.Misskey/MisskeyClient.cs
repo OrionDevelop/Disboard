@@ -13,15 +13,12 @@ namespace Disboard.Misskey
 {
     public class MisskeyClient : AppClient
     {
-        public string Domain { get; }
-
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
 
-        public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
+        public MisskeyClient(string domain, string secret = null) : base(domain, AuthMode.Myself, RequestMode.Json)
         {
-            Domain = domain;
             ClientSecret = secret;
             BinaryParameters = new List<string>();
 
