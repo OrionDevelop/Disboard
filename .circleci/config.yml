@@ -38,7 +38,7 @@ jobs:
 
       - run:
           name: Running Tests
-          comand: |
+          command: |
             dotnet test ./Source/
 
       - run:
