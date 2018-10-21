@@ -7,11 +7,8 @@ namespace Disboard.Mastodon
 {
     public class MastodonClient : AppClient
     {
-        protected internal string Domain { get; }
-
-        public MastodonClient(string domain) : base($"https://{domain}", AuthMode.OAuth2, RequestMode.FormUrlEncoded)
+        public MastodonClient(string domain) : base(domain, AuthMode.OAuth2, RequestMode.FormUrlEncoded)
         {
-            Domain = domain;
             BinaryParameters = new List<string> {"avatar", "header", "file"};
 
             Account = new AccountsClient(this);

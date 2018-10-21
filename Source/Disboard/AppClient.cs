@@ -40,15 +40,22 @@ namespace Disboard
         /// </summary>
         protected List<string> BinaryParameters { get; set; } = new List<string>();
 
+        #region Other Properties
+
+        public string Domain { get; }
+
+        #endregion
+
         /// <summary>
         ///     Constructor
         /// </summary>
-        /// <param name="baseUrl">API base url</param>
+        /// <param name="domain">Domain name</param>
         /// <param name="authMode">Authentication mode</param>
         /// <param name="requestMode">Serialization mode</param>
-        protected AppClient(string baseUrl, AuthMode authMode, RequestMode requestMode)
+        protected AppClient(string domain, AuthMode authMode, RequestMode requestMode)
         {
-            _baseUrl = baseUrl;
+            Domain = domain;
+            _baseUrl = $"https://${domain}";
             _authMode = authMode;
             _requestMode = requestMode;
 
