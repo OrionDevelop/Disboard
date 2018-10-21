@@ -20,6 +20,7 @@ jobs:
           command: |
             apt update
             apt install -yq unzip wget > /dev/null 2>&1
+            apt install -yq apt-transport-https > /dev/null 2>&1
 
       - run:
           name: Install test dependencies
