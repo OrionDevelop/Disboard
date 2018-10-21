@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Test", "Tests\Disb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Pleroma.Test", "Tests\Disboard.Pleroma.Test\Disboard.Pleroma.Test.csproj", "{0E7E7D8E-A9FE-4CFB-96C4-AA5A7DB766DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.AutoDocs", "Disboard.AutoDocs\Disboard.AutoDocs.csproj", "{9FE95639-5356-4EC3-B30F-212AC7AACAF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{0E7E7D8E-A9FE-4CFB-96C4-AA5A7DB766DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E7E7D8E-A9FE-4CFB-96C4-AA5A7DB766DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E7E7D8E-A9FE-4CFB-96C4-AA5A7DB766DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE95639-5356-4EC3-B30F-212AC7AACAF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
