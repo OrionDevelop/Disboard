@@ -1,7 +1,8 @@
 # Disboard
 
 [![License](https://img.shields.io/github/license/mika-f/Disboard.svg?style=flat-square)](LICENSE)
-[![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/disboard.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/disboard)
+[![AppVeyor branch](https://img.shields.io/appveyor/ci/mika-f/Disboard/develop.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/disboard)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard/develop.svg?style=flat-square)](https://circleci.com/gh/OrionDevelop/Disboard/tree/develop)
 
 
 Collection of fediverse client libraries for .NET Standard 2.0.
