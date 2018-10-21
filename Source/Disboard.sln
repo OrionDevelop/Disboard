@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.Pleroma", "Disboar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1321652F-BB51-4936-9574-F3F1CB5D9F62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Mastodon.Test", "Disboard.Mastodon.Test\Disboard.Mastodon.Test.csproj", "{CA5FBEAC-6466-437B-9C32-C9407E61A383}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Mastodon.Test", "Tests\Disboard.Mastodon.Test\Disboard.Mastodon.Test.csproj", "{CA5FBEAC-6466-437B-9C32-C9407E61A383}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Test", "Disboard.Test\Disboard.Test.csproj", "{9E52CA58-24F3-4BE5-9769-70CCC5DDB0E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Test", "Tests\Disboard.Test\Disboard.Test.csproj", "{9E52CA58-24F3-4BE5-9769-70CCC5DDB0E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Pleroma.Test", "Disboard.Pleroma.Test\Disboard.Pleroma.Test.csproj", "{0E7E7D8E-A9FE-4CFB-96C4-AA5A7DB766DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Pleroma.Test", "Tests\Disboard.Pleroma.Test\Disboard.Pleroma.Test.csproj", "{0E7E7D8E-A9FE-4CFB-96C4-AA5A7DB766DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

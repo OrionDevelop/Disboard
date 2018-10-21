@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Disboard\Disboard.csproj" />
+    <ProjectReference Include="..\..\Disboard\Disboard.csproj" />
   </ItemGroup>
 
 </Project>
