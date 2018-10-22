@@ -104,50 +104,50 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Account>($"/{id}").Stay();
         }
 
-        public async Task<Account> FollowAsync(long id, bool? reblogs = null)
+        public async Task<Relationship> FollowAsync(long id, bool? reblogs = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("reblogs", reblogs);
 
-            return await PostAsync<Account>($"/{id}/follow", parameters).Stay();
+            return await PostAsync<Relationship>($"/{id}/follow", parameters).Stay();
         }
 
-        public async Task<Account> UnfollowAsync(long id)
+        public async Task<Relationship> UnfollowAsync(long id)
         {
-            return await PostAsync<Account>($"/{id}/unfollow").Stay();
+            return await PostAsync<Relationship>($"/{id}/unfollow").Stay();
         }
 
-        public async Task<Account> BlockAsync(long id)
+        public async Task<Relationship> BlockAsync(long id)
         {
-            return await PostAsync<Account>($"/{id}/block").Stay();
+            return await PostAsync<Relationship>($"/{id}/block").Stay();
         }
 
-        public async Task<Account> UnblockAsync(long id)
+        public async Task<Relationship> UnblockAsync(long id)
         {
-            return await PostAsync<Account>($"/{id}/unblock").Stay();
+            return await PostAsync<Relationship>($"/{id}/unblock").Stay();
         }
 
-        public async Task<Account> MuteAsync(long id, bool? notifications = null)
+        public async Task<Relationship> MuteAsync(long id, bool? notifications = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("notifications", notifications);
 
-            return await PostAsync<Account>($"/{id}/mute", parameters).Stay();
+            return await PostAsync<Relationship>($"/{id}/mute", parameters).Stay();
         }
 
-        public async Task<Account> UnmuteAsync(long id)
+        public async Task<Relationship> UnmuteAsync(long id)
         {
-            return await PostAsync<Account>($"/{id}/unmute").Stay();
+            return await PostAsync<Relationship>($"/{id}/unmute").Stay();
         }
 
-        public async Task<Account> PinAsync(long id)
+        public async Task<Relationship> PinAsync(long id)
         {
-            return await PostAsync<Account>($"/{id}/pin").Stay();
+            return await PostAsync<Relationship>($"/{id}/pin").Stay();
         }
 
-        public async Task<Account> UnpinAsync(long id)
+        public async Task<Relationship> UnpinAsync(long id)
         {
-            return await PostAsync<Account>($"/{id}/unpin").Stay();
+            return await PostAsync<Relationship>($"/{id}/unpin").Stay();
         }
 
         public async Task<CredentialAccount> VerifyCredentialsAsync()
