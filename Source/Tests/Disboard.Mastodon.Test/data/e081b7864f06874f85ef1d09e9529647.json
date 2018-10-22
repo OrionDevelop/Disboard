@@ -8,5 +8,5 @@
   "muting_notifications": false,
   "requested": false,
   "domain_blocking": false,
-  "endorsed": false
+  "endorsed": true
 }

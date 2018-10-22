@@ -12,7 +12,7 @@ namespace Disboard.Mastodon.Test.Clients
         [Fact]
         public async Task AccessTokenAsync()
         {
-            var actual = await TestClient.Auth.AccessTokenAsync(Constants.RedirectUriForClient, "2d72992cf19f0bf3f48585565dfe0aedf2ffc10b1ac7ef891d4acf9d72b44eea");
+            var actual = await TestClient.Auth.AccessTokenAsync(Constants.RedirectUriForClient, "21238fbf78892764c7529ffbf8aecf8440bb2a09699919480941c0812e9c2709");
             actual.CheckRecursively();
         }
 

@@ -13,9 +13,9 @@
   },
   {
     "id": "47754",
-    "following": true,
-    "showing_reblogs": true,
-    "followed_by": true,
+    "following": false,
+    "showing_reblogs": false,
+    "followed_by": false,
     "blocking": false,
     "muting": false,
     "muting_notifications": false,

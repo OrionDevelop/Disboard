@@ -33,7 +33,7 @@ namespace Disboard.Test.Handlers
         private static async Task<string> CreateRequestHash(HttpRequestMessage request)
         {
             var method = request.Method.Method;
-            var endpoint = request.RequestUri.PathAndQuery;
+            var endpoint = request.RequestUri.ToString();
             var body = request.Content != null ? await request.Content.ReadAsStringAsync() : "";
 
             var md5 = CalcMd5(method + endpoint + body);

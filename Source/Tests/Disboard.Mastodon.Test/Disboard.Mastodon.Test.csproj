@@ -24,46 +24,52 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data\06d24efe5702d1ee224471e777214328.json">
+    <None Update="data\02d445f39a4849cc0d85b41ca56c1778.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\0d1afc684f3fc7da825077b51da67382.json">
+    <None Update="data\0e739a6e9ea2235bf7e324421fd4f7b3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\25cf3eadbace3cb727d61d880f174e6d.json">
+    <None Update="data\1587dfaf0a7188fb1a4843d6fa8293d1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\29c07b49c7907fbced18f5f7f275a520.json">
+    <None Update="data\16164ee708e0230c4c43fd1decbe05d4.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\33f1898e3b241836b29950d29c5666d2.json">
+    <None Update="data\1dd57c38763ba5a7696e136a869b123f.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\4954bf1e0ca857d89a5e3a6e2b57af74.json">
+    <None Update="data\233d2b2114a090ce1b6ca5add09d4666.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\4e84a97b706861970ed6b91c8062c2c6.json">
+    <None Update="data\38685dd749c3a730fe9e8a62ffe1a57e.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\51a001aff040fb2c7cf4485e3a04e623.json">
+    <None Update="data\3f7210d61165f15202358ada392f06c3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\56eb96fc03f260093907cd5af6b0e4b7.json">
+    <None Update="data\4dfdeb435f86a6d9582ce635b9952766.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\5f7ee381df628003b0cfd7adea4be2f6.json">
+    <None Update="data\63755f712acf7e058f37766694dc36be.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\62a7964807f2828bf1bd033b0ad16b49.json">
+    <None Update="data\6c77e1244c0022a80cd947efc7a3baec.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\6b5ba94696bc4d55b3d7a4860bacf86a.json">
+    <None Update="data\76d66266a6626ebdd125e7fe5a6e1975.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\7f6ab0030195bbadfcff81dcf416e51e.json">
+    <None Update="data\7a20d9715bfbf5e48158cff86d66c9cb.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\8fdb5098fbc1a97c696b9d879cc70061.json">
+    <None Update="data\7b51902ff2dbfa3abbff2ee53009d23d.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\83d4dc129fbacb0a8a63dc705810330f.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\8ec4304067157d9e78f94dccc6557e72.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="data\90429e5d73b55a1cf3954dfb220cc5c7.json">
@@ -72,22 +78,34 @@
     <None Update="data\9415108c9789ae1b842409639fa2e3ea.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\b321bc2d9eabe998ca91c2aa98c014f6.json">
+    <None Update="data\94c7f4631e0b91e7b4034f2d7fd9bf1b.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\b9e6b9ecddcea66f560b26a567d1ac89.json">
+    <None Update="data\9810bc5b41b04f43e35c1d0f0665bb0a.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\c07a462089fb56608f1b6a29f93b4335.json">
+    <None Update="data\98aef8f95190011d7a714e27315417d1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\c30461e12f81a135a3fb6d4e8ac6eb77.json">
+    <None Update="data\a3f6423f22f53740d173e48005b7586c.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\de7187f37d3f0af8732f11c82098758b.json">
+    <None Update="data\ba6512eeef6c30ba831fc718eb46ebd3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\ffe685e43f6cc2f2a8ccf7fb03af19dc.json">
+    <None Update="data\c9fc62d68f06dc3e5ba0e6844ef4292c.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\d57dd852350ff7f74a0cc897b23b41fd.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\e081b7864f06874f85ef1d09e9529647.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\e438654a177982e54608ad001c07f697.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\efc6289a3708eb7e12692fa7adf69fd3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="data\mapping.json">
@@ -96,6 +114,10 @@
     <None Update="Resources\get-account-verify_credentials.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="data\" />
   </ItemGroup>
 
 </Project>
