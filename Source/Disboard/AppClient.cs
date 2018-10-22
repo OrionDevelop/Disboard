@@ -293,34 +293,42 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> SendAsFormDataAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            HttpContent content;
-            if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
+            HttpResponseMessage response;
+            if (parameters == null)
             {
-                content = new MultipartFormDataContent();
-
-                foreach (var parameter in parameters)
-                {
-                    HttpContent formDataContent;
-                    if (BinaryParameters.Contains(parameter.Key))
-                    {
-                        using (var stream = new FileStream(parameter.Value.ToString(), FileMode.Open))
-                            formDataContent = new ByteArrayContent(ReadAsByteArray(stream));
-                        formDataContent.Headers.Add("Content-Disposition", $"form-data; name=\"{parameter.Key}\"; filename=\"{Path.GetFileName(parameter.Value.ToString())}\"");
-                    }
-                    else
-                    {
-                        formDataContent = new StringContent(parameter.Value.ToString());
-                    }
-                    ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
-                }
+                response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint)).Stay();
             }
             else
             {
-                var kvpCollection = parameters?.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
-                content = new FormUrlEncodedContent(kvpCollection);
+                HttpContent content;
+                if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
+                {
+                    content = new MultipartFormDataContent();
+
+                    foreach (var parameter in parameters)
+                    {
+                        HttpContent formDataContent;
+                        if (BinaryParameters.Contains(parameter.Key))
+                        {
+                            using (var stream = new FileStream(parameter.Value.ToString(), FileMode.Open))
+                                formDataContent = new ByteArrayContent(ReadAsByteArray(stream));
+                            formDataContent.Headers.Add("Content-Disposition", $"form-data; name=\"{parameter.Key}\"; filename=\"{Path.GetFileName(parameter.Value.ToString())}\"");
+                        }
+                        else
+                        {
+                            formDataContent = new StringContent(parameter.Value.ToString());
+                        }
+                        ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
+                    }
+                }
+                else
+                {
+                    var kvpCollection = parameters.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
+                    content = new FormUrlEncodedContent(kvpCollection);
+                }
+                response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             }
 
-            var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             if (response.IsSuccessStatusCode)
                 return response;
             throw await DisboardException.Create(response, _baseUrl + endpoint);

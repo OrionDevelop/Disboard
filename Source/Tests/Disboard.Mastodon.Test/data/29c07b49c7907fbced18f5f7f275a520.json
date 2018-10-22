@@ -1,0 +1,38 @@
+[
+  {
+    "id": "66051",
+    "following": true,
+    "showing_reblogs": true,
+    "followed_by": true,
+    "blocking": false,
+    "muting": false,
+    "muting_notifications": false,
+    "requested": false,
+    "domain_blocking": false,
+    "endorsed": false
+  },
+  {
+    "id": "47754",
+    "following": true,
+    "showing_reblogs": true,
+    "followed_by": true,
+    "blocking": false,
+    "muting": false,
+    "muting_notifications": false,
+    "requested": false,
+    "domain_blocking": false,
+    "endorsed": false
+  },
+  {
+    "id": "12111",
+    "following": false,
+    "showing_reblogs": false,
+    "followed_by": false,
+    "blocking": false,
+    "muting": false,
+    "muting_notifications": false,
+    "requested": false,
+    "domain_blocking": false,
+    "endorsed": false
+  }
+]
