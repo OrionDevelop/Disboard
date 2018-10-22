@@ -34,7 +34,7 @@ namespace Disboard.Mastodon.Models
         public string Thumbnail { get; set; }
 
         [JsonProperty("languages")]
-        public List<string> Languages { get; set; }
+        public IEnumerable<string> Languages { get; set; }
 
         [JsonProperty("contact_account")]
         public Account ContactAccount { get; set; }

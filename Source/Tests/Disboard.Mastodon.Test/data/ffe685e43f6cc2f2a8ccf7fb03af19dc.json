@@ -1,0 +1,8 @@
+{
+  "id": "209790",
+  "name": "Orion Test",
+  "website": "https://mochizuki.moe",
+  "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
+  "client_id": "APP_CLIENT_ID",
+  "client_secret": "APP_CLIENT_SECRET"
+}

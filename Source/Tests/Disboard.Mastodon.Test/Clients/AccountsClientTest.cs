@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Disboard.Mastodon.Models;
+using Disboard.Test.Helpers;
 
 using Xunit;
 
@@ -16,14 +17,14 @@ namespace Disboard.Mastodon.Test.Clients
         public async Task BlockAsync()
         {
             var actual = await TestClient.Account.BlockAsync(1);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task FollowAsync()
         {
             var actual = await TestClient.Account.FollowAsync(1, true);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace Disboard.Mastodon.Test.Clients
         {
             var actual = await TestClient.Account.FollowersAsync(Id, 1, 50000, 100000);
             actual.Count.Is(1);
-            actual.First().Extends.IsNull();
+            actual.First().CheckRecursively();
         }
 
         [Fact]
@@ -39,7 +40,7 @@ namespace Disboard.Mastodon.Test.Clients
         {
             var actual = await TestClient.Account.FollowingAsync(Id, 1, 50000, 100000);
             actual.Count.Is(1);
-            actual.First().Extends.IsNull();
+            actual.First().CheckRecursively();
         }
 
         [Fact(Skip = "FIXME: Get a valid real response for tests")]
@@ -53,14 +54,14 @@ namespace Disboard.Mastodon.Test.Clients
         public async Task MuteAsync()
         {
             var actual = await TestClient.Account.MuteAsync(1, true);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task PinAsync()
         {
             var actual = await TestClient.Account.PinAsync(1);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
@@ -68,7 +69,7 @@ namespace Disboard.Mastodon.Test.Clients
         {
             var actual = await TestClient.Account.RelationshipsAsync(new List<long> {66051, 47754, 12111});
             actual.Count.Is(3);
-            actual.First().Extends.IsNull();
+            actual.First().CheckRecursively();
         }
 
         [Fact]
@@ -76,14 +77,14 @@ namespace Disboard.Mastodon.Test.Clients
         {
             var actual = await TestClient.Account.SearchAsync("みか", 1, false, false);
             actual.Count.Is(1);
-            actual.First().Extends.IsNull();
+            actual.First().CheckRecursively();
         }
 
         [Fact]
         public async Task ShowAsync()
         {
             var actual = await TestClient.Account.ShowAsync(Id);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
@@ -91,49 +92,49 @@ namespace Disboard.Mastodon.Test.Clients
         {
             var actual = await TestClient.Account.StatusesAsync(Id, 1, 1, 1000000, false, false, true);
             actual.Count.Is(1);
-            actual.First().Extends.IsNull();
+            actual.First().CheckRecursively();
         }
 
         [Fact]
         public async Task UnblockAsync()
         {
             var actual = await TestClient.Account.UnblockAsync(1);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task UnfollowAsync()
         {
             var actual = await TestClient.Account.UnfollowAsync(1);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task UnmuteAsync()
         {
             var actual = await TestClient.Account.UnmuteAsync(1);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task UnpinAsync()
         {
             var actual = await TestClient.Account.UnpinAsync(1);
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task UpdateCredentialsAsync()
         {
             var actual = await TestClient.Account.UpdateCredentialsAsync(isBot: false, source: new Source {IsSensitive = false});
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
 
         [Fact]
         public async Task VerifyCredentialsAsync()
         {
             var actual = await TestClient.Account.VerifyCredentialsAsync();
-            actual.Extends.IsNull();
+            actual.CheckRecursively();
         }
     }
 }

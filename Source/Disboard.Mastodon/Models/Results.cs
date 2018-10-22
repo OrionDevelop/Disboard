@@ -9,12 +9,12 @@ namespace Disboard.Mastodon.Models
     public class Results : ApiResponse
     {
         [JsonProperty("accounts")]
-        public List<Account> Accounts { get; set; }
+        public IEnumerable<Account> Accounts { get; set; }
 
         [JsonProperty("statuses")]
-        public List<Status> Statuses { get; set; }
+        public IEnumerable<Status> Statuses { get; set; }
 
         [JsonProperty("hashtags")]
-        public List<string> Hashtags { get; set; }
+        public IEnumerable<string> Hashtags { get; set; }
     }
 }

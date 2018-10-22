@@ -3,6 +3,7 @@
   "0d1afc684f3fc7da825077b51da67382": "GET /api/v1/accounts/31061/lists",
   "25cf3eadbace3cb727d61d880f174e6d": "POST /api/v1/accounts/1/unmute",
   "29c07b49c7907fbced18f5f7f275a520": "GET /api/v1/accounts/relationships?id[]=66051&id[]=47754&id[]=12111",
+  "33f1898e3b241836b29950d29c5666d2": "GET /api/v1/apps/verify_credentials",
   "4954bf1e0ca857d89a5e3a6e2b57af74": "GET /api/v1/accounts/31061/following?limit=1&since_id=1&max_id=100000",
   "4e84a97b706861970ed6b91c8062c2c6": "GET /api/v1/accounts/verify_credentials",
   "51a001aff040fb2c7cf4485e3a04e623": "POST /api/v1/accounts/1/mute",
@@ -15,5 +16,6 @@
   "b321bc2d9eabe998ca91c2aa98c014f6": "POST /api/v1/accounts/1/unblock",
   "b9e6b9ecddcea66f560b26a567d1ac89": "GET /api/v1/accounts/31061",
   "c30461e12f81a135a3fb6d4e8ac6eb77": "POST /api/v1/accounts/1/unfollow",
-  "de7187f37d3f0af8732f11c82098758b": "GET /api/v1/accounts/search?q=%E3%81%BF%E3%81%8B&limit=1&following=false&resolve=false"
+  "de7187f37d3f0af8732f11c82098758b": "GET /api/v1/accounts/search?q=%E3%81%BF%E3%81%8B&limit=1&following=false&resolve=false",
+  "ffe685e43f6cc2f2a8ccf7fb03af19dc": "POST /api/v1/apps"
 }

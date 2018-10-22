@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Meta
+    public class Meta : ApiResponse
     {
         /// <summary>
         ///     If meta type is "video", this property is filled.
