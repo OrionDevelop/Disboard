@@ -15,6 +15,7 @@
   "8fdb5098fbc1a97c696b9d879cc70061": "POST /api/v1/accounts/1/unpin",
   "b321bc2d9eabe998ca91c2aa98c014f6": "POST /api/v1/accounts/1/unblock",
   "b9e6b9ecddcea66f560b26a567d1ac89": "GET /api/v1/accounts/31061",
+  "c07a462089fb56608f1b6a29f93b4335": "POST /oauth/token",
   "c30461e12f81a135a3fb6d4e8ac6eb77": "POST /api/v1/accounts/1/unfollow",
   "de7187f37d3f0af8732f11c82098758b": "GET /api/v1/accounts/search?q=%E3%81%BF%E3%81%8B&limit=1&following=false&resolve=false",
   "ffe685e43f6cc2f2a8ccf7fb03af19dc": "POST /api/v1/apps"
