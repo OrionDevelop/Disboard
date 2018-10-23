@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Running Tests
           command: |
-            dotnet test ./Source/
+            dotnet test ./Source/ -c Release
 
       - run:
           name: Generate documents by docfx

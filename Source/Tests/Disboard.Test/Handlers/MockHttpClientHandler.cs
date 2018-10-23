@@ -31,15 +31,15 @@ namespace Disboard.Test.Handlers
                 using (var sr = new StreamReader(path))
                     return new HttpResponseMessage(HttpStatusCode.OK) {Content = new StringContent(await sr.ReadToEndAsync())};
 
-            throw new InvalidOperationException();
-
-            /*
+#if DEBUG
             var response = await base.SendAsync(request, cancellationToken);
             using (var sw = new StreamWriter(path))
                 sw.WriteLine(await response.Content.ReadAsStringAsync());
             await UpdateMapper(request);
             return response;
-            */
+#else
+            throw new InvalidOperationException();
+#endif
         }
 
         private async Task<string> CreateRequestHash(HttpRequestMessage request)
