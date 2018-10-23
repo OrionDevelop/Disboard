@@ -1,0 +1,45 @@
+{
+  "uri": "mastodon.cloud",
+  "title": "mastodon.cloud",
+  "description": "\u003cp\u003e\r\n  Generalistic and moderated instance.\u003cbr\u003e\r\n  Everyone is welcome as long as you follow our code of conduct!\u003cbr\u003e\r\n  Read the Code of Conduct before signing up please!\u003cbr\u003e\r\n  Feel free to join us in this adventure!\u003cbr\u003e\r\n  Up since 04/04/2017. ✅\r\n\u003c/p\u003e\r\n\r\n\u003cp\u003e\r\n  \u003ci class=\"fa fa-server fa-fw\"\u003e\u003c/i\u003e\r\n  Code of Conduct and more details:\r\n  \u003ca href=\"https://mastodon.cloud/about/more\" target=\"__blank\"\u003e\r\n    /about/more\r\n    \u003ci class=\"fa fa-external-link fa-fw\"\u003e\u003c/i\u003e\r\n  \u003c/a\u003e\r\n\u003c/p\u003e\r\n\r\n\u003cp\u003e\r\n  \u003ci class=\"fa fa-align-left fa-fw\" aria-hidden=\"true\"\u003e\u003c/i\u003e\r\n  Status:\r\n  \u003ca href=\"https://status.mastodon.cloud\" target=\"__blank\"\u003e\r\n    status.mastodon.cloud\r\n    \u003ci class=\"fa fa-external-link fa-fw\" aria-hidden=\"true\"\u003e\u003c/i\u003e\r\n  \u003c/a\u003e\r\n\u003c/p\u003e",
+  "email": "contact@mastodon.cloud",
+  "version": "2.5.2",
+  "urls": {
+    "streaming_api": "wss://mastodon.cloud"
+  },
+  "stats": {
+    "user_count": 51172,
+    "status_count": 2466541,
+    "domain_count": 5629
+  },
+  "thumbnail": "https://media.mastodon.cloud/site_uploads/files/000/000/001/original/ZkJtnD8w.jpg",
+  "languages": [
+    "en"
+  ],
+  "contact_account": {
+    "id": "1",
+    "username": "TheAdmin",
+    "acct": "TheAdmin",
+    "display_name": "The Admin ☁️",
+    "locked": false,
+    "bot": false,
+    "created_at": "2017-04-04T11:24:56.498Z",
+    "note": "\u003cp\u003eIt\u0026apos;s time to ditch Twitter and Facebook.\u003c/p\u003e",
+    "url": "https://mastodon.cloud/@TheAdmin",
+    "avatar": "https://media.mastodon.cloud/accounts/avatars/000/000/001/original/ded945b6fc55af43.jpg",
+    "avatar_static": "https://media.mastodon.cloud/accounts/avatars/000/000/001/original/ded945b6fc55af43.jpg",
+    "header": "https://media.mastodon.cloud/accounts/headers/000/000/001/original/f94ff9d38b71f344.jpg",
+    "header_static": "https://media.mastodon.cloud/accounts/headers/000/000/001/original/f94ff9d38b71f344.jpg",
+    "followers_count": 13237,
+    "following_count": 2,
+    "statuses_count": 278,
+    "emojis": [],
+    "fields": [
+      {
+        "name": "Location",
+        "value": "in the cloud !",
+        "verified_at": null
+      }
+    ]
+  }
+}
