@@ -1,3 +1,4 @@
-[
-  "friends.nico"
-]
+{
+  "StatusCode": "OK",
+  "Body": "[\"friends.nico\"]"
+}

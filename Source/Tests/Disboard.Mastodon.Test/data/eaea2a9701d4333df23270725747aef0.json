@@ -1,5 +1,4 @@
-[
-  "gs.jonkman.ca",
-  "rkun.cf",
-  "mastodon.daiko.fr"
-]
+{
+  "StatusCode": "OK",
+  "Body": "[\"gs.jonkman.ca\",\"rkun.cf\",\"mastodon.daiko.fr\"]"
+}

@@ -41,11 +41,21 @@ namespace Disboard.Exceptions
                 var json = JsonConvert.DeserializeObject<ApiResponse>(content);
 
                 // for Mastodon
-                return json.Extends.ContainsKey("error") ? new DisboardException(response.StatusCode, new Uri(url), content, json.Extends["error"].ToString()) : new DisboardException(response.StatusCode, new Uri(url), content);
+                return json.Extends.ContainsKey("error")
+                    ? new DisboardException(response.StatusCode, new Uri(url), content, json.Extends["error"].ToString())
+                    : new DisboardException(response.StatusCode, new Uri(url), content);
             }
 
             // unknown, parse as plain text
             return new DisboardException(response.StatusCode, new Uri(url), content);
+        }
+
+        public static DisboardException Create(HttpStatusCode code, string content, string url)
+        {
+            var json = JsonConvert.DeserializeObject<ApiResponse>(content);
+            return json.Extends.ContainsKey("error")
+                ? new DisboardException(code, new Uri(url), content, json.Extends["error"].ToString())
+                : new DisboardException(code, new Uri(url), content);
         }
     }
 }

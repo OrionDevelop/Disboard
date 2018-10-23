@@ -1,11 +1,4 @@
 {
-  "id": 228,
-  "phrase": "test2",
-  "context": [
-    "home",
-    "public"
-  ],
-  "whole_word": true,
-  "expires_at": "2018-10-23T11:52:41.389Z",
-  "irreversible": true
+  "StatusCode": "OK",
+  "Body": "{\"id\":228,\"phrase\":\"test2\",\"context\":[\"home\",\"public\"],\"whole_word\":true,\"expires_at\":\"2018-10-23T11:52:41.389Z\",\"irreversible\":true}"
 }

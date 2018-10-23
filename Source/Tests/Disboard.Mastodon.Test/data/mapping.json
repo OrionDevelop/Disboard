@@ -5,10 +5,12 @@
   "1587dfaf0a7188fb1a4843d6fa8293d1": "GET /api/v1/accounts/31061/statuses?limit=1&since_id=1&max_id=1000000&pinned=false&only_media=false&exclude_replies=true",
   "16164ee708e0230c4c43fd1decbe05d4": "GET /api/v1/accounts/31061/following?limit=1&since_id=50000&max_id=100000",
   "1dd57c38763ba5a7696e136a869b123f": "POST /api/v1/accounts/1/unpin",
+  "1f0bc1a17b6f74a89741140e6cc399c5": "DELETE /api/v1/lists/320",
   "233d2b2114a090ce1b6ca5add09d4666": "POST /api/v1/apps",
   "38685dd749c3a730fe9e8a62ffe1a57e": "GET /api/v1/accounts/31061/followers?limit=1&since_id=50000&max_id=100000",
   "3f7210d61165f15202358ada392f06c3": "POST /api/v1/accounts/1/follow",
   "3f97baaa64618f805dbda34246c10784": "GET /api/v1/follow_requests?limit=1&since_id=1&max_id=1000000",
+  "49627e62f2fe3fe06da645186601a617": "PATCH /api/v1/lists/320",
   "4dfdeb435f86a6d9582ce635b9952766": "GET /api/v1/favourites?limit=1&since_id=1&max_id=100000",
   "4fb4eff1a49a9e1465793c6b75af8a95": "GET /api/v1/filters",
   "63755f712acf7e058f37766694dc36be": "POST /api/v1/domain_blocks",
@@ -31,6 +33,8 @@
   "98aef8f95190011d7a714e27315417d1": "POST /oauth/token",
   "a1da468df89be14cd9534b7f0d526e25": "GET /api/v1/follow_requests?limit=1&since_id=1&max_id=1000000",
   "a3f6423f22f53740d173e48005b7586c": "GET /api/v1/domain_blocks?limit=1&since_id=1&max_id=10000",
+  "ab0f3be3300ce0cf420f6a6628799ae4": "GET /api/v1/lists",
+  "b5238147a761a5cf1c6eb4e566d61e79": "GET /api/v1/lists/316",
   "ba6512eeef6c30ba831fc718eb46ebd3": "GET /api/v1/blocks?limit=1&since_id=1&max_id=1000000",
   "c9fc62d68f06dc3e5ba0e6844ef4292c": "GET /api/v1/accounts/search?q=%E3%81%BF%E3%81%8B&limit=1&following=false&resolve=false",
   "d57dd852350ff7f74a0cc897b23b41fd": "GET /api/v1/domain_blocks?limit=1&since_id=1&max_id=10001",
@@ -38,6 +42,8 @@
   "e081b7864f06874f85ef1d09e9529647": "POST /api/v1/accounts/1/pin",
   "e438654a177982e54608ad001c07f697": "GET /api/v1/accounts/verify_credentials",
   "eaea2a9701d4333df23270725747aef0": "GET /api/v1/instance/peers",
+  "ec0c6ef8664a01e38e08acf5174e639d": "POST /api/v1/lists",
   "efc6289a3708eb7e12692fa7adf69fd3": "POST /api/v1/accounts/1/unblock",
-  "f4bffa4c0b2ba215a9962423f3d9784c": "GET /api/v1/filters"
+  "f4bffa4c0b2ba215a9962423f3d9784c": "GET /api/v1/filters",
+  "fe4d7561787a08177103ca387646b923": "GET /api/v1/lists/320"
 }

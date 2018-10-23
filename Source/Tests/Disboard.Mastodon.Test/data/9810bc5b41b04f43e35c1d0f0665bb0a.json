@@ -1,20 +1,4 @@
-[
-  {
-    "shortcode": "hacker_y",
-    "url": "https://media.mastodon.cloud/custom_emojis/images/000/015/602/original/3cc048bdf937a3be.png",
-    "static_url": "https://media.mastodon.cloud/custom_emojis/images/000/015/602/static/3cc048bdf937a3be.png",
-    "visible_in_picker": true
-  },
-  {
-    "shortcode": "hehehe",
-    "url": "https://media.mastodon.cloud/custom_emojis/images/000/015/651/original/d55f0a5aafc9e348.png",
-    "static_url": "https://media.mastodon.cloud/custom_emojis/images/000/015/651/static/d55f0a5aafc9e348.png",
-    "visible_in_picker": true
-  },
-  {
-    "shortcode": "plsnotagain",
-    "url": "https://media.mastodon.cloud/custom_emojis/images/000/015/655/original/496b1141a75d4f7d.png",
-    "static_url": "https://media.mastodon.cloud/custom_emojis/images/000/015/655/static/496b1141a75d4f7d.png",
-    "visible_in_picker": true
-  }
-]
+{
+  "StatusCode": "OK",
+  "Body": "[{\"shortcode\":\"hacker_y\",\"url\":\"https://media.mastodon.cloud/custom_emojis/images/000/015/602/original/3cc048bdf937a3be.png\",\"static_url\":\"https://media.mastodon.cloud/custom_emojis/images/000/015/602/static/3cc048bdf937a3be.png\",\"visible_in_picker\":true},{\"shortcode\":\"hehehe\",\"url\":\"https://media.mastodon.cloud/custom_emojis/images/000/015/651/original/d55f0a5aafc9e348.png\",\"static_url\":\"https://media.mastodon.cloud/custom_emojis/images/000/015/651/static/d55f0a5aafc9e348.png\",\"visible_in_picker\":true},{\"shortcode\":\"plsnotagain\",\"url\":\"https://media.mastodon.cloud/custom_emojis/images/000/015/655/original/496b1141a75d4f7d.png\",\"static_url\":\"https://media.mastodon.cloud/custom_emojis/images/000/015/655/static/496b1141a75d4f7d.png\",\"visible_in_picker\":true}]"
+}

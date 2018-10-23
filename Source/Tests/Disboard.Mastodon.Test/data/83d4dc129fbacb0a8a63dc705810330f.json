@@ -1,4 +1,4 @@
 {
-  "name": "Orion",
-  "website": "https://orion.mochizuki.moe"
+  "StatusCode": "OK",
+  "Body": "{\"name\":\"Orion\",\"website\":\"https://orion.mochizuki.moe\"}"
 }

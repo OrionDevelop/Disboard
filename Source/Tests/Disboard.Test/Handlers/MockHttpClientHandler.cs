@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Disboard.Exceptions;
+using Disboard.Test.Models;
 
 using Newtonsoft.Json;
 
@@ -29,12 +30,17 @@ namespace Disboard.Test.Handlers
             // If dump file exists, use dumped HTTP response.
             if (File.Exists(path))
                 using (var sr = new StreamReader(path))
-                    return new HttpResponseMessage(HttpStatusCode.OK) {Content = new StringContent(await sr.ReadToEndAsync())};
+                {
+                    var content = JsonConvert.DeserializeObject<HttpResponse>(await sr.ReadToEndAsync());
+                    if (200 <= (int) content.StatusCode && (int) content.StatusCode <= 299)
+                        return new HttpResponseMessage(content.StatusCode) {Content = new StringContent(content.Body)};
+                    throw DisboardException.Create(content.StatusCode, content.Body, request.RequestUri.ToString());
+                }
 
 #if DEBUG
             var response = await base.SendAsync(request, cancellationToken);
             using (var sw = new StreamWriter(path))
-                sw.WriteLine(await response.Content.ReadAsStringAsync());
+                sw.WriteLine(JsonConvert.SerializeObject(new HttpResponse {StatusCode = response.StatusCode, Body = await response.Content.ReadAsStringAsync()}));
             await UpdateMapper(request);
             return response;
 #else
