@@ -26,7 +26,7 @@ namespace Disboard.Misskey.Models
         public string Id { get; set; }
 
         [JsonProperty("isSensitive")]
-        public bool IsSensitive { get; set; }
+        public bool? IsSensitive { get; set; }
 
         [JsonProperty("md5")]
         public string Md5 { get; set; }
