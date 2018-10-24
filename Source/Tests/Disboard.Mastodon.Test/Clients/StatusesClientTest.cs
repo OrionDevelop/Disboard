@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
+using Disboard.Exceptions;
 using Disboard.Mastodon.Enums;
 using Disboard.Test.Helpers;
 
@@ -27,10 +29,25 @@ namespace Disboard.Mastodon.Test.Clients
         }
 
         [Fact]
+        public async Task DestroyAsync()
+        {
+            await TestClient.Statuses.DestroyAsync(Id);
+            await MarkAsAnother(async client => await Assert.ThrowsAsync<DisboardException>(async () => await client.Statuses.ShowAsync(Id)));
+        }
+
+        [Fact]
         public async Task FavoriteAsync()
         {
             var actual = await TestClient.Statuses.FavouriteAsync(Id);
             actual.CheckRecursively();
+        }
+
+        [Fact]
+        public async Task FavouritedByAsync()
+        {
+            var actual = await TestClient.Statuses.FavouritedByAsync(Id);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively();
         }
 
         [Fact]
@@ -45,6 +62,21 @@ namespace Disboard.Mastodon.Test.Clients
         {
             var actual = await TestClient.Statuses.PinAsync(Id);
             actual.CheckRecursively();
+        }
+
+        [Fact]
+        public async Task ReblogAsync()
+        {
+            var actual = await TestClient.Statuses.ReblogAsync(Id);
+            actual.CheckRecursively();
+        }
+
+        [Fact]
+        public async Task RebloggedBy()
+        {
+            var actual = await TestClient.Statuses.RebloggedByAsync(Id);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively();
         }
 
         [Fact]
@@ -72,6 +104,13 @@ namespace Disboard.Mastodon.Test.Clients
         public async Task UnpinAsync()
         {
             var actual = await TestClient.Statuses.UnpinAsync(Id);
+            actual.CheckRecursively();
+        }
+
+        [Fact]
+        public async Task UnreblogAsync()
+        {
+            var actual = await TestClient.Statuses.UnreblogAsync(Id);
             actual.CheckRecursively();
         }
 
