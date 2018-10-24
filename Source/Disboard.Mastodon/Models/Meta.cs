@@ -72,6 +72,9 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("rotate")]
         public double? Rotate { get; set; }
 
+        [JsonProperty("focus")]
+        public Focus Focus { get; set; }
+
         [JsonProperty("original")]
         public Metadata Original { get; set; }
 
