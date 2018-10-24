@@ -83,7 +83,7 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Card>($"/{id}/card").Stay();
         }
 
-        public async Task<Status> UpdateAsync(string status, long? inReplyToId = null, List<long?> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
+        public async Task<Status> UpdateAsync(string status, long? inReplyToId = null, List<long> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
                                               VisibilityType? visibility = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
