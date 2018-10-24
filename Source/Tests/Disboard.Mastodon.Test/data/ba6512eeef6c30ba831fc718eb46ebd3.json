@@ -1,0 +1,4 @@
+{
+  "StatusCode": "OK",
+  "Body": "[{\"id\":\"1\",\"username\":\"TheAdmin\",\"acct\":\"TheAdmin\",\"display_name\":\"The Admin ☁️\",\"locked\":false,\"bot\":false,\"created_at\":\"2017-04-04T11:24:56.498Z\",\"note\":\"\\u003cp\\u003eIt\\u0026apos;s time to ditch Twitter and Facebook.\\u003c/p\\u003e\",\"url\":\"https://mastodon.cloud/@TheAdmin\",\"avatar\":\"https://media.mastodon.cloud/accounts/avatars/000/000/001/original/ded945b6fc55af43.jpg\",\"avatar_static\":\"https://media.mastodon.cloud/accounts/avatars/000/000/001/original/ded945b6fc55af43.jpg\",\"header\":\"https://media.mastodon.cloud/accounts/headers/000/000/001/original/f94ff9d38b71f344.jpg\",\"header_static\":\"https://media.mastodon.cloud/accounts/headers/000/000/001/original/f94ff9d38b71f344.jpg\",\"followers_count\":13232,\"following_count\":2,\"statuses_count\":278,\"emojis\":[],\"fields\":[{\"name\":\"Location\",\"value\":\"in the cloud !\",\"verified_at\":null}]}]"
+}

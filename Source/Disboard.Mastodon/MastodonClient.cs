@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 
+using Disboard.Clients;
 using Disboard.Mastodon.Clients;
 using Disboard.Models;
 
@@ -7,7 +9,7 @@ namespace Disboard.Mastodon
 {
     public class MastodonClient : AppClient
     {
-        public MastodonClient(string domain) : base(domain, AuthMode.OAuth2, RequestMode.FormUrlEncoded)
+        public MastodonClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
         {
             BinaryParameters = new List<string> {"avatar", "header", "file"};
 

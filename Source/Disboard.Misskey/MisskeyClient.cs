@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 using Disboard.Misskey.Clients;
+using Disboard.Misskey.Handlers;
 using Disboard.Models;
 
 using MisskeyAppClient = Disboard.Misskey.Clients.AppClient;
@@ -17,26 +18,13 @@ namespace Disboard.Misskey
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
 
-        public MisskeyClient(string domain, string secret = null) : base(domain, AuthMode.Myself, RequestMode.Json)
+        public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
         {
-            ClientSecret = secret;
-            BinaryParameters = new List<string>();
+            BinaryParameters = new List<string> {"file"};
 
             Aggregation = new AggregationClient(this);
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
-
-            RegisterCustomAuthenticator(MisskeyAuthentication);
-        }
-
-        // Add "i" parameter to all request.
-        private void MisskeyAuthentication(HttpClient client, string url, ref IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            if (string.IsNullOrWhiteSpace(AccessToken))
-                return;
-            if (parameters == null)
-                parameters = new List<KeyValuePair<string, object>>();
-            (parameters as List<KeyValuePair<string, object>>)?.Add(new KeyValuePair<string, object>("i", EncryptedAccessToken));
         }
 
         #region EncryptedAccessToken

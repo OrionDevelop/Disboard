@@ -1,6 +1,9 @@
-﻿using Disboard.Models;
+﻿using System;
+
+using Disboard.Models;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Disboard.Mastodon.Models
 {
@@ -12,5 +15,9 @@ namespace Disboard.Mastodon.Models
 
         [JsonProperty("value")]
         public string Value { get; set; }
+
+        [JsonProperty("verified_at")]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        public DateTime? VerifiedAt { get; set; }
     }
 }
