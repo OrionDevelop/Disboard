@@ -32,7 +32,7 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 If this project help you reduce time to develop, you can give me a lunch.
 
 <a href="https://www.patreon.com/mikazuki">
-  <img src="https://static.mochizuki.moe/become_a_patron_button.png" srcset="https://static.mochizuki.moe/become_a_patron_button.png 1x, https://static.mochizuki.moe/become_a_patron_button@2x.png 2x" width="160px">
+  <img src="https://static.mochizuki.moe/become_a_patron_button@2x.png" width="160px">
 </a>
 
 Ethereum: `0xC925668E7431d4635Dc9670C934A19c2206b2819`  
