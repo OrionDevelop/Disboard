@@ -7,9 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Disboard.Mastodon\Disboard.Mastodon.csproj" />
+    <ProjectReference Include="..\..\Disboard.Pleroma\Disboard.Pleroma.csproj" />
+    <ProjectReference Include="..\..\Disboard\Disboard.csproj" />
+    <ProjectReference Include="..\Disboard.Test\Disboard.Test.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\829916e6fcb3b8a2584653fc9bfc1c3d.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\mapping.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
