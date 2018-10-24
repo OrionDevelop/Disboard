@@ -1,0 +1,4 @@
+{
+  "StatusCode": "NotFound",
+  "Body": "{\"error\":\"Record not found\"}"
+}

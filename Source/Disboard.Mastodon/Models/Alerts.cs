@@ -1,6 +1,8 @@
-﻿namespace Disboard.Mastodon.Models
+﻿using Disboard.Models;
+
+namespace Disboard.Mastodon.Models
 {
-    public class Alerts
+    public class Alerts : ApiResponse
     {
         public bool Follow { get; set; }
 

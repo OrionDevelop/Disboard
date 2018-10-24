@@ -1,0 +1,4 @@
+{
+  "StatusCode": "OK",
+  "Body": "{\"id\":\"209807\",\"name\":\"Orion Test\",\"website\":\"https://mochizuki.moe\",\"redirect_uri\":\"urn:ietf:wg:oauth:2.0:oob\",\"client_id\":\"CLIENT_ID\",\"client_secret\":\"CLIENT_SECRET\"}"
+}

@@ -1,6 +1,30 @@
 version: 2
+workflows:
+  version: 2
+  build_with_docs:
+    jobs:
+      - test
+      - docs:
+          filters:
+            branches:
+              only: master
+
 jobs:
-  build:
+  test:
+    docker:
+      - image: microsoft/dotnet:2.1-sdk
+    
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Run tests
+          command: |
+            dotnet test ./Source/ -c Release
+
+  docs:
     docker:
       # specify the version you desire here
       - image: mono:5.14
@@ -20,30 +44,12 @@ jobs:
           command: |
             apt update
             apt install -yq unzip wget > /dev/null 2>&1
-            apt install -yq apt-transport-https > /dev/null 2>&1
-
-      - run:
-          name: Install test dependencies
-          command: |
-            wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
-            mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
-            wget -q https://packages.microsoft.com/config/debian/8/prod.list
-            mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
-            chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-            chown root:root /etc/apt/sources.list.d/microsoft-prod.list
-            apt update
-            apt install -yq dotnet-sdk-2.1 > /dev/null 2>&1
 
       - run:
           name: Install document dependencies
           command: |
             wget -q 'https://github.com/dotnet/docfx/releases/download/v2.40/docfx.zip' -O docfx.zip
             unzip -q docfx.zip -d docfx/
-
-      - run:
-          name: Running Tests
-          command: |
-            dotnet test ./Source/
 
       - run:
           name: Generate documents by docfx

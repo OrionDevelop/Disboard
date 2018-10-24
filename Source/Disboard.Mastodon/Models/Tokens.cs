@@ -18,7 +18,7 @@ namespace Disboard.Mastodon.Models
 
         [JsonProperty("scope")]
         [JsonConverter(typeof(StringFlagConverter))]
-        public List<AccessScope> Scope { get; set; }
+        public IEnumerable<AccessScope> Scope { get; set; }
 
         [JsonProperty("created_at")]
         public int CreatedAt { get; set; }

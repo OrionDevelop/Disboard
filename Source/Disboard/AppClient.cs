@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+using Disboard.Clients;
 using Disboard.Exceptions;
 using Disboard.Extensions;
 using Disboard.Models;
@@ -26,13 +25,9 @@ namespace Disboard
     /// </summary>
     public class AppClient
     {
-        public delegate void CustomAuthFunc(HttpClient client, string url, ref IEnumerable<KeyValuePair<string, object>> parameters);
-
-        private readonly AuthMode _authMode;
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
         private readonly RequestMode _requestMode;
-        private CustomAuthFunc _customAuth;
         public static string Version => "1.0";
 
         /// <summary>
@@ -50,94 +45,17 @@ namespace Disboard
         ///     Constructor
         /// </summary>
         /// <param name="domain">Domain name</param>
-        /// <param name="authMode">Authentication mode</param>
+        /// <param name="handler">DisboardHttpHandler implementation instance</param>
         /// <param name="requestMode">Serialization mode</param>
-        protected AppClient(string domain, AuthMode authMode, RequestMode requestMode)
+        protected AppClient(string domain, DisboardHttpHandler handler, RequestMode requestMode)
         {
             Domain = domain;
             _baseUrl = $"https://{domain}";
-            _authMode = authMode;
             _requestMode = requestMode;
+            handler.Client = this; // これしか思いつかなかった...
 
-            _httpClient = new HttpClient();
+            _httpClient = new HttpClient(handler);
             _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
-        }
-
-        protected void RegisterCustomAuthenticator(CustomAuthFunc action)
-        {
-            _customAuth = action;
-        }
-
-        private void PrepareForAuthenticate(HttpMethod method, string url, ref IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            // ReSharper disable NotResolvedInText
-            switch (_authMode)
-            {
-                case AuthMode.OAuth1:
-                    PrepareForOAuth1A(method, url, parameters);
-                    break;
-
-                case AuthMode.OAuth2:
-                    PrepareForOAuth2();
-                    break;
-
-                case AuthMode.Myself:
-                    _customAuth?.Invoke(_httpClient, url, ref parameters);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(AuthMode), _authMode, null);
-            }
-
-            // ReSharper restore NotResolvedInText
-        }
-
-        private void PrepareForOAuth1A(HttpMethod method, string url, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            var dictionary = new SortedDictionary<string, string>
-            {
-                ["oauth_consumer_key"] = ConsumerKey,
-                ["oauth_nonce"] = GenerateNonce(),
-                ["oauth_signature_method"] = "HMAC-SHA1",
-                ["oauth_timestamp"] = GenerateTimestamp(),
-                ["oauth_version"] = "1.0"
-            };
-            if (!string.IsNullOrWhiteSpace(AccessToken))
-                dictionary["oauth_token"] = AccessToken;
-
-            if (parameters != null)
-                foreach (var parameter in parameters)
-                    dictionary[parameter.Key] = parameter.Value.ToString();
-
-            var key = $"{UrlEncode(ConsumerSecret)}&{UrlEncode(string.IsNullOrWhiteSpace(AccessTokenSecret) ? "" : AccessTokenSecret)}";
-            var message = $"{method.Method}&{UrlEncode(url)}&{UrlEncode(string.Join("&", AsUrlParameter(dictionary)))}";
-
-            var hmacsha1 = new HMACSHA1 {Key = Encoding.ASCII.GetBytes(key)};
-            var signature = Convert.ToBase64String(hmacsha1.ComputeHash(Encoding.ASCII.GetBytes(message)));
-            var header = string.Join(",", AsUrlParameter(dictionary.Where(w => w.Key.StartsWith("oauth_"))));
-
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", $"{header},oauth_signature={UrlEncode(signature)}");
-        }
-
-        private void PrepareForOAuth2()
-        {
-            if (!string.IsNullOrWhiteSpace(AccessToken))
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
-        }
-
-        private static string GenerateTimestamp()
-        {
-            return Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalSeconds).ToString();
-        }
-
-        private static string GenerateNonce()
-        {
-            const string letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var sb = new StringBuilder();
-            var random = new Random();
-            for (var i = 0; i < 32; i++)
-                sb.Append(letters[random.Next(letters.Length)]);
-            return sb.ToString();
         }
 
         private void ProcessLinkHeader(HttpResponseMessage response, object obj)
@@ -220,7 +138,6 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> GetAsyncInternal(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, ref parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
@@ -238,7 +155,6 @@ namespace Disboard
         /// <returns>API response (Stream)</returns>
         public async Task<Stream> GetStreamAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(HttpMethod.Get, _baseUrl + endpoint, ref parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
@@ -311,7 +227,6 @@ namespace Disboard
         /// <returns>API response</returns>
         public async Task<string> DeleteAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(HttpMethod.Delete, _baseUrl + endpoint, ref parameters);
             if (parameters != null && parameters.Any())
                 endpoint += $"?{string.Join("&", AsUrlParameter(parameters))}";
 
@@ -376,39 +291,45 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> SendAsFormDataAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            HttpContent content;
-            if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
+            HttpResponseMessage response;
+            if (parameters == null)
             {
-                PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
-                content = new MultipartFormDataContent();
-
-                foreach (var parameter in parameters)
-                {
-                    HttpContent formDataContent;
-                    if (BinaryParameters.Contains(parameter.Key))
-                    {
-                        using (var stream = new FileStream(parameter.Value.ToString(), FileMode.Open))
-                            formDataContent = new ByteArrayContent(ReadAsByteArray(stream));
-                        formDataContent.Headers.Add("Content-Disposition", $"form-data; name=\"{parameter.Key}\"; filename=\"{Path.GetFileName(parameter.Value.ToString())}\"");
-                    }
-                    else
-                    {
-                        var value = parameter.Value.ToString();
-                        if (parameter.Value is bool)
-                            value = value.ToLower();
-                        formDataContent = new StringContent(value);
-                    }
-                    ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
-                }
+                response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint)).Stay();
             }
             else
             {
-                PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
-                var kvpCollection = parameters?.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
-                content = new FormUrlEncodedContent(kvpCollection);
+                HttpContent content;
+                if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
+                {
+                    content = new MultipartFormDataContent();
+
+                    foreach (var parameter in parameters)
+                    {
+                        HttpContent formDataContent;
+                        if (BinaryParameters.Contains(parameter.Key))
+                        {
+                            using (var stream = new FileStream(parameter.Value.ToString(), FileMode.Open))
+                                formDataContent = new ByteArrayContent(ReadAsByteArray(stream));
+                            formDataContent.Headers.Add("Content-Disposition", $"form-data; name=\"{parameter.Key}\"; filename=\"{Path.GetFileName(parameter.Value.ToString())}\"");
+                        }
+                        else
+                        {
+                            var value = parameter.Value.ToString();
+                            if (parameter.Value is bool)
+                                value = value.ToLower();
+                            formDataContent = new StringContent(value);
+                        }
+                        ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
+                    }
+                }
+                else
+                {
+                    var kvpCollection = parameters.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
+                    content = new FormUrlEncodedContent(kvpCollection);
+                }
+                response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             }
 
-            var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             if (response.IsSuccessStatusCode)
                 return response;
             throw await DisboardException.Create(response, _baseUrl + endpoint);
@@ -416,7 +337,6 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            PrepareForAuthenticate(method, _baseUrl + endpoint, ref parameters);
             var dict = new Dictionary<string, object>();
             if (parameters != null)
                 if (parameters.Any(w => BinaryParameters.Contains(w.Key)))

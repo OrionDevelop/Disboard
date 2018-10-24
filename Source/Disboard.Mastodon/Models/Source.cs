@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 
+using Disboard.Models;
+
 using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
     // https://github.com/tootsuite/mastodon/blob/v2.5.0/app/serializers/rest/credential_account_serializer.rb#L6-L16
-    public class Source
+    public class Source : ApiResponse
     {
         [JsonProperty("privacy")]
         public string Privacy { get; set; }
@@ -20,6 +22,6 @@ namespace Disboard.Mastodon.Models
         public string Note { get; set; }
 
         [JsonProperty("fields")]
-        public List<Field> Fields { get; set; }
+        public IEnumerable<Field> Fields { get; set; }
     }
 }
