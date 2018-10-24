@@ -75,9 +75,14 @@ namespace Disboard
 
         #region Utilities
 
+        private static string NormalizeBoolean<T>(T w)
+        {
+            return w is bool ? w.ToString().ToLower() : w.ToString();
+        }
+
         public static IEnumerable<string> AsUrlParameter<T>(IEnumerable<KeyValuePair<string, T>> parameters)
         {
-            return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
+            return parameters.Select(w => $"{w.Key}={UrlEncode(NormalizeBoolean(w.Value))}");
         }
 
         public static string UrlEncode(string str)
@@ -314,17 +319,14 @@ namespace Disboard
                         }
                         else
                         {
-                            var value = parameter.Value.ToString();
-                            if (parameter.Value is bool)
-                                value = value.ToLower();
-                            formDataContent = new StringContent(value);
+                            formDataContent = new StringContent(NormalizeBoolean(parameter.Value));
                         }
                         ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
                     }
                 }
                 else
                 {
-                    var kvpCollection = parameters.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
+                    var kvpCollection = parameters.Select(w => new KeyValuePair<string, string>(w.Key, NormalizeBoolean(w.Value)));
                     content = new FormUrlEncodedContent(kvpCollection);
                 }
                 response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
