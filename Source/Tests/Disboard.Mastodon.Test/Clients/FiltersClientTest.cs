@@ -21,11 +21,6 @@ namespace Disboard.Mastodon.Test.Clients
         public async Task DestroyAsync()
         {
             await TestClient.Filters.DestroyAsync(228);
-            await MarkAsAnother(async client =>
-            {
-                var actual = await client.Filters.ListAsync();
-                actual.Count.Is(0);
-            });
         }
 
         [Fact]
