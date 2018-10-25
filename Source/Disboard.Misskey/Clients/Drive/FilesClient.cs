@@ -18,14 +18,14 @@ namespace Disboard.Misskey.Clients.Drive
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("md5", md5)};
 
             var response = await PostAsync<JObject>("/check_existence", parameters).Stay();
-            return response["file"].ToObject<File>();
+            return response.ContainsKey("file") ? response["file"].ToObject<File>() : null;
         }
 
         public async Task<File> CreateAsync(string file, string folderId = null, bool? isSensitive = null)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("file", file)};
             parameters.AddIfValidValue("folderId", folderId);
-            parameters.AddIfValidValue("isSensitive", isSensitive);
+            parameters.AddIfValidValue("isSensitive", isSensitive); // Not work?
 
             return await PostAsync<File>("/create", parameters).Stay();
         }

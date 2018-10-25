@@ -37,6 +37,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("properties")]
         public MediaProperty Properties { get; set; }
 
+        [JsonProperty("src")]
+        public string Src { get; set; }
+
         [JsonProperty("thumbnailUrl")]
         public string ThumbnailUrl { get; set; }
 
