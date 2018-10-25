@@ -45,6 +45,14 @@ namespace Disboard.Test.Converters
         }
 
         [Fact]
+        public void ReadJsonNull()
+        {
+            const string json = "{\"createdAt\":null}";
+            var r = JsonConvert.DeserializeObject<ExpectObject>(json);
+            r.CreatedAt.Is(DateTime.MinValue);
+        }
+
+        [Fact]
         public void ReadJsonSecondsByLong()
         {
             const string json = "{\"createdAt\":1540120526}";
