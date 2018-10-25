@@ -32,4 +32,6 @@ dotnet_csproj:
   informational_version: '{version}'
 nuget:
   disable_publish_on_pr: true
+pull_requests:
+  do_not_increment_build_number: true
 skip_tags: true
