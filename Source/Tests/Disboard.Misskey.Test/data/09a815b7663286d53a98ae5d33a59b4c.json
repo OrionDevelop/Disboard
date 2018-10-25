@@ -1,0 +1,4 @@
+{
+  "StatusCode": "OK",
+  "Body": "{\"accessToken\":\"TEST_ACCESS_TOKEN\",\"user\":{\"createdAt\":\"2018-09-21T10:12:20.806Z\",\"description\":null,\"followersCount\":5,\"followingCount\":2,\"name\":\"みか\",\"notesCount\":121,\"username\":\"mikazuki\",\"host\":null,\"profile\":{\"bio\":null,\"birthday\":null,\"blood\":null,\"gender\":null,\"handedness\":null,\"height\":null,\"location\":\"Tokyo, Japan\",\"weight\":null},\"lastUsedAt\":\"2018-10-25T22:36:41.295Z\",\"avatarColor\":[172,142,167],\"avatarUrl\":\"https://s3.arkjp.net/misskey/drive/80797fdf-7789-476d-b2b4-cf47cd9a9cd3/annna4.png.cropped.png.thumbnail.jpg\",\"isCat\":true,\"id\":\"5ba4c40406bdd21ada87964b\"}}"
+}

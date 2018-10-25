@@ -1,0 +1,17 @@
+{
+  "09a815b7663286d53a98ae5d33a59b4c": "POST /api/auth/session/userkey",
+  "1f5686cf25c99dc15ae1da2c76aa6b81": "POST /api/drive/files/upload_from_url",
+  "2fa336b3018772283792527bd9373095": "POST /api/drive/files/check_existence",
+  "2fb95ce963cd0250cabfd4702f035c8d": "POST /api/aggregation/users/followers",
+  "387e5dbd43cf485432ac05a786ada04b": "POST /api/drive/files/update",
+  "59ef749ebaedf580c5fbb241153abcf6": "POST /api/drive/files/show",
+  "69abfd1cfc5edf3f1efb68eec81126a3": "POST /api/app/show",
+  "81c274b1eb587464989aeab6a6aa9488": "POST /api/auth/session/generate",
+  "86c2e231e2582c18e92976f0f463a661": "POST /api/drive/files/delete",
+  "95e67a912197f056ccf465976e29dbaa": "POST /api/app/create",
+  "9e2d745796193e9bbdb6a4ce11062d3a": "POST /api/aggregation/users/following",
+  "afa1f36fa699b825acbf1cff6cc85c40": "POST /api/aggregation/users/reaction",
+  "ceba9ebf6e38c88897cf87608c047d5a": "POST /api/aggregation/users/post",
+  "df48580dcf63aaf588a12cc7fb30d35b": "POST /api/drive/files/check_existence",
+  "e854fdb59a79f0600cc378dc2e39c347": "POST /api/aggregation/users/activity"
+}
