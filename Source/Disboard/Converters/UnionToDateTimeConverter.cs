@@ -17,11 +17,9 @@ namespace Disboard.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (reader.Value == null)
-                return DateTime.MinValue;
             if (reader.TokenType == JsonToken.StartObject)
                 return new DateObjectToDateTimeConverter().ReadJson(reader, objectType, existingValue, serializer);
-            return reader.TokenType == JsonToken.Integer
+            return reader.TokenType == JsonToken.Integer || int.TryParse(reader.Value?.ToString(), out _) || long.TryParse(reader.Value?.ToString(), out _)
                 ? new UnixTimeToDateTimeConverter().ReadJson(reader, objectType, existingValue, serializer)
                 : new IsoDateTimeConverter().ReadJson(reader, objectType, existingValue, serializer);
         }
