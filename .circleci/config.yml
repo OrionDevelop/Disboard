@@ -4,10 +4,7 @@ workflows:
   build_with_docs:
     jobs:
       - test
-      - docs:
-          filters:
-            branches:
-              only: master
+      - docs
 
 jobs:
   test:

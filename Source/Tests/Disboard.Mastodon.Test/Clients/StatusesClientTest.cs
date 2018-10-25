@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Disboard.Exceptions;
 using Disboard.Mastodon.Enums;
 using Disboard.Test.Helpers;
 
