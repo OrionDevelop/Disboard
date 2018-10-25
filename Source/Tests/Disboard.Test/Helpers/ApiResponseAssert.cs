@@ -10,7 +10,7 @@ namespace Disboard.Test.Helpers
 {
     public static class ApiResponseAssert
     {
-        public static void CheckRecursively(this ApiResponse obj)
+        public static void CheckRecursively(this ApiResponse obj, params string[] ignores)
         {
             foreach (var property in obj.GetType().GetProperties().Where(w => w.GetValue(obj) != null))
             {
@@ -27,7 +27,16 @@ namespace Disboard.Test.Helpers
                             item.CheckRecursively();
                     }
             }
-            obj.Extends.IsNull();
+
+            if (ignores == null)
+            {
+                obj.Extends.IsNull();
+            }
+            else
+            {
+                ignores.ToList().ForEach(w => obj.Extends?.Remove(w));
+                obj.Extends?.Count.Is(0); // equals to null
+            }
         }
     }
 }
