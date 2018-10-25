@@ -18,7 +18,7 @@ namespace Disboard.Misskey.Test.Clients.Auth
         [Fact(Skip = "FIXME")]
         public async Task ShowAsync()
         {
-            var actual = await TestClient.Auth.Session.ShowAsync(AccessToken);
+            var actual = await TestClient.Auth.Session.ShowAsync("TEST_ACCESS_TOKEN");
             actual.CheckRecursively();
         }
 
