@@ -17,9 +17,9 @@ namespace Disboard.Misskey.Clients
             Users = new UsersClient(client);
         }
 
-        public async Task<IEnumerable<Hashtag>> HashtagsAsync()
+        public async Task<List<Hashtag>> HashtagsAsync()
         {
-            return await PostAsync<IEnumerable<Hashtag>>("/hashtags").Stay();
+            return await PostAsync<List<Hashtag>>("/hashtags").Stay();
         }
     }
 }

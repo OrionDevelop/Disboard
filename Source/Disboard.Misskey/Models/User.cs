@@ -78,6 +78,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("host")]
         public string Host { get; set; }
 
+        [JsonProperty("hostLower")]
+        public string HostLower { get; set; }
+
         [JsonProperty("id")]
         public string Id { get; set; }
 
@@ -105,6 +108,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("isStalking")]
         public bool? IsStalking { get; set; }
 
+        [JsonProperty("isPro")]
+        public bool? IsPro { get; set; }
+
         [JsonProperty("isVerified")]
         public bool? IsVerified { get; set; }
 
@@ -117,6 +123,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("lastUsedAt")]
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime? LastUsedAt { get; set; }
+
+        [JsonProperty("links")]
+        public ApiResponse Links { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

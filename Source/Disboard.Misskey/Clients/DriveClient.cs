@@ -24,7 +24,7 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<Models.Drive>().Stay();
         }
 
-        public async Task<IEnumerable<File>> FilesAsync(string folderId = null, string type = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<File>> FilesAsync(string folderId = null, string type = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("folderId", folderId);
@@ -33,10 +33,10 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<IEnumerable<File>>("/files", parameters).Stay();
+            return await PostAsync<List<File>>("/files", parameters).Stay();
         }
 
-        public async Task<IEnumerable<Folder>> FoldersAsync(string folderId = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<Folder>> FoldersAsync(string folderId = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("folderId", folderId);
@@ -44,10 +44,10 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<IEnumerable<Folder>>("/folders", parameters).Stay();
+            return await PostAsync<List<Folder>>("/folders", parameters).Stay();
         }
 
-        public async Task<IEnumerable<File>> StreamAsync(string type = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<File>> StreamAsync(string type = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("type", type);
@@ -55,7 +55,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<IEnumerable<File>>("/stream", parameters).Stay();
+            return await PostAsync<List<File>>("/stream", parameters).Stay();
         }
     }
 }
