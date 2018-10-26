@@ -30,6 +30,11 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
+environment:
+  MISSKEY_CLIENT_SECRET:
+    secure: 5V4bI2o5RVG8ax/P4VdZt17u/3LxOD7zAgTrSFZ6kGBq85Vys5aex4urCGbX09hI
+  MISSKEY_ACCESS_TOKEN:
+    secure: wA3E9PQS0wLQlbIYwY1FUVsUHwh+6MW8xV+lN7KAz+hFfj3BtxdTzsf03UVh+fMr
 nuget:
   disable_publish_on_pr: true
 pull_requests:
