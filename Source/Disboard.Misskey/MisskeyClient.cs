@@ -21,6 +21,8 @@ namespace Disboard.Misskey
         public FollowingClient Following { get; }
         public HashtagsClient Hashtags { get; }
         public IClient I { get; }
+        public MuteClient Mute { get; }
+        public MyClient My { get; }
         public StreamingClient Streaming { get; }
 
         public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
@@ -34,6 +36,8 @@ namespace Disboard.Misskey
             Following = new FollowingClient(this);
             Hashtags = new HashtagsClient(this);
             I = new IClient(this);
+            Mute = new MuteClient(this);
+            My = new MyClient(this);
             Streaming = new StreamingClient(this);
         }
 
