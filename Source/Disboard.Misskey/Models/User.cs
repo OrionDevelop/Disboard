@@ -136,8 +136,11 @@ namespace Disboard.Misskey.Models
         [JsonProperty("pendingReceivedFollowRequestsCount")]
         public long PendingReceivedFollowRequestsCount { get; set; }
 
+        [JsonProperty("pinnedNotes")]
+        public IEnumerable<Note> PinnedNotes { get; set; }
+
         [JsonProperty("pinnedNoteIds")]
-        public List<string> PinnedNoteIds { get; set; }
+        public IEnumerable<string> PinnedNoteIds { get; set; }
 
         [JsonProperty("profile")]
         public Profile Profile { get; set; }
@@ -163,6 +166,9 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("username")]
         public string Username { get; set; }
+
+        [JsonProperty("usernameLower")]
+        public string UsernameLower { get; set; }
 
         [JsonProperty("wallpaperColor")]
         [JsonConverter(typeof(RgbArrayToColorConverter))]

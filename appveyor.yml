@@ -32,9 +32,9 @@ dotnet_csproj:
   informational_version: '{version}'
 environment:
   MISSKEY_CLIENT_SECRET:
-    secure: 5V4bI2o5RVG8ax/P4VdZt17u/3LxOD7zAgTrSFZ6kGBq85Vys5aex4urCGbX09hI
+    secure: vtITEV22b63CoAoGxv2RVN67Y5dV3Wm4pR776daQfqu3qW4WbwhoUktnaqUzFxCT
   MISSKEY_ACCESS_TOKEN:
-    secure: wA3E9PQS0wLQlbIYwY1FUVsUHwh+6MW8xV+lN7KAz+hFfj3BtxdTzsf03UVh+fMr
+    secure: 6czWkQqZHuGV+nHrxeBTUn074btzVd0Udlh3qxVmhFtodDrXM3REoYx476ry1j9L
 nuget:
   disable_publish_on_pr: true
 pull_requests:

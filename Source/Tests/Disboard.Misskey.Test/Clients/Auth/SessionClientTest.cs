@@ -15,17 +15,17 @@ namespace Disboard.Misskey.Test.Clients.Auth
             actual.CheckRecursively();
         }
 
-        [Fact(Skip = "FIXME")]
+        [Fact(Skip = "Token is unknown")]
         public async Task ShowAsync()
         {
-            var actual = await TestClient.Auth.Session.ShowAsync("TEST_ACCESS_TOKEN");
+            var actual = await TestClient.Auth.Session.ShowAsync("");
             actual.CheckRecursively();
         }
 
         [Fact]
         public async Task UserKeyAsync()
         {
-            var actual = await TestClient.Auth.Session.UserKeyAsync("8564d8fb-8a83-4028-8413-ecc1515f6687");
+            var actual = await TestClient.Auth.Session.UserKeyAsync("db5e25ba-addb-47d2-8992-da28dd25353c");
             actual.CheckRecursively();
         }
     }

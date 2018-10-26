@@ -11,21 +11,21 @@ namespace Disboard.Misskey.Test.Clients.Drive
         [Fact]
         public async Task CreateAsync()
         {
-            var actual = await TestClient.Drive.Folders.CreateAsync("Disboard", "5bcb51c1ccba9f002ebb1452");
+            var actual = await TestClient.Drive.Folders.CreateAsync("CI.TESTING", "5bd32b5eaffd0600284f6f00");
             actual.CheckRecursively();
         }
 
         [Fact]
         public async Task ShowAsync()
         {
-            var actual = await TestClient.Drive.Folders.ShowAsync("5bd2f7b0f85f76002f959e4a");
+            var actual = await TestClient.Drive.Folders.ShowAsync("5bd32b97bde21c004b2c3248");
             actual.CheckRecursively();
         }
 
         [Fact]
         public async Task UpdateAsync()
         {
-            var actual = await TestClient.Drive.Folders.UpdateAsync("5bd2f7b0f85f76002f959e4a", "Disboard.Test", "5bd2f790f9e541004adf7efb");
+            var actual = await TestClient.Drive.Folders.UpdateAsync("5bd32b97bde21c004b2c3248", "CI.TESTED", "5bd32b5eaffd0600284f6f00");
             actual.CheckRecursively();
         }
     }

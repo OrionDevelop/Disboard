@@ -16,6 +16,9 @@ If you want to contribute to this library, you SHOULD read [Misskey's source cod
 
 **This is a generic Misskey API wrapper**, we do not implement features unique to the instance.  
 
+Some Misskey endpoints require privilege permission (`secure: true`).  
+Disboard does not support these APIs.
+
 
 ## Usage
 

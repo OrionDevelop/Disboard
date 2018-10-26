@@ -3,13 +3,19 @@ using System.Threading.Tasks;
 
 using Disboard.Clients;
 using Disboard.Extensions;
+using Disboard.Misskey.Clients.Following;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
     public class FollowingClient : ApiClient<MisskeyClient>
     {
-        protected internal FollowingClient(MisskeyClient client) : base(client, "/api/following") { }
+        public RequestsClient Requests { get; }
+
+        protected internal FollowingClient(MisskeyClient client) : base(client, "/api/following")
+        {
+            Requests = new RequestsClient(client);
+        }
 
         public async Task<User> CreateAsync(string userId)
         {

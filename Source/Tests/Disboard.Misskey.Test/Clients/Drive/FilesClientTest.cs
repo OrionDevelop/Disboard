@@ -29,23 +29,23 @@ namespace Disboard.Misskey.Test.Clients.Drive
             actual.CheckRecursively("_user");
         }
 
-        [Fact]
+        [Fact(Skip = "FIXME: Test case is invalid")]
         public async Task DeleteAsync()
         {
-            await TestClient.Drive.Files.DeleteAsync("5bd24b02a919c80052895a86");
+            await TestClient.Drive.Files.DeleteAsync("5bd2500ca919c80052895bbd");
         }
 
         [Fact]
         public async Task ShowAsync()
         {
-            var actual = await TestClient.Drive.Files.ShowAsync("5bd24b02a919c80052895a86");
+            var actual = await TestClient.Drive.Files.ShowAsync("5bd2500ca919c80052895bbd");
             actual.CheckRecursively("_user");
         }
 
         [Fact]
         public async Task UpdateAsync()
         {
-            var actual = await TestClient.Drive.Files.UpdateAsync("5bd24b02a919c80052895a86", null, "test.jpg", false);
+            var actual = await TestClient.Drive.Files.UpdateAsync("5bd2500ca919c80052895bbd", null, "test.jpg", false);
             actual.CheckRecursively("_user");
         }
 

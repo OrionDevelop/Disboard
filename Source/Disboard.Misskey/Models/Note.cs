@@ -36,6 +36,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("id")]
         public string Id { get; set; }
 
+        [JsonProperty("isFavorited")]
+        public bool? IsFavorited { get; set; }
+
         [JsonProperty("media")]
         public List<Media> Media { get; set; }
 
@@ -47,6 +50,9 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("mentionedRemoteUsers")]
         public List<User> MentionedRemoteUsers { get; set; }
+
+        [JsonProperty("myReaction")]
+        public ReactionCount MyReaction { get; set; }
 
         // always null
         [JsonProperty("next")]

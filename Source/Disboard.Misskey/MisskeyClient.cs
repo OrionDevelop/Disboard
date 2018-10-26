@@ -19,6 +19,8 @@ namespace Disboard.Misskey
         public AuthClient Auth { get; }
         public DriveClient Drive { get; }
         public FollowingClient Following { get; }
+        public HashtagsClient Hashtags { get; }
+        public IClient I { get; }
         public StreamingClient Streaming { get; }
 
         public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
@@ -30,6 +32,8 @@ namespace Disboard.Misskey
             Auth = new AuthClient(this);
             Drive = new DriveClient(this);
             Following = new FollowingClient(this);
+            Hashtags = new HashtagsClient(this);
+            I = new IClient(this);
             Streaming = new StreamingClient(this);
         }
 
