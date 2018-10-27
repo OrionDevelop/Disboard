@@ -1,11 +1,13 @@
 ﻿using System;
 
+using Disboard.Models;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Disboard.Misskey.Models
 {
-    public class AuthSession
+    public class AuthSession : ApiResponse
     {
         [JsonProperty("app")]
         public App App { get; set; }

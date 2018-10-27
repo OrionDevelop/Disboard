@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
     // from locales/ja-JP.yml
-    public class ReactionCount
+    public class ReactionCount : ApiResponse
     {
         [JsonProperty("like")]
         public long? Like { get; set; }
@@ -25,6 +27,9 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("angry")]
         public long? Angry { get; set; }
+
+        [JsonProperty("confused")]
+        public long? Confused { get; set; }
 
         [JsonProperty("rip")]
         public long? Rip { get; set; }

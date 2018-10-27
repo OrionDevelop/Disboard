@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
-    public class Geo
+    public class Geo : ApiResponse
     {
         [JsonProperty("altitude")]
         public double Altitude { get; set; }
