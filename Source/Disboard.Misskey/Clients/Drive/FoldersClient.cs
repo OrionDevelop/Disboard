@@ -20,12 +20,12 @@ namespace Disboard.Misskey.Clients.Drive
             return await PostAsync<Folder>("/create", parameters).Stay();
         }
 
-        public async Task<IEnumerable<Folder>> FindAsync(string name, string parentId = null)
+        public async Task<List<Folder>> FindAsync(string name, string parentId = null)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("name", name)};
             parameters.AddIfValidValue("parentId", parentId);
 
-            return await PostAsync<IEnumerable<Folder>>("/find", parameters).Stay();
+            return await PostAsync<List<Folder>>("/find", parameters).Stay();
         }
 
         public async Task<FolderExtend> ShowAsync(string folderId)

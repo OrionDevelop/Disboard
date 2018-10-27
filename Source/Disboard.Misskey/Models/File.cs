@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Disboard.Models;
 
@@ -9,6 +10,9 @@ namespace Disboard.Misskey.Models
 {
     public class File : ApiResponse
     {
+        [JsonProperty("attachedNoteIds")]
+        public IEnumerable<string> AttachedNoteIds { get; set; }
+
         [JsonProperty("createdAt")]
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime CreatedAt { get; set; }

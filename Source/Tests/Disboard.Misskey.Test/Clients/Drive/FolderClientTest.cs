@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Disboard.Test.Helpers;
 
@@ -13,6 +14,14 @@ namespace Disboard.Misskey.Test.Clients.Drive
         {
             var actual = await TestClient.Drive.Folders.CreateAsync("CI.TESTING", "5bd32b5eaffd0600284f6f00");
             actual.CheckRecursively();
+        }
+
+        [Fact]
+        public async Task FindAsync()
+        {
+            var actual = await TestClient.Drive.Folders.FindAsync("CI.TESTING", "5bd32b5eaffd0600284f6f00");
+            actual.Count.Is(1);
+            actual.First().CheckRecursively();
         }
 
         [Fact]

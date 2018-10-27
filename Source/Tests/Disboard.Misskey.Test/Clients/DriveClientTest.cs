@@ -18,10 +18,26 @@ namespace Disboard.Misskey.Test.Clients
         }
 
         [Fact]
+        public async Task FoldersAsync()
+        {
+            var actual = await TestClient.Drive.FoldersAsync("5bcb60688a63830035fac61e", 1);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively("_user");
+        }
+
+        [Fact]
         public async Task ShowAsync()
         {
             var actual = await TestClient.Drive.ShowAsync();
             actual.CheckRecursively();
+        }
+
+        [Fact]
+        public async Task StreamAsync()
+        {
+            var actual = await TestClient.Drive.StreamAsync(limit: 1);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively("_user");
         }
     }
 }
