@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -17,20 +18,25 @@ namespace Disboard.Test.Handlers
 {
     public class MockHttpClientHandler : HttpClientHandler
     {
+        private readonly Assembly _assembly;
         private readonly string _salt;
 
         public MockHttpClientHandler(string salt = "")
         {
             _salt = salt;
+            _assembly = Assembly.GetCallingAssembly();
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var path = Path.Combine("./data", $"{await CreateRequestHash(request)}.json");
+            var path = $"{_assembly.FullName.Split(",")[0]}.data.{await CreateRequestHash(request)}.json";
+
+            Console.WriteLine(path);
 
             // If dump file exists, use dumped HTTP response.
-            if (File.Exists(path))
-                using (var sr = new StreamReader(path))
+            var stream = _assembly.GetManifestResourceStream(path);
+            if (stream != null)
+                using (var sr = new StreamReader(stream))
                 {
                     var content = JsonConvert.DeserializeObject<HttpResponse>(await sr.ReadToEndAsync());
                     if (200 <= (int) content.StatusCode && (int) content.StatusCode <= 299)
