@@ -12,7 +12,7 @@
 
         FavoritesRead = 1 << 3,
 
-        FavoritesWrite = 1 << 4,
+        FavoriteWrite = 1 << 4,
 
         FollowingWrite = 1 << 5,
 

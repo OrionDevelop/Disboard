@@ -29,12 +29,10 @@ namespace Disboard.Test.Handlers
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var path = $"{_assembly.FullName.Split(",")[0]}.data.{await CreateRequestHash(request)}.json";
-
-            Console.WriteLine(path);
+            var asmPath = $"{_assembly.FullName.Split(",")[0]}.data.{await CreateRequestHash(request)}.json";
 
             // If dump file exists, use dumped HTTP response.
-            var stream = _assembly.GetManifestResourceStream(path);
+            var stream = _assembly.GetManifestResourceStream(asmPath);
             if (stream != null)
                 using (var sr = new StreamReader(stream))
                 {
@@ -44,6 +42,7 @@ namespace Disboard.Test.Handlers
                     throw DisboardException.Create(content.StatusCode, content.Body, request.RequestUri.ToString());
                 }
 
+            var path = AsProjectDataPath($"{await CreateRequestHash(request)}.json");
 #if DEBUG
             var response = await base.SendAsync(request, cancellationToken);
             using (var sw = new StreamWriter(path))
@@ -75,7 +74,7 @@ namespace Disboard.Test.Handlers
 
         private async Task UpdateMapper(HttpRequestMessage request)
         {
-            var path = Path.Combine("./data", "mapping.json");
+            var path = AsProjectDataPath("mapping.json");
             var hash = await CreateRequestHash(request);
             var query = $"{request.Method.Method} {request.RequestUri.PathAndQuery}";
 
@@ -90,6 +89,14 @@ namespace Disboard.Test.Handlers
 
             using (var sw = new StreamWriter(path))
                 await sw.WriteLineAsync(JsonConvert.SerializeObject(new SortedDictionary<string, string>(dict)));
+        }
+
+        private string AsProjectDataPath(string file)
+        {
+            var asmPath = Path.GetDirectoryName(_assembly.Location);
+            var binPath = $"data/{file}";
+
+            return Path.Combine(asmPath, "..", "..", "..", binPath);
         }
     }
 }

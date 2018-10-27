@@ -23,6 +23,7 @@ namespace Disboard.Misskey
         public IClient I { get; }
         public MuteClient Mute { get; }
         public MyClient My { get; }
+        public NotesClient Notes { get; }
         public StreamingClient Streaming { get; }
 
         public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
@@ -38,6 +39,7 @@ namespace Disboard.Misskey
             I = new IClient(this);
             Mute = new MuteClient(this);
             My = new MyClient(this);
+            Notes = new NotesClient(this);
             Streaming = new StreamingClient(this);
         }
 

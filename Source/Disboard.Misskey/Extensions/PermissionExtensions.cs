@@ -25,8 +25,8 @@ namespace Disboard.Misskey.Extensions
                 case Permission.FavoritesRead:
                     return "favorites-read";
 
-                case Permission.FavoritesWrite:
-                    return "favorites-write";
+                case Permission.FavoriteWrite:
+                    return "favorite-write";
 
                 case Permission.FollowingWrite:
                     return "following-write";
