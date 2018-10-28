@@ -42,12 +42,27 @@ namespace Disboard.Misskey.Test.Clients
         }
 
         [Fact]
-        public async Task RecommentationAsync() { }
+        public async Task RecommendationAsync()
+        {
+            var actual = await TestClient.Users.RecommendationAsync(1);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively(IgnoreProperties);
+        }
 
         [Fact]
-        public async Task SearchAsync() { }
+        public async Task SearchAsync()
+        {
+            var actual = await TestClient.Users.SearchAsync("mika", 1, 0, false);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively(IgnoreProperties);
+        }
 
         [Fact]
-        public async Task ShowAsync() { }
+        public async Task ShowAsync()
+        {
+            var actual = await TestClient.Users.ShowAsync(username: "mikazuki", host: "misskey.xyz");
+            actual.Count.Is(1);
+            actual.First().CheckRecursively();
+        }
     }
 }

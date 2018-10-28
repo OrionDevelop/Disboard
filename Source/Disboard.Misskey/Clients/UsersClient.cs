@@ -68,5 +68,37 @@ namespace Disboard.Misskey.Clients
 
             return await PostAsync<List<Note>>("/notes", parameters);
         }
+
+        public async Task<List<User>> RecommendationAsync(int? limit = null, int? offset = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("limit", limit);
+            parameters.AddIfValidValue("offset", offset);
+
+            return await PostAsync<List<User>>("/recommendation", parameters);
+        }
+
+        public async Task<List<User>> SearchAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("query", query)};
+            parameters.AddIfValidValue("limit", limit);
+            parameters.AddIfValidValue("offset", offset);
+            parameters.AddIfValidValue("localOnly", localOnly);
+
+            return await PostAsync<List<User>>("/search", parameters);
+        }
+
+        public async Task<List<User>> ShowAsync(string userId = null, List<string> userIds = null, string username = null, string host = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("userId", userId);
+            parameters.AddIfValidValue("userIds", userIds);
+            parameters.AddIfValidValue("username", username);
+            parameters.AddIfValidValue("host", host);
+
+            if (userIds != null)
+                return await PostAsync<List<User>>("/show", parameters);
+            return new List<User> {await PostAsync<User>("/show", parameters)};
+        }
     }
 }
