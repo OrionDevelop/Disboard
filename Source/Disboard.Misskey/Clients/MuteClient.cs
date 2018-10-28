@@ -23,10 +23,10 @@ namespace Disboard.Misskey.Clients
             await PostAsync("/delete", parameters);
         }
 
-        public async Task<MuteList> ListAsync(bool? iKnow = null, int? limit = null, string cursor = null)
+        public async Task<MuteList> ListAsync(bool? iknow = null, int? limit = null, string cursor = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
-            parameters.AddIfValidValue("iKnow", iKnow);
+            parameters.AddIfValidValue("iknow", iknow);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
 
