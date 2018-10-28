@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Disboard.Misskey.Enums;
 using Disboard.Models;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Disboard.Misskey.Models
 {
@@ -52,7 +54,8 @@ namespace Disboard.Misskey.Models
         public List<User> MentionedRemoteUsers { get; set; }
 
         [JsonProperty("myReaction")]
-        public ReactionCount MyReaction { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Reaction? MyReaction { get; set; }
 
         // always null
         [JsonProperty("next")]

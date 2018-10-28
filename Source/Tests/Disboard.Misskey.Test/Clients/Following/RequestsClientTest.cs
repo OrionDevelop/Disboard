@@ -26,7 +26,7 @@ namespace Disboard.Misskey.Test.Clients.Following
         {
             var actual = await TestClient.Following.Requests.ListAsync();
             actual.Count.IsNot(0);
-            actual.First().CheckRecursively("_follower", "_followee");
+            actual.First().CheckRecursively(IgnoreProperties);
         }
 
         [Fact]

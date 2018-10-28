@@ -35,7 +35,9 @@ namespace Disboard.Test.Helpers
             else
             {
                 ignores.ToList().ForEach(w => obj.Extends?.Remove(w));
-                obj.Extends?.Count.Is(0); // equals to null
+                if (obj.Extends?.Count == 0)
+                    obj.Extends = null;
+                obj.Extends?.IsNull();
             }
         }
     }

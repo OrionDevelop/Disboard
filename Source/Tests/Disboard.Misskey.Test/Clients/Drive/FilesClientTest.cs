@@ -12,7 +12,7 @@ namespace Disboard.Misskey.Test.Clients.Drive
         public async Task CheckExistenceInExists()
         {
             var actual = await TestClient.Drive.Files.CheckExistence("bb84063ae69264a728e2825889adfa01");
-            actual.CheckRecursively("_user");
+            actual.CheckRecursively(IgnoreProperties);
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace Disboard.Misskey.Test.Clients.Drive
         public async Task CreateAsync()
         {
             var actual = await TestClient.Drive.Files.CreateAsync("./data/photo.jpg", "5bcb51c1ccba9f002ebb1452");
-            actual.CheckRecursively("_user");
+            actual.CheckRecursively(IgnoreProperties);
         }
 
         [Fact(Skip = "FIXME: Test case is invalid")]
@@ -39,21 +39,21 @@ namespace Disboard.Misskey.Test.Clients.Drive
         public async Task ShowAsync()
         {
             var actual = await TestClient.Drive.Files.ShowAsync("5bd2500ca919c80052895bbd");
-            actual.CheckRecursively("_user");
+            actual.CheckRecursively(IgnoreProperties);
         }
 
         [Fact]
         public async Task UpdateAsync()
         {
             var actual = await TestClient.Drive.Files.UpdateAsync("5bd2500ca919c80052895bbd", null, "test.jpg", false);
-            actual.CheckRecursively("_user");
+            actual.CheckRecursively(IgnoreProperties);
         }
 
         [Fact]
         public async Task UploadFromUrl()
         {
             var actual = await TestClient.Drive.Files.UploadFromUrl("https://static.mochizuki.moe/busy_banner.png");
-            actual.CheckRecursively("_user");
+            actual.CheckRecursively(IgnoreProperties);
         }
     }
 }
