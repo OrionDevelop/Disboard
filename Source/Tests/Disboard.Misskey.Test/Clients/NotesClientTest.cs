@@ -125,10 +125,10 @@ namespace Disboard.Misskey.Test.Clients
             actual.First().CheckRecursively();
         }
 
-        [Fact(Skip = "No Lists")]
+        [Fact]
         public async Task UserListTimelineAsync()
         {
-            var actual = await TestClient.Notes.UserListTimelineAsync("", 1, includeMyRenotes: false, includeRenotedMyNotes: false, includeLocalRenotes: false);
+            var actual = await TestClient.Notes.UserListTimelineAsync("5bd5451d27711d00457b5984", 1, includeMyRenotes: false, includeRenotedMyNotes: false, includeLocalRenotes: false);
             actual.Count.Is(1);
             actual.First().CheckRecursively();
         }
