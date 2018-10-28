@@ -24,7 +24,9 @@ namespace Disboard.Misskey
         public MuteClient Mute { get; }
         public MyClient My { get; }
         public NotesClient Notes { get; }
+        public NotificationsClient Notifications { get; }
         public StreamingClient Streaming { get; }
+        public UsernameClient Username { get; }
 
         public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
         {
@@ -40,7 +42,9 @@ namespace Disboard.Misskey
             Mute = new MuteClient(this);
             My = new MyClient(this);
             Notes = new NotesClient(this);
+            Notifications = new NotificationsClient(this);
             Streaming = new StreamingClient(this);
+            Username = new UsernameClient(this);
         }
 
         #region EncryptedAccessToken
