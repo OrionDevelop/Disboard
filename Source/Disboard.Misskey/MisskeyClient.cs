@@ -21,6 +21,7 @@ namespace Disboard.Misskey
         public FollowingClient Following { get; }
         public HashtagsClient Hashtags { get; }
         public IClient I { get; }
+        public MessagingClient Messaging { get; }
         public MuteClient Mute { get; }
         public MyClient My { get; }
         public NotesClient Notes { get; }
@@ -40,6 +41,7 @@ namespace Disboard.Misskey
             Following = new FollowingClient(this);
             Hashtags = new HashtagsClient(this);
             I = new IClient(this);
+            Messaging = new MessagingClient(this);
             Mute = new MuteClient(this);
             My = new MyClient(this);
             Notes = new NotesClient(this);
