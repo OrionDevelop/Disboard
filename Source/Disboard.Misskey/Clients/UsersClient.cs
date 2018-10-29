@@ -24,7 +24,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
 
-            return await PostAsync<UserWithCursor>("/followers", parameters);
+            return await PostAsync<UserWithCursor>("/followers", parameters).Stay();
         }
 
         public async Task<UserWithCursor> FollowingAsync(string userId, bool? iknow = null, int? limit = null, string cursor = null)
@@ -34,7 +34,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
 
-            return await PostAsync<UserWithCursor>("/following", parameters);
+            return await PostAsync<UserWithCursor>("/following", parameters).Stay();
         }
 
         public async Task<List<FrequentlyRepliedUser>> GetFrequentlyRepliedUsersAsync(string userId, int? limit = null)
@@ -42,7 +42,7 @@ namespace Disboard.Misskey.Clients
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<List<FrequentlyRepliedUser>>("/get_frequently_replied_users", parameters);
+            return await PostAsync<List<FrequentlyRepliedUser>>("/get_frequently_replied_users", parameters).Stay();
         }
 
         public async Task<List<Note>> NotesAsync(string userId = null, string username = null, string host = null, bool? includeReplies = null, int? limit = null,
@@ -66,7 +66,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("withFiles", withFiles);
             parameters.AddIfValidValue("fileType", fileType);
 
-            return await PostAsync<List<Note>>("/notes", parameters);
+            return await PostAsync<List<Note>>("/notes", parameters).Stay();
         }
 
         public async Task<List<User>> RecommendationAsync(int? limit = null, int? offset = null)
@@ -75,7 +75,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<User>>("/recommendation", parameters);
+            return await PostAsync<List<User>>("/recommendation", parameters).Stay();
         }
 
         public async Task<List<User>> SearchAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null)
@@ -85,7 +85,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("localOnly", localOnly);
 
-            return await PostAsync<List<User>>("/search", parameters);
+            return await PostAsync<List<User>>("/search", parameters).Stay();
         }
 
         public async Task<List<User>> ShowAsync(string userId = null, List<string> userIds = null, string username = null, string host = null)
@@ -97,8 +97,8 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("host", host);
 
             if (userIds != null)
-                return await PostAsync<List<User>>("/show", parameters);
-            return new List<User> {await PostAsync<User>("/show", parameters)};
+                return await PostAsync<List<User>>("/show", parameters).Stay();
+            return new List<User> {await PostAsync<User>("/show", parameters).Stay()};
         }
     }
 }

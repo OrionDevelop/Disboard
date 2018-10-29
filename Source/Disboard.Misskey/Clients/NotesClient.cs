@@ -28,7 +28,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<Note>>("/conversation", parameters);
+            return await PostAsync<List<Note>>("/conversation", parameters).Stay();
         }
 
         public async Task<Note> CreateAsync(string text = null, string visibility = null, List<string> visibleUserIds = null, string cw = null, bool? viaMobile = null, Geo geo = null,
@@ -45,7 +45,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("renoteId", renoteId);
             parameters.AddIfValidValue("poll", poll);
 
-            var response = await PostAsync<ApiResponse>("/create", parameters);
+            var response = await PostAsync<ApiResponse>("/create", parameters).Stay();
             return response.Extends["createdNote"].ToObject<Note>();
         }
 
@@ -53,7 +53,7 @@ namespace Disboard.Misskey.Clients
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            await PostAsync("/delete", parameters);
+            await PostAsync("/delete", parameters).Stay();
         }
 
         public async Task<List<Note>> GlobalTimelineAsync(int? limit = null, bool? withFiles = null, string sinceId = null, string untilId = null,
@@ -67,7 +67,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceData", sinceDate);
             parameters.AddIfValidValue("untilDate", untilDate);
 
-            return await PostAsync<List<Note>>("/global-timeline", parameters);
+            return await PostAsync<List<Note>>("/global-timeline", parameters).Stay();
         }
 
         public async Task<List<Note>> HybridTimelineAsync(int? limit = null, bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null,
@@ -85,7 +85,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceData", sinceDate);
             parameters.AddIfValidValue("untilDate", untilDate);
 
-            return await PostAsync<List<Note>>("/hybrid-timeline", parameters);
+            return await PostAsync<List<Note>>("/hybrid-timeline", parameters).Stay();
         }
 
         public async Task<List<Note>> LocalTimelineAsync(int? limit = null, bool? withFiles = null, string fileType = null, bool? excludeNswf = null,
@@ -101,7 +101,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceData", sinceDate);
             parameters.AddIfValidValue("untilDate", untilDate);
 
-            return await PostAsync<List<Note>>("/local-timeline", parameters);
+            return await PostAsync<List<Note>>("/local-timeline", parameters).Stay();
         }
 
         public async Task<List<Note>> MentionsAsync(int? limit = null, bool? following = null, string visibility = null, string sinceId = null, string untilId = null)

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using Disboard.Clients;
+using Disboard.Extensions;
 
 namespace Disboard.Misskey.Clients
 {
@@ -10,7 +11,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task MarkAllAsReadAsync()
         {
-            await PostAsync("/mark_all_as_read");
+            await PostAsync("/mark_all_as_read").Stay();
         }
     }
 }

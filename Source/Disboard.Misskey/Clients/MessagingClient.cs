@@ -22,7 +22,7 @@ namespace Disboard.Misskey.Clients
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<List<Message>>("/history", parameters);
+            return await PostAsync<List<Message>>("/history", parameters).Stay();
         }
 
         public async Task<List<Message>> MessagesAsync(string userId, bool? markAsRead = null, int? limit = null, string sinceId = null, string untilId = null)
@@ -33,7 +33,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Message>>("/messages", parameters);
+            return await PostAsync<List<Message>>("/messages", parameters).Stay();
         }
     }
 }

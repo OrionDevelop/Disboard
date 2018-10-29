@@ -19,7 +19,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Note>>("/favorites", parameters);
+            return await PostAsync<List<Note>>("/favorites", parameters).Stay();
         }
 
         public async Task<List<Notification>> NotificationsAsync(bool? following = null, bool? markAsRead = null, int? limit = null, string sinceId = null, string untilId = null)
@@ -31,26 +31,26 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Notification>>("/notifications", parameters);
+            return await PostAsync<List<Notification>>("/notifications", parameters).Stay();
         }
 
         public async Task<User> PinAsync(string noteId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            return await PostAsync<User>("/pin", parameters);
+            return await PostAsync<User>("/pin", parameters).Stay();
         }
 
         public async Task<User> UnpinAsync(string noteId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            return await PostAsync<User>("/unpin", parameters);
+            return await PostAsync<User>("/unpin", parameters).Stay();
         }
 
         public async Task ReadAllUnreadNotesAsync()
         {
-            await PostAsync("/read_all_unread_notes");
+            await PostAsync("/read_all_unread_notes").Stay();
         }
 
         public async Task<User> UpdateAsync(string name = null, string description = null, string location = null, string birthday = null, string avatarId = null, string bannerId = null,
@@ -70,7 +70,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("autoWatch", autoWatch);
             parameters.AddIfValidValue("alwaysMarkAsNsfw", alwaysMarkNsfw);
 
-            return await PostAsync<User>("/update", parameters);
+            return await PostAsync<User>("/update", parameters).Stay();
         }
     }
 }

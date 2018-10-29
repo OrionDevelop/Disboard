@@ -17,14 +17,14 @@ namespace Disboard.Misskey.Clients.Messaging
             parameters.AddIfValidValue("text", text);
             parameters.AddIfValidValue("fileId", fileId);
 
-            return await PostAsync<Message>("/create", parameters);
+            return await PostAsync<Message>("/create", parameters).Stay();
         }
 
         public async Task ReadAsync(string messageId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("messageId", messageId)};
 
-            await PostAsync("/read", parameters);
+            await PostAsync("/read", parameters).Stay();
         }
     }
 }

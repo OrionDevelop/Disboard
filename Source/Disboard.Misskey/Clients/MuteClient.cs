@@ -14,13 +14,13 @@ namespace Disboard.Misskey.Clients
         public async Task CreateAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            await PostAsync("/create", parameters);
+            await PostAsync("/create", parameters).Stay();
         }
 
         public async Task DeleteAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            await PostAsync("/delete", parameters);
+            await PostAsync("/delete", parameters).Stay();
         }
 
         public async Task<MuteList> ListAsync(bool? iknow = null, int? limit = null, string cursor = null)
@@ -30,7 +30,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
 
-            return await PostAsync<MuteList>("/list", parameters);
+            return await PostAsync<MuteList>("/list", parameters).Stay();
         }
     }
 }

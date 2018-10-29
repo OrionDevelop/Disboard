@@ -17,7 +17,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<App>>("/apps", parameters);
+            return await PostAsync<List<App>>("/apps", parameters).Stay();
         }
     }
 }

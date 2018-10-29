@@ -17,7 +17,7 @@ namespace Disboard.Misskey.Clients.Notes
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<Note>>("/recommendation", parameters);
+            return await PostAsync<List<Note>>("/recommendation", parameters).Stay();
         }
 
         public async Task VoteAsync(string noteId, int choice)
@@ -28,7 +28,7 @@ namespace Disboard.Misskey.Clients.Notes
                 new KeyValuePair<string, object>("choice", choice)
             };
 
-            await PostAsync("/vote", parameters);
+            await PostAsync("/vote", parameters).Stay();
         }
     }
 }

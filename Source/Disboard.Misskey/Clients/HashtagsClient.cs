@@ -17,12 +17,12 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<string>>("/search", parameters);
+            return await PostAsync<List<string>>("/search", parameters).Stay();
         }
 
         public async Task<List<TrendTag>> TrendAsync()
         {
-            return await PostAsync<List<TrendTag>>("/trend");
+            return await PostAsync<List<TrendTag>>("/trend").Stay();
         }
     }
 }

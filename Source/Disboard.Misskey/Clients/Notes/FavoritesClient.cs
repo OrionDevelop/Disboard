@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Disboard.Clients;
+using Disboard.Extensions;
 
 namespace Disboard.Misskey.Clients.Notes
 {
@@ -13,14 +14,14 @@ namespace Disboard.Misskey.Clients.Notes
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            await PostAsync("/create", parameters);
+            await PostAsync("/create", parameters).Stay();
         }
 
         public async Task DeleteAsync(string noteId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            await PostAsync("/delete", parameters);
+            await PostAsync("/delete", parameters).Stay();
         }
     }
 }

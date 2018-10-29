@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Disboard.Clients;
+using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Following
@@ -13,7 +14,7 @@ namespace Disboard.Misskey.Clients.Following
         public async Task AcceptAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            await PostAsync("/accept", parameters);
+            await PostAsync("/accept", parameters).Stay();
         }
 
         public async Task<User> CancelAsync(string userId)
@@ -24,13 +25,13 @@ namespace Disboard.Misskey.Clients.Following
 
         public async Task<List<FollowRequest>> ListAsync()
         {
-            return await PostAsync<List<FollowRequest>>("/list");
+            return await PostAsync<List<FollowRequest>>("/list").Stay();
         }
 
         public async Task RejectAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            await PostAsync("/reject", parameters);
+            await PostAsync("/reject", parameters).Stay();
         }
     }
 }
