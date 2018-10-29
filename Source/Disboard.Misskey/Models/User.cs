@@ -69,11 +69,17 @@ namespace Disboard.Misskey.Models
         [JsonProperty("hasPendingFollowRequestToYou")]
         public bool? HasPendingFollowRequestToYou { get; set; }
 
+        [JsonProperty("hasUnreadMentions")]
+        public bool? HasUnreadMentions { get; set; }
+
         [JsonProperty("hasUnreadMessage")]
         public bool? HasUnreadMessage { get; set; }
 
         [JsonProperty("hasUnreadNotification")]
         public bool? HasUnreadNotification { get; set; }
+
+        [JsonProperty("hasUnreadSpecifiedNotes")]
+        public bool? HasUnreadSpecifiedNotes { get; set; }
 
         [JsonProperty("host")]
         public string Host { get; set; }

@@ -26,13 +26,6 @@ namespace Disboard.Misskey.Test.Clients
         }
 
         [Fact]
-        public async Task ShowAsync()
-        {
-            var actual = await TestClient.Drive.ShowAsync();
-            actual.CheckRecursively();
-        }
-
-        [Fact]
         public async Task StreamAsync()
         {
             var actual = await TestClient.Drive.StreamAsync(limit: 1);

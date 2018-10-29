@@ -12,7 +12,7 @@ using MisskeyAppClient = Disboard.Misskey.Clients.AppClient;
 
 namespace Disboard.Misskey
 {
-    public class MisskeyClient : AppClient
+    public partial class MisskeyClient : AppClient
     {
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
