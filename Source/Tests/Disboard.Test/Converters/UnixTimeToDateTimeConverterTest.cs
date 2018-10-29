@@ -20,17 +20,17 @@ namespace Disboard.Test.Converters
         [Fact]
         public void ReadJsonMillSecondsByLong()
         {
-            const string json = "{\"createdAt\":15401205261200}";
+            const string json = "{\"createdAt\":1540120526120}";
             var r = JsonConvert.DeserializeObject<ExpectObject>(json);
-            r.CreatedAt.Is(new DateTime(2018, 10, 21, 11, 15, 26, 12, DateTimeKind.Utc));
+            r.CreatedAt.Is(new DateTime(2018, 10, 21, 11, 15, 26, 120, DateTimeKind.Utc));
         }
 
         [Fact]
         public void ReadJsonMillSecondsByString()
         {
-            const string json = "{\"createdAt\":\"15401205261200\"}";
+            const string json = "{\"createdAt\":\"1540120526120\"}";
             var r = JsonConvert.DeserializeObject<ExpectObject>(json);
-            r.CreatedAt.Is(new DateTime(2018, 10, 21, 11, 15, 26, 12, DateTimeKind.Utc));
+            r.CreatedAt.Is(new DateTime(2018, 10, 21, 11, 15, 26, 120, DateTimeKind.Utc));
         }
 
         [Fact]

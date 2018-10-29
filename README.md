@@ -1,8 +1,8 @@
 # Disboard
 
 [![License](https://img.shields.io/github/license/mika-f/Disboard.svg?style=flat-square)](LICENSE)
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/mika-f/Disboard/develop.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/disboard)
-[![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard/develop.svg?style=flat-square)](https://circleci.com/gh/OrionDevelop/Disboard/tree/develop)
+[![AppVeyor branch](https://img.shields.io/appveyor/ci/mika-f/Disboard.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/disboard)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard.svg?style=flat-square)](https://circleci.com/gh/OrionDevelop/Disboard/tree/develop)
 
 
 Collection of fediverse client libraries for .NET Standard 2.0.
@@ -14,8 +14,17 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 | -------- | ---------- | ----------------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | N/A      | N/A        | [`Disboard`](Source/Disboard)                   | `Disboard`          | [![Disboard](https://img.shields.io/nuget/v/Disboard.svg?style=flat-square)](https://nuget.org/packages/Disboard)                            |
 | Mastodon | 2.5.0      | [`Disboard.Mastodon`](Source/Disboard.Mastodon) | `Disboard.Mastodon` | [![Disboard.Mastodon](https://img.shields.io/nuget/v/Disboard.Mastodon.svg?style=flat-square)](https://nuget.org/packages/Disboard.Mastodon) |
-| Misskey  | 8.45.1     | [`Disboard.Misskey`](Source/Disboard.Misskey)   | `Disboard.Misskey`  | [![Disboard.Misskey](https://img.shields.io/nuget/v/Disboard.Misskey.svg?style=flat-square)](https://nuget.org/packages/Disboard.Misskey)    |
+| Misskey  | 10.28.0    | [`Disboard.Misskey`](Source/Disboard.Misskey)   | `Disboard.Misskey`  | [![Disboard.Misskey](https://img.shields.io/nuget/v/Disboard.Misskey.svg?style=flat-square)](https://nuget.org/packages/Disboard.Misskey)    |
 | Pleroma  | `ad318189` | [`Disboard.Pleroma`](Source/Disboard.Pleroma)   | `Disboard.Pleroma`  | [![Disboard.Pleroma](https://img.shields.io/nuget/v/Disboard.Pleroma.svg?style=flat-square)](https://nuget.org/packages/Disboard.Pleroma)    |
+
+
+## Tests
+
+| Platform | develop                                                                                                                | latest                                                                                                                 |
+| -------- | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+| Windows  | ![AppVeyor branch](https://img.shields.io/appveyor/ci/mika-f/Disboard/develop.svg?style=flat-square)                   | ![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/Disboard.svg?style=flat-square)                                  |
+| Debian   | ![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard/develop.svg?style=flat-square) | ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard.svg?style=flat-square) |
+
 
 
 ## Contributing

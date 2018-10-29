@@ -25,8 +25,6 @@ namespace Disboard
     /// </summary>
     public class AppClient
     {
-        public delegate void CustomAuthFunc(HttpClient client, string url, ref IEnumerable<KeyValuePair<string, object>> parameters);
-
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
         private readonly RequestMode _requestMode;
@@ -77,9 +75,14 @@ namespace Disboard
 
         #region Utilities
 
+        private static string NormalizeBoolean<T>(T w)
+        {
+            return w is bool ? w.ToString().ToLower() : w.ToString();
+        }
+
         public static IEnumerable<string> AsUrlParameter<T>(IEnumerable<KeyValuePair<string, T>> parameters)
         {
-            return parameters.Select(w => $"{w.Key}={UrlEncode(w.Value.ToString())}");
+            return parameters.Select(w => $"{w.Key}={UrlEncode(NormalizeBoolean(w.Value))}");
         }
 
         public static string UrlEncode(string str)
@@ -316,14 +319,14 @@ namespace Disboard
                         }
                         else
                         {
-                            formDataContent = new StringContent(parameter.Value.ToString());
+                            formDataContent = new StringContent(NormalizeBoolean(parameter.Value));
                         }
                         ((MultipartFormDataContent) content).Add(formDataContent, parameter.Key);
                     }
                 }
                 else
                 {
-                    var kvpCollection = parameters.Select(w => new KeyValuePair<string, string>(w.Key, w.Value.ToString()));
+                    var kvpCollection = parameters.Select(w => new KeyValuePair<string, string>(w.Key, NormalizeBoolean(w.Value)));
                     content = new FormUrlEncodedContent(kvpCollection);
                 }
                 response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
@@ -338,12 +341,15 @@ namespace Disboard
         {
             var dict = new Dictionary<string, object>();
             if (parameters != null)
-                foreach (var kvp in parameters)
-                {
-                    if (dict.ContainsKey(kvp.Key))
-                        throw new InvalidOperationException();
-                    dict.Add(kvp.Key, kvp.Value);
-                }
+                if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
+                    return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
+                else
+                    foreach (var kvp in parameters)
+                    {
+                        if (dict.ContainsKey(kvp.Key))
+                            throw new InvalidOperationException();
+                        dict.Add(kvp.Key, kvp.Value);
+                    }
             var body = JsonConvert.SerializeObject(dict);
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();

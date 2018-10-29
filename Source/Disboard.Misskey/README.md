@@ -6,7 +6,7 @@
 
 
 Misskey API wrapper for .NET Standard 2.0.  
-Based on Misskey 8.x.
+Based on Misskey 10.x.
 
 
 ## Note
@@ -15,6 +15,9 @@ Based on Misskey 8.x.
 If you want to contribute to this library, you SHOULD read [Misskey's source code implementation](https://github.com/syuilo/misskey).
 
 **This is a generic Misskey API wrapper**, we do not implement features unique to the instance.  
+
+Some Misskey endpoints require privilege permission (`secure: true`).  
+Disboard does not support these APIs.
 
 
 ## Usage
@@ -37,5 +40,12 @@ await misskey.Auth.Session.UserKeyAsync(session.Token);
 // If you want to call REST API, please use method that has "Async()" suffix.
 await misskey.I.VerifyAsync();
 
+// Streaming API
+var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
+	w.Dump();
+});
+
+await Task.Delay(1000 * 60);
+disposable.Dispose();
 ```
 

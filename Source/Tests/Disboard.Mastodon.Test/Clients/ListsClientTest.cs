@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-using Disboard.Exceptions;
 using Disboard.Test.Helpers;
 
 using Xunit;
@@ -24,9 +23,6 @@ namespace Disboard.Mastodon.Test.Clients
         public async Task DestroyAsync()
         {
             await TestClient.Lists.DestroyAsync(320);
-
-            // record not found
-            await MarkAsAnother(async client => await Assert.ThrowsAsync<DisboardException>(async () => await client.Lists.ShowAsync(320)));
         }
 
         [Fact]

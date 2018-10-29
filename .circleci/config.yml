@@ -5,9 +5,12 @@ workflows:
     jobs:
       - test
       - docs:
+          requires:
+            - test
           filters:
             branches:
-              only: master
+              only:
+                - master
 
 jobs:
   test:

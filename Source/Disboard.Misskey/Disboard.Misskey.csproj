@@ -22,8 +22,4 @@
     <ProjectReference Include="..\Disboard\Disboard.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
 </Project>

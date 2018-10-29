@@ -1,0 +1,47 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Disboard.Clients;
+using Disboard.Extensions;
+using Disboard.Misskey.Models;
+
+namespace Disboard.Misskey.Clients.Drive
+{
+    public class FoldersClient : ApiClient<MisskeyClient>
+    {
+        protected internal FoldersClient(MisskeyClient client) : base(client, "/api/drive/folders") { }
+
+        public async Task<Folder> CreateAsync(string name = null, string parentId = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("name", name);
+            parameters.AddIfValidValue("parentId", parentId);
+
+            return await PostAsync<Folder>("/create", parameters).Stay();
+        }
+
+        public async Task<List<Folder>> FindAsync(string name, string parentId = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("name", name)};
+            parameters.AddIfValidValue("parentId", parentId);
+
+            return await PostAsync<List<Folder>>("/find", parameters).Stay();
+        }
+
+        public async Task<FolderExtend> ShowAsync(string folderId)
+        {
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("folderId", folderId)};
+
+            return await PostAsync<FolderExtend>("/show", parameters).Stay();
+        }
+
+        public async Task<Folder> UpdateAsync(string folderId, string name = null, string parentId = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("folderId", folderId)};
+            parameters.AddIfValidValue("name", name);
+            parameters.AddIfValidValue("parentId", parentId);
+
+            return await PostAsync<Folder>("/update", parameters).Stay();
+        }
+    }
+}
