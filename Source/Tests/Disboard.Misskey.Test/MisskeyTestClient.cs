@@ -14,7 +14,7 @@ namespace Disboard.Misskey.Test
         protected readonly string ClientSecret = Environment.GetEnvironmentVariable("MISSKEY_CLIENT_SECRET");
 #endif
         protected MisskeyClient TestClient { get; }
-        protected string[] IgnoreProperties = {"two_factor_temp_secret", "_follower", "_followee", "_replyIds", "_quoteIds", "_user"};
+        protected readonly string[] IgnoreProperties = {"two_factor_temp_secret", "_follower", "_followee", "_replyIds", "_quoteIds", "_user"};
 
         protected MisskeyTestClient()
         {
