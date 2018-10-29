@@ -6,7 +6,7 @@
 
 
 Misskey API wrapper for .NET Standard 2.0.  
-Based on Misskey 10.x.
+Based on Misskey 10.28.x.
 
 
 ## Note
@@ -26,8 +26,20 @@ Disboard does not support these APIs.
 var misskey = new MisskeyClient("misskey.xyz");
 
 // register app
-var permissions = new string[] {"account-read", "account-write", "note-write", "reaction-write", "following-write", "drive-read", "drive-write", "notification-write", "notification-read"};
-await misskey.App.CreateAsync("Orion", "Orion is generic microblogging client", permissions, "https://static.mochizuki.moe/callback.html");
+var permissions = new List<Permission> {
+    Permission.AccountRead, Permission.AccountRead2, 
+    Permission.AccountWrite, Permission.AccountWrite2,
+    Permission.DriveRead, Permission.DriveWrite,
+    Permission.FavoritesRead, Permission.FavoriteWrite,
+    Permission.FollowingRead, Permission.FollowingWrite,
+    Permission.MessagingRead, Permission.MessagingWrite,
+    Permission.NoteWrite,
+    Permission.NotificationWrite,
+    Permission.ReactionWrite,
+    Permission.VoteWrite,
+};
+// permission is "string[]", because Misskey's permission is very flexible and possibility that it will increase in the future.
+await misskey.App.CreateAsync("Orion", "Orion is generic microblogging client", permissions.Select(w => w.ToStr()).ToArray(), "https://static.mochizuki.moe/callback.html");
 
 // auth
 var session = await misskey.Auth.Session.Generate();
@@ -42,7 +54,7 @@ await misskey.I.VerifyAsync();
 
 // Streaming API
 var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
-	w.Dump();
+    w.Dump();
 });
 
 await Task.Delay(1000 * 60);
