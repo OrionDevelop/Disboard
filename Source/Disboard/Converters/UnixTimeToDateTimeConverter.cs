@@ -18,6 +18,13 @@ namespace Disboard.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            var value = reader.Value;
+            if (int.TryParse(value.ToString(), out var i))
+                return Epoch.AddSeconds(i);
+            if (long.TryParse(value.ToString(), out var l))
+                return Epoch.AddMilliseconds(l);
+            if (!int.TryParse(reader.Value.ToString(), out _) && long.TryParse(reader.Value.ToString(), out l))
+                return Epoch.AddMilliseconds(l);
             return Epoch.AddSeconds(long.Parse(reader.Value as string ?? throw new InvalidOperationException()));
         }
 

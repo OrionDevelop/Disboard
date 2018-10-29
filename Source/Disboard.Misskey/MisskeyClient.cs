@@ -5,41 +5,50 @@ using System.Security.Cryptography;
 using System.Text;
 
 using Disboard.Misskey.Clients;
+using Disboard.Misskey.Handlers;
 using Disboard.Models;
 
 using MisskeyAppClient = Disboard.Misskey.Clients.AppClient;
 
 namespace Disboard.Misskey
 {
-    public class MisskeyClient : AppClient
+    public partial class MisskeyClient : AppClient
     {
-        internal string Domain { get; }
-
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
+        public DriveClient Drive { get; }
+        public FollowingClient Following { get; }
+        public HashtagsClient Hashtags { get; }
+        public IClient I { get; }
+        public MessagingClient Messaging { get; }
+        public MuteClient Mute { get; }
+        public MyClient My { get; }
+        public NotesClient Notes { get; }
+        public NotificationsClient Notifications { get; }
+        public StreamingClient Streaming { get; }
+        public UsernameClient Username { get; }
+        public UsersClient Users { get; }
 
-        public MisskeyClient(string domain, string secret = null) : base($"https://{domain}", AuthMode.Myself, RequestMode.Json)
+        public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
         {
-            Domain = domain;
-            ClientSecret = secret;
-            BinaryParameters = new List<string>();
+            BinaryParameters = new List<string> {"file"};
 
             Aggregation = new AggregationClient(this);
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
-
-            RegisterCustomAuthenticator(MisskeyAuthentication);
-        }
-
-        // Add "i" parameter to all request.
-        private void MisskeyAuthentication(HttpClient client, string url, ref IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            if (string.IsNullOrWhiteSpace(AccessToken))
-                return;
-            if (parameters == null)
-                parameters = new List<KeyValuePair<string, object>>();
-            (parameters as List<KeyValuePair<string, object>>)?.Add(new KeyValuePair<string, object>("i", EncryptedAccessToken));
+            Drive = new DriveClient(this);
+            Following = new FollowingClient(this);
+            Hashtags = new HashtagsClient(this);
+            I = new IClient(this);
+            Messaging = new MessagingClient(this);
+            Mute = new MuteClient(this);
+            My = new MyClient(this);
+            Notes = new NotesClient(this);
+            Notifications = new NotificationsClient(this);
+            Streaming = new StreamingClient(this);
+            Username = new UsernameClient(this);
+            Users = new UsersClient(this);
         }
 
         #region EncryptedAccessToken

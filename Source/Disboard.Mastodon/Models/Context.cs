@@ -10,9 +10,9 @@ namespace Disboard.Mastodon.Models
     public class Context : ApiResponse
     {
         [JsonProperty("ancestors")]
-        public List<Status> Ancestors { get; set; }
+        public IEnumerable<Status> Ancestors { get; set; }
 
         [JsonProperty("descendants")]
-        public List<Status> Descendants { get; set; }
+        public IEnumerable<Status> Descendants { get; set; }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Disboard.Mastodon.Models
+﻿using Disboard.Models;
+
+namespace Disboard.Mastodon.Models
 {
-    public class Keys
+    public class Keys : ApiResponse
     {
         // ReSharper disable once InconsistentNaming
         public string P256DH { get; set; }

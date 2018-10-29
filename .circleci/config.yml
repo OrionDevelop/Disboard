@@ -1,0 +1,72 @@
+version: 2
+workflows:
+  version: 2
+  build_with_docs:
+    jobs:
+      - test
+      - docs:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+
+jobs:
+  test:
+    docker:
+      - image: microsoft/dotnet:2.1-sdk
+    
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Run tests
+          command: |
+            dotnet test ./Source/ -c Release
+
+  docs:
+    docker:
+      # specify the version you desire here
+      - image: mono:5.14
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install common dependencies
+          command: |
+            apt update
+            apt install -yq unzip wget > /dev/null 2>&1
+
+      - run:
+          name: Install document dependencies
+          command: |
+            wget -q 'https://github.com/dotnet/docfx/releases/download/v2.40/docfx.zip' -O docfx.zip
+            unzip -q docfx.zip -d docfx/
+
+      - run:
+          name: Generate documents by docfx
+          command: |
+            mono ./docfx/docfx.exe ./Source/Disboard.AutoDocs/docfx.json
+
+      - run:
+          name: Install deployment dependencies
+          command: |
+            wget -qO- 'https://cli.netlify.com/download/latest/linux' | tar xz
+
+      - deploy:
+          name: Deployment task
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./netlifyctl deploy --publish-directory "./docs" --access-token $NETLIFY_ACCESS_TOKEN --site-id $NETLIFY_SITE_ID
+            fi

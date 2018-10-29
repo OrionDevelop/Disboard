@@ -1,0 +1,4 @@
+{
+  "StatusCode": "OK",
+  "Body": "{\"createdAt\":\"2018-10-26T14:50:58.477Z\",\"userId\":\"5ba4c40406bdd21ada87964b\",\"name\":\"Disboard Test\",\"description\":\"Disboard Tester\",\"permission\":[\"account-read\",\"account-write\",\"note-write\",\"reaction-write\",\"following-write\",\"drive-read\",\"drive-write\",\"notification-write\",\"notification-read\"],\"callbackUrl\":\"https://static.mochizuki.moe/callback.html\",\"secret\":\"TEST_SECRET\",\"id\":\"5bd329d2be72e6003d639365\",\"iconUrl\":\"https://misskey.xyz/files/app-default.jpg\"}"
+}
