@@ -20,10 +20,10 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 
 ## Tests
 
-| Platform | develop                                                                                                                | latest                                                                                                                 |
-| -------- | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
-| Windows  | ![AppVeyor branch](https://img.shields.io/appveyor/ci/mika-f/Disboard/develop.svg?style=flat-square)                   | ![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/Disboard.svg?style=flat-square)                                  |
-| Debian   | ![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard/develop.svg?style=flat-square) | ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard.svg?style=flat-square) |
+| Platform | develop                                                                                                                                                                              | latest                                                                                                                                                   |
+| -------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Windows  | [![AppVeyor branch](https://img.shields.io/appveyor/ci/mika-f/Disboard/develop.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/Disboard/branch/develop)               | [![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/Disboard.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/Disboard/history)         |
+| Debian   | [![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard/develop.svg?style=flat-square)](https://circleci.com/gh/OrionDevelop/Disboard/tree/develop) | [![CircleCI](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard.svg?style=flat-square)](https://circleci.com/gh/OrionDevelop/Disboard) |
 
 
 
