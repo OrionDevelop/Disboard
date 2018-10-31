@@ -2,10 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mika-f/Disboard</RepositoryUrl>
+    <Description>PeerTube API Client for .NET Standard 2.0.</Description>
+    <Authors>Fuyuno Mikazuki</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Disboard\Disboard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clients\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
