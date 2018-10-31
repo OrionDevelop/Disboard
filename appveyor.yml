@@ -10,7 +10,7 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 before_build:
-- cmd: nuget restore .\Source\
+- cmd: nuget restore .\Source\ -verbosity detailed
 build:
   project: Source\Disboard.sln
   publish_nuget: true
