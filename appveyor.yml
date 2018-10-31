@@ -10,13 +10,13 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 before_build:
-- cmd: nuget restore .\Source\ -verbosity detailed
+- cmd: nuget restore .\Source\
 build:
   project: Source\Disboard.sln
   publish_nuget: true
   verbosity: minimal
 cache:
-- Source\packages -> **\packages.config
+- C:\Users\appveyor\.nuget\packages -> **\packages.config
 configuration: Release
 deploy:
 - provider: NuGet
