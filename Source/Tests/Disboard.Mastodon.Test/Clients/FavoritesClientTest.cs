@@ -12,7 +12,7 @@ namespace Disboard.Mastodon.Test.Clients
         [Fact]
         public async Task ListAsync()
         {
-            var actual = await TestClient.Favorites.ListAsync(1, 1, 100000);
+            var actual = await TestClient.Favorites.ListAsync(1);
             actual.Count.Is(1);
             actual.First().CheckRecursively();
         }
