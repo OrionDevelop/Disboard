@@ -3,6 +3,7 @@
   "02d445f39a4849cc0d85b41ca56c1778": "DELETE /api/v1/domain_blocks?domain=friends.nico",
   "04989ab5392da0af9649b89ab4b127e0": "GET /api/v1/statuses/100950488743368230",
   "077d1474c88e5e441765c9c7351d9cb6": "GET /api/v1/statuses/100950488743368230/favourited_by",
+  "09a9dc85eb7ce66958195431898b0ebd": "DELETE /api/v1/conversations/460",
   "0e23b764dd218dfef0c11434bf93f76a": "POST /api/v1/statuses/100950488743368230/favourite",
   "0e739a6e9ea2235bf7e324421fd4f7b3": "POST /api/v1/accounts/1/unmute",
   "1316588e47c13c7732a27b6ed4604cb7": "GET /api/v1/filters/228",
@@ -48,6 +49,7 @@
   "90a3728dd53962db8972e893a9f80e6b": "POST /api/v1/statuses/100950488743368230/mute",
   "9462ac9da6e644a908199761982c1213": "POST /api/v1/notifications/clear",
   "94c7f4631e0b91e7b4034f2d7fd9bf1b": "POST /api/v1/accounts/1/mute",
+  "94e18ea8b73624b75daee2ae1aa672d6": "POST /api/v1/conversations/460/read",
   "9810bc5b41b04f43e35c1d0f0665bb0a": "GET /api/v1/custom_emojis",
   "98aef8f95190011d7a714e27315417d1": "POST /oauth/token",
   "9c681f8d3a0a231af2de878399334fef": "POST /api/v1/notifications/dismiss",
@@ -72,6 +74,7 @@
   "eaea2a9701d4333df23270725747aef0": "GET /api/v1/instance/peers",
   "ec0c6ef8664a01e38e08acf5174e639d": "POST /api/v1/lists",
   "efc6289a3708eb7e12692fa7adf69fd3": "POST /api/v1/accounts/1/unblock",
+  "f1be87151cafae7333f70d66c83fe4d9": "GET /api/v1/conversations?limit=1&since_id=1&min_id=1&max_id=9223372036854775807",
   "f4bffa4c0b2ba215a9962423f3d9784c": "GET /api/v1/filters",
   "f9b028bd61f546ade564474e274f12d4": "GET /api/v1/notifications?limit=1&since_id=1&min_id=1&max_id=1000000&exclude_types[]=reblog",
   "fe4d7561787a08177103ca387646b923": "GET /api/v1/lists/320"
