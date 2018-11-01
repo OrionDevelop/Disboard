@@ -6,7 +6,7 @@
 
 
 Mastodon API wrapper for .NET Standard 2.0.  
-Based on Mastodon 2.5.0.
+Based on Mastodon 2.6.x.
 
 
 ## Note
