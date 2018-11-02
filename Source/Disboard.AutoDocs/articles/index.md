@@ -29,7 +29,7 @@ using Disboard.Mastodon;
 
 ### Step. 3
 
-ドメイン名を引数として、 `MastodonClient` インスタンスを作成することで、 API をコールできます。
+ドメイン名を引数として、 `MastodonClient` インスタンスを作成することで、 API をコールできます。  
 例えば、 mastodon.cloud の API を呼び出す場合は、
 
 ```cs
@@ -39,5 +39,6 @@ var mastodon = new MastodonClient("mastodon.cloud");
 とします。
 
 Disboard の提供する API は、各サービスの API のエンドポイントと同様の形です。  
-例えば、 `/api/v1/statuses/update` を呼び出したい場合、 `mastodon.Statuses.UpdateAsync` を呼び出します。
+例えば、エンドポイントが `/api/v1/statuses/update` の API を使う場合は、 `mastodon.Statuses.UpdateAsync` を呼び出します。
 
+各メソッドのパラメータは、サービス毎の API ドキュメントを参照してください。
