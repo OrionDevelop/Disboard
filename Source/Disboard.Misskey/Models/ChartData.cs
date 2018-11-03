@@ -14,15 +14,15 @@ namespace Disboard.Misskey.Models
         public DateTime Date { get; set; }
 
         [JsonProperty("users")]
-        public ChartLocation<ChartUserData> Users { get; set; }
+        public ChartLocation<ChartBasicData<long>> Users { get; set; }
 
         [JsonProperty("notes")]
-        public ChartLocation<ChartNoteData> Notes { get; set; }
+        public ChartLocation<ChartNoteData<long>> Notes { get; set; }
 
         [JsonProperty("drive")]
-        public ChartLocation<ChartDriveData> Drive { get; set; }
+        public ChartLocation<ChartDriveData<long>> Drive { get; set; }
 
         [JsonProperty("network")]
-        public ChartNetworkData Network { get; set; }
+        public ChartNetworkData<long> Network { get; set; }
     }
 }

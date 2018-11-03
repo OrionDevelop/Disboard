@@ -1,0 +1,1 @@
+{"StatusCode":"OK","Body":"{\"local\":{\"total\":[972795],\"inc\":[5],\"dec\":[0],\"diffs\":{\"normal\":[5],\"reply\":[0],\"renote\":[0]}},\"remote\":{\"total\":[11897441],\"inc\":[201],\"dec\":[35],\"diffs\":{\"normal\":[85],\"reply\":[42],\"renote\":[39]}}}"}

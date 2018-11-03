@@ -20,6 +20,13 @@ namespace Disboard.Misskey.Clients.Drive
             return await PostAsync<Folder>("/create", parameters).Stay();
         }
 
+        public async Task DeleteAsync(string folderId)
+        {
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("folderId", folderId)};
+
+            await PostAsync("/delete", parameters).Stay();
+        }
+
         public async Task<List<Folder>> FindAsync(string name, string parentId = null)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("name", name)};

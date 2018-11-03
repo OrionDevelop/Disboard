@@ -56,6 +56,14 @@ namespace Disboard.Misskey.Clients
             await PostAsync("/delete", parameters).Stay();
         }
 
+        public async Task<List<Note>> FeaturedAsync(int? limit = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("limit", limit);
+
+            return await PostAsync<List<Note>>("/featured", parameters).Stay();
+        }
+
         public async Task<List<Note>> GlobalTimelineAsync(int? limit = null, bool? withFiles = null, string sinceId = null, string untilId = null,
                                                           long? sinceDate = null, long? untilDate = null)
         {

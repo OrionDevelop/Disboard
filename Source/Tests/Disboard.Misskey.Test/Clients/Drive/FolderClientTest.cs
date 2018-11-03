@@ -17,6 +17,12 @@ namespace Disboard.Misskey.Test.Clients.Drive
         }
 
         [Fact]
+        public async Task DeleteAsync()
+        {
+            await TestClient.Drive.Folders.DeleteAsync("5bd32b97bde21c004b2c3248");
+        }
+
+        [Fact]
         public async Task FindAsync()
         {
             var actual = await TestClient.Drive.Folders.FindAsync("CI.TESTING", "5bd32b5eaffd0600284f6f00");

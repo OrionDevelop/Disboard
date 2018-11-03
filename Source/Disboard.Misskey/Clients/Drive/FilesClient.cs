@@ -13,6 +13,13 @@ namespace Disboard.Misskey.Clients.Drive
     {
         protected internal FilesClient(MisskeyClient client) : base(client, "/api/drive/files") { }
 
+        public async Task<List<Note>> AttachedNotesAsync(string fileId)
+        {
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("fileId", fileId)};
+
+            return await PostAsync<List<Note>>("/attached_notes", parameters).Stay();
+        }
+
         public async Task<File> CheckExistence(string md5)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("md5", md5)};

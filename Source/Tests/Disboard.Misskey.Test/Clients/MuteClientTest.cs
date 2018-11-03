@@ -26,10 +26,9 @@ namespace Disboard.Misskey.Test.Clients
         [Fact]
         public async Task ListAsync()
         {
-            var actual = await TestClient.Mute.ListAsync(false, 1);
-            actual.Users.Count().Is(1);
-            actual.CheckRecursively();
-            actual.Users.First().CheckRecursively();
+            var actual = await TestClient.Mute.ListAsync(1);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively();
         }
     }
 }

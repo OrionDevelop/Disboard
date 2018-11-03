@@ -78,6 +78,16 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<User>>("/recommendation", parameters).Stay();
         }
 
+        public async Task<List<Relation>> RelationAsync(List<string> userIds)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("userId", userIds)
+            };
+
+            return await PostAsync<List<Relation>>("/relation", parameters).Stay();
+        }
+
         public async Task<List<User>> SearchAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("query", query)};

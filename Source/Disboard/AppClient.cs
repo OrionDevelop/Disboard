@@ -28,18 +28,14 @@ namespace Disboard
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
         private readonly RequestMode _requestMode;
-        public static string Version => "1.0";
+        public static string Version => "1.1";
 
         /// <summary>
         ///     Keys that send as binary data.
         /// </summary>
         protected List<string> BinaryParameters { get; set; } = new List<string>();
 
-        #region Other Properties
-
-        public string Domain { get; }
-
-        #endregion
+        public Credential Credential { get; }
 
         /// <summary>
         ///     Constructor
@@ -49,10 +45,27 @@ namespace Disboard
         /// <param name="requestMode">Serialization mode</param>
         protected AppClient(string domain, DisboardHttpHandler handler, RequestMode requestMode)
         {
-            Domain = domain;
+            Credential = new Credential {Domain = domain};
             _baseUrl = $"https://{domain}";
             _requestMode = requestMode;
             handler.Client = this; // これしか思いつかなかった...
+
+            _httpClient = new HttpClient(handler);
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
+        }
+
+        /// <summary>
+        ///     Constructor with existing credentials
+        /// </summary>
+        /// <param name="credential"></param>
+        /// <param name="handler"></param>
+        /// <param name="requestMode"></param>
+        public AppClient(Credential credential, DisboardHttpHandler handler, RequestMode requestMode)
+        {
+            Credential = credential;
+            _baseUrl = $"https://{Credential.Domain}";
+            _requestMode = requestMode;
+            handler.Client = this;
 
             _httpClient = new HttpClient(handler);
             _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
@@ -360,17 +373,34 @@ namespace Disboard
 
         #endregion
 
-        #region Application Keys
+        #region Aliases
+
+        /// <summary>
+        ///     Domain
+        /// </summary>
+        public string Domain
+        {
+            get => Credential.Domain;
+            set => Credential.Domain = value;
+        }
 
         /// <summary>
         ///     Client ID
         /// </summary>
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get => Credential.ClientId;
+            set => Credential.ClientId = value;
+        }
 
         /// <summary>
         ///     Client Secret
         /// </summary>
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get => Credential.ClientSecret;
+            set => Credential.ClientSecret = value;
+        }
 
         /// <summary>
         ///     Consumer Key (alias of <see cref="ClientId" />)
@@ -397,17 +427,29 @@ namespace Disboard
         /// <summary>
         ///     Access Token
         /// </summary>
-        public string AccessToken { get; set; }
+        public string AccessToken
+        {
+            get => Credential.AccessToken;
+            set => Credential.AccessToken = value;
+        }
 
         /// <summary>
         ///     Access Token Secret
         /// </summary>
-        public string AccessTokenSecret { get; set; }
+        public string AccessTokenSecret
+        {
+            get => Credential.AccessTokenSecret;
+            set => Credential.AccessTokenSecret = value;
+        }
 
         /// <summary>
         ///     Refresh Token (OAuth 2.0)
         /// </summary>
-        public string RefreshToken { get; set; }
+        public string RefreshToken
+        {
+            get => Credential.RefreshToken;
+            set => Credential.RefreshToken = value;
+        }
 
         #endregion
     }

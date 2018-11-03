@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Disboard.Test.Helpers;
 
@@ -8,6 +9,13 @@ namespace Disboard.Misskey.Test.Clients.Drive
 {
     public class FilesClientTest : MisskeyTestClient
     {
+        [Fact]
+        public async Task AttachedNotesAsync()
+        {
+            var actual = await TestClient.Drive.Files.AttachedNotesAsync("5bd2500ca919c80052895bbd");
+            actual.First().CheckRecursively();
+        }
+
         [Fact]
         public async Task CheckExistenceInExists()
         {
