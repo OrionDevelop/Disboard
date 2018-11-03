@@ -17,6 +17,8 @@ namespace Disboard.Misskey
         public AggregationClient Aggregation { get; }
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
+        public BlockingClient Blocking { get; }
+        public ChartsClient Charts { get; }
         public DriveClient Drive { get; }
         public FollowingClient Following { get; }
         public HashtagsClient Hashtags { get; }
@@ -39,6 +41,8 @@ namespace Disboard.Misskey
             Aggregation = new AggregationClient(this);
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
+            Blocking = new BlockingClient(this);
+            Charts = new ChartsClient(this);
             Drive = new DriveClient(this);
             Following = new FollowingClient(this);
             Hashtags = new HashtagsClient(this);

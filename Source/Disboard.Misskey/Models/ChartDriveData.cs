@@ -4,24 +4,24 @@ using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
-    public class ChartDriveData : ApiResponse
+    public class ChartDriveData<T> : ApiResponse
     {
         [JsonProperty("totalCount")]
-        public long TotalCount { get; set; }
+        public T TotalCount { get; set; }
 
         [JsonProperty("totalSize")]
-        public long TotalSize { get; set; }
+        public T TotalSize { get; set; }
 
         [JsonProperty("incCount")]
-        public long IncCount { get; set; }
+        public T IncCount { get; set; }
 
         [JsonProperty("incSize")]
-        public long IncSize { get; set; }
+        public T IncSize { get; set; }
 
         [JsonProperty("decCount")]
-        public long DecCount { get; set; }
+        public T DecCount { get; set; }
 
         [JsonProperty("decSize")]
-        public long DecSize { get; set; }
+        public T DecSize { get; set; }
     }
 }

@@ -7,30 +7,32 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class MuteClient : ApiClient<MisskeyClient>
+    public class BlockingClient : ApiClient<MisskeyClient>
     {
-        protected internal MuteClient(MisskeyClient client) : base(client, "/api/mute") { }
+        protected internal BlockingClient(MisskeyClient client) : base(client, "/api/blocking") { }
 
-        public async Task CreateAsync(string userId)
+        public async Task<User> CreateAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            await PostAsync("/create", parameters).Stay();
+
+            return await PostAsync<User>("/create", parameters).Stay();
         }
 
-        public async Task DeleteAsync(string userId)
+        public async Task<User> DeleteAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            await PostAsync("/delete", parameters).Stay();
+
+            return await PostAsync<User>("/delete", parameters).Stay();
         }
 
-        public async Task<List<Muting>> ListAsync(int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<Blocking>> ListAsync(int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Muting>>("/list", parameters).Stay();
+            return await PostAsync<List<Blocking>>("/list", parameters).Stay();
         }
     }
 }
