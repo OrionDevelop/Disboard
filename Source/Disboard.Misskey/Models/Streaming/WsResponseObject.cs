@@ -14,7 +14,7 @@ namespace Disboard.Misskey.Models.Streaming
         public string Type { get; set; }
 
         [JsonProperty("body")]
-        public JObject Body { get; set; }
+        public JObject RawBody { get; set; }
 
         [JsonIgnore]
         public IStreamMessage Decoded { get; set; }
