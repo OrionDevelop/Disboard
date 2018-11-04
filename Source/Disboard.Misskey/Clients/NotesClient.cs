@@ -32,7 +32,7 @@ namespace Disboard.Misskey.Clients
         }
 
         public async Task<Note> CreateAsync(string text = null, string visibility = null, List<string> visibleUserIds = null, string cw = null, bool? viaMobile = null, Geo geo = null,
-                                            List<string> fileIds = null, string renoteId = null, Poll poll = null)
+                                            List<string> fileIds = null, string replyId = null, string renoteId = null, Poll poll = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("text", text);
@@ -42,6 +42,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("viaMobile", viaMobile);
             parameters.AddIfValidValue("geo", geo);
             parameters.AddIfValidValue("fileIds", fileIds);
+            parameters.AddIfValidValue("replyId", replyId);
             parameters.AddIfValidValue("renoteId", renoteId);
             parameters.AddIfValidValue("poll", poll);
 
