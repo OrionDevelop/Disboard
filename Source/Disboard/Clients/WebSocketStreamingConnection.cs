@@ -49,7 +49,7 @@ namespace Disboard.Clients
 
                     do
                     {
-                        var result = await WebSocketClient.ReceiveAsync(buffer, CancellationToken.None).Stay();
+                        var result = await WebSocketClient.ReceiveAsync(buffer, token).Stay();
                         if (result.MessageType == WebSocketMessageType.Close)
                             break;
 
@@ -62,7 +62,7 @@ namespace Disboard.Clients
                             stream.Write(bytes, 0, bytes.Length);
                             do
                             {
-                                result = await WebSocketClient.ReceiveAsync(buffer, CancellationToken.None).Stay();
+                                result = await WebSocketClient.ReceiveAsync(buffer, token).Stay();
                                 bytes = AsSafeBytes(buffer, result);
                                 stream.Write(bytes, 0, bytes.Length);
                             } while (!result.EndOfMessage);
@@ -77,6 +77,7 @@ namespace Disboard.Clients
                 }
                 catch (Exception e)
                 {
+                    // だいたいこっち来そうではある...
                     observer.OnError(e);
                 }
                 return async () => await Disconnect();
