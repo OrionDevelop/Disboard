@@ -34,21 +34,22 @@ namespace Disboard.Clients
 
         protected IObservable<IStreamMessage> Connect(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            if (parameters != null && parameters.Any())
-                endpoint += $"?{string.Join("&", AppClient.AsUrlParameter(parameters))}";
-            var uri = new Uri(endpoint);
             _observable = Observable.Create<IStreamMessage>(async (observer, token) =>
             {
+                if (parameters != null && parameters.Any())
+                    endpoint += $"?{string.Join("&", AppClient.AsUrlParameter(parameters))}";
+                var uri = new Uri(endpoint);
+
                 try
                 {
                     WebSocketClient = new ClientWebSocket();
-                    await WebSocketClient.ConnectAsync(uri, token).Stay();
+                    await WebSocketClient.ConnectAsync(uri, CancellationToken.None).Stay();
 
                     var buffer = new ArraySegment<byte>(new byte[1024]);
 
                     do
                     {
-                        var result = await WebSocketClient.ReceiveAsync(buffer, token).Stay();
+                        var result = await WebSocketClient.ReceiveAsync(buffer, CancellationToken.None).Stay();
                         if (result.MessageType == WebSocketMessageType.Close)
                             break;
 
@@ -61,7 +62,7 @@ namespace Disboard.Clients
                             stream.Write(bytes, 0, bytes.Length);
                             do
                             {
-                                result = await WebSocketClient.ReceiveAsync(buffer, token).Stay();
+                                result = await WebSocketClient.ReceiveAsync(buffer, CancellationToken.None).Stay();
                                 bytes = AsSafeBytes(buffer, result);
                                 stream.Write(bytes, 0, bytes.Length);
                             } while (!result.EndOfMessage);
@@ -71,13 +72,14 @@ namespace Disboard.Clients
 
                         if (result.MessageType == WebSocketMessageType.Text)
                             observer.OnNext(ParseData(Encoding.UTF8.GetString(bytes)));
-                    } while (WebSocketClient.State == WebSocketState.Open);
+                    } while (WebSocketClient.State == WebSocketState.Open && !token.IsCancellationRequested);
                     observer.OnCompleted();
                 }
                 catch (Exception e)
                 {
                     observer.OnError(e);
                 }
+                return async () => await Disconnect();
             });
 
             return _observable;
