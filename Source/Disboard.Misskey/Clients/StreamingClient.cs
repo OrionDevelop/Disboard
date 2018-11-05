@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Threading.Tasks;
 
 using Disboard.Clients;
 using Disboard.Misskey.Clients.Streaming;
@@ -11,58 +13,64 @@ namespace Disboard.Misskey.Clients
 {
     public class StreamingClient : ApiClient<MisskeyClient>
     {
+        private StreamingConnection _connection;
+        private IDisposable _disposable;
+        private IConnectableObservable<IStreamMessage> _observable;
+
         protected internal StreamingClient(MisskeyClient client) : base(client, "") { }
+
+        public async Task ConnectAsync(string host = null)
+        {
+            var url = $"wss://{(string.IsNullOrWhiteSpace(host) ? Client.Domain : host)}/streaming";
+            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("i", Client.EncryptedAccessToken)};
+            _connection = new StreamingConnection(Client, url, parameters);
+            _observable = _connection.Connect().Publish();
+            _disposable = _observable.Connect(); // start
+            await _connection.WaitForConnectionEstablished();
+        }
+
+        public void Disconnect()
+        {
+            _disposable.Dispose(); // Goodbye
+        }
 
         public IObservable<IStreamMessage> MainAsObservable(string host = null)
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "main", Id = id}, Type = "connect"};
-            var (connection, observable) = ConnectToStreaming(host);
-            connection.SendAsync(body).Wait();
-
-            return observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            SendAsync(body).Wait();
+            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
         public IObservable<IStreamMessage> HomeTimelineAsObservable(string host = null)
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "homeTimeline", Id = id}, Type = "connect"};
-            var (connection, observable) = ConnectToStreaming(host);
-            connection.SendAsync(body).Wait();
-
-            return observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            SendAsync(body).Wait();
+            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
         public IObservable<IStreamMessage> LocalTimelineAsObservable(string host = null)
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "localTimeline", Id = id}, Type = "connect"};
-            var (connection, observable) = ConnectToStreaming(host);
-            connection.SendAsync(body).Wait();
-
-            return observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            SendAsync(body).Wait();
+            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
         public IObservable<IStreamMessage> GlobalTimelineAsObservable(string host = null)
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "globalTimeline", Id = id}, Type = "connect"};
-            var (connection, observable) = ConnectToStreaming(host);
-            connection.SendAsync(body).Wait();
-
-            return observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            SendAsync(body).Wait();
+            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
-        private (StreamingConnection, IObservable<IStreamMessage>) ConnectToStreaming(string host = null)
+        internal async Task SendAsync(WsRequest request)
         {
-            var url = $"wss://{(string.IsNullOrWhiteSpace(host) ? Client.Domain : host)}/streaming";
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("i", Client.EncryptedAccessToken)};
-            var connection = new StreamingConnection(Client, url, parameters);
-            var observable = connection.Connect().Publish();
-            observable.Connect(); // 接続時に Send する必要があるので、購読を開始する必要がある
-            connection.WaitForConnectionEstablished().Wait();
-
-            return (connection, observable);
+            if (_connection == null)
+                throw new InvalidOperationException("Does not connect to WebSocket stream");
+            await _connection.SendAsync(request);
         }
 
         private bool Passable(WsResponse response, string id)
