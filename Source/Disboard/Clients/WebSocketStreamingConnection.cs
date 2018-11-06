@@ -47,7 +47,7 @@ namespace Disboard.Clients
 
                     var buffer = new ArraySegment<byte>(new byte[1024]);
 
-                    do
+                    while ((WebSocketClient.State == WebSocketState.Open || WebSocketClient.State == WebSocketState.CloseReceived) && !token.IsCancellationRequested)
                     {
                         var result = await WebSocketClient.ReceiveAsync(buffer, token).Stay();
                         if (result.MessageType == WebSocketMessageType.Close)
@@ -72,7 +72,8 @@ namespace Disboard.Clients
 
                         if (result.MessageType == WebSocketMessageType.Text)
                             observer.OnNext(ParseData(Encoding.UTF8.GetString(bytes)));
-                    } while (WebSocketClient.State == WebSocketState.Open && !token.IsCancellationRequested);
+                    }
+
                     observer.OnCompleted();
                 }
                 catch (Exception e)
@@ -88,7 +89,7 @@ namespace Disboard.Clients
 
         public async Task Disconnect()
         {
-            if (WebSocketClient != null && WebSocketClient.State == WebSocketState.Open)
+            if (WebSocketClient != null)
                 await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", new CancellationToken());
         }
 
