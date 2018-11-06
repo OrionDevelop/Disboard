@@ -31,10 +31,10 @@ namespace Disboard.Misskey.Clients
 
         public void Disconnect()
         {
-            _disposable.Dispose(); // Goodbye
+            _disposable?.Dispose(); // Goodbye
         }
 
-        public IObservable<IStreamMessage> MainAsObservable(string host = null)
+        public IObservable<IStreamMessage> MainAsObservable()
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "main", Id = id}, Type = "connect"};
@@ -42,7 +42,7 @@ namespace Disboard.Misskey.Clients
             return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
-        public IObservable<IStreamMessage> HomeTimelineAsObservable(string host = null)
+        public IObservable<IStreamMessage> HomeTimelineAsObservable()
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "homeTimeline", Id = id}, Type = "connect"};
@@ -50,7 +50,7 @@ namespace Disboard.Misskey.Clients
             return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
-        public IObservable<IStreamMessage> LocalTimelineAsObservable(string host = null)
+        public IObservable<IStreamMessage> LocalTimelineAsObservable()
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "localTimeline", Id = id}, Type = "connect"};
@@ -58,7 +58,7 @@ namespace Disboard.Misskey.Clients
             return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
         }
 
-        public IObservable<IStreamMessage> GlobalTimelineAsObservable(string host = null)
+        public IObservable<IStreamMessage> GlobalTimelineAsObservable()
         {
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "globalTimeline", Id = id}, Type = "connect"};
