@@ -39,7 +39,7 @@ namespace Disboard.Misskey.Clients
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "main", Id = id}, Type = "connect"};
             SendAsync(body).Wait();
-            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            return ApplyStreamFilter(_observable, id);
         }
 
         public IObservable<IStreamMessage> HomeTimelineAsObservable()
@@ -47,7 +47,7 @@ namespace Disboard.Misskey.Clients
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "homeTimeline", Id = id}, Type = "connect"};
             SendAsync(body).Wait();
-            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            return ApplyStreamFilter(_observable, id);
         }
 
         public IObservable<IStreamMessage> LocalTimelineAsObservable()
@@ -55,7 +55,7 @@ namespace Disboard.Misskey.Clients
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "localTimeline", Id = id}, Type = "connect"};
             SendAsync(body).Wait();
-            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            return ApplyStreamFilter(_observable, id);
         }
 
         public IObservable<IStreamMessage> GlobalTimelineAsObservable()
@@ -63,7 +63,7 @@ namespace Disboard.Misskey.Clients
             var id = Guid.NewGuid().ToString();
             var body = new WsRequest {Body = new Connection {Channel = "globalTimeline", Id = id}, Type = "connect"};
             SendAsync(body).Wait();
-            return _observable.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded);
+            return ApplyStreamFilter(_observable, id);
         }
 
         internal async Task SendAsync(WsRequest request)
@@ -84,7 +84,13 @@ namespace Disboard.Misskey.Clients
             return default;
         }
 
-        private bool Passable(WsResponse response, string id)
+        private IObservable<IStreamMessage> ApplyStreamFilter(IObservable<IStreamMessage> stream, string id)
+        {
+            return stream.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded)
+                         .Finally(async () => await SendAsync(new WsRequest {Type = "disconnect", Body = new WsRequestObject {Id = id}}));
+        }
+
+        private static bool Passable(WsResponse response, string id)
         {
             return response.Type == "channel" && response.Body?.Id == id;
         }
