@@ -104,7 +104,10 @@ namespace Disboard.Misskey.Clients.Streaming
                     default:
                         if (json.Body == null)
                             throw new ArgumentOutOfRangeException(json.Body?.Type);
-                        json.Body.Decoded = new UnknownMessage {Body = json.Body.RawBody};
+                        if (json.Type.StartsWith("api"))
+                            json.Body = new WsRestResponseObject {Res = json.Body.Extends["res"]}; // API call
+                        else
+                            json.Body.Decoded = new UnknownMessage {Body = json.Body.RawBody};
                         break;
                 }
             }

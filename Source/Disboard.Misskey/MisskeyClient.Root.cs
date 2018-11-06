@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
+using Disboard.Misskey.Models.Streaming;
 
 namespace Disboard.Misskey
 {
@@ -25,6 +26,12 @@ namespace Disboard.Misskey
         public async Task<User> IAsync()
         {
             return await PostAsync<User>("/api/i").Stay();
+        }
+
+        // ReSharper disable once InconsistentNaming
+        public async Task<User> IWsAsync()
+        {
+            return await Streaming.SendAsync<User>(WsRestRequestObject.CreateRestRequest("i"));
         }
 
         public async Task<Instance> MetaAsync()

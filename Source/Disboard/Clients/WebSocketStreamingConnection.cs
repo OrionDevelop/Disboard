@@ -89,7 +89,7 @@ namespace Disboard.Clients
         public async Task Disconnect()
         {
             if (WebSocketClient != null && WebSocketClient.State == WebSocketState.Open)
-                await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", new CancellationToken());
+                await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
         }
 
         protected async Task SendAsync(string message)

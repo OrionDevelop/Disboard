@@ -73,6 +73,17 @@ namespace Disboard.Misskey.Clients
             await _connection.SendAsync(request);
         }
 
+        internal async Task<T> SendAsync<T>(WsRequest request)
+        {
+            if (_connection == null)
+                throw new InvalidOperationException("Does not connect to WebSocket stream");
+            await _connection.SendAsync(request);
+            var response = await _observable.Cast<WsResponse>().FirstAsync(w => $"api:{request.Body.Id}" == w?.Type);
+            if (response.Body is WsRestResponseObject obj)
+                return obj.Res.ToObject<T>();
+            return default;
+        }
+
         private bool Passable(WsResponse response, string id)
         {
             return response.Type == "channel" && response.Body?.Id == id;
