@@ -357,12 +357,7 @@ namespace Disboard
                 if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
                     return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
                 else
-                    foreach (var kvp in parameters)
-                    {
-                        if (dict.ContainsKey(kvp.Key))
-                            throw new InvalidOperationException();
-                        dict.Add(kvp.Key, kvp.Value);
-                    }
+                    dict = parameters.ToDictionary(w => w.Key, w => w.Value);
             var body = JsonConvert.SerializeObject(dict);
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
