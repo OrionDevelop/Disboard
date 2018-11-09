@@ -50,14 +50,21 @@ Console.ReadLine();
 await misskey.Auth.Session.UserKeyAsync(session.Token);
 
 // If you want to call REST API, please use method that has "Async()" suffix.
-await misskey.I.VerifyAsync();
+await misskey.IAsync();
 
 // Streaming API
+await misskey.Streaming.ConnectAsync();
+
 var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
     w.Dump();
 });
 
 await Task.Delay(1000 * 60);
 disposable.Dispose();
+
+// If you want to call REST API using WebSocket connection, please use method that has "WsAsync()" suffix.
+await misskey.IWsAsync();
+
+misskey.Streaming.Disconnect();
 ```
 
