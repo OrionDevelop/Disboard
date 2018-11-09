@@ -6,7 +6,7 @@
 
 
 Misskey API wrapper for .NET Standard 2.0.  
-Based on Misskey 10.28.x.
+Based on Misskey 10.38.x.
 
 
 ## Note
