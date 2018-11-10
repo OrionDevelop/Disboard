@@ -62,7 +62,7 @@ namespace Disboard.Misskey
 
         #region WsWrapper for Misskey endpoints
 
-        internal async Task<T> WsSendAsync<T>(string endpoint, List<KeyValuePair<string, object>> parameters = null)
+        public async Task<T> WsSendAsync<T>(string endpoint, List<KeyValuePair<string, object>> parameters = null)
         {
             return await Streaming.SendAsync<T>(WsRestRequestObject.CreateRestRequest(endpoint, parameters)).Stay();
         }
