@@ -6,6 +6,8 @@ using Disboard.Extensions;
 using Disboard.Misskey.Models;
 using Disboard.Models;
 
+using Credential = Disboard.Misskey.Models.Credential;
+
 namespace Disboard.Misskey.Clients.Auth
 {
     public class SessionClient : ApiClient<MisskeyClient>

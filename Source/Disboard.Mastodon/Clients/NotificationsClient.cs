@@ -14,12 +14,13 @@ namespace Disboard.Mastodon.Clients
     {
         protected internal NotificationsClient(MastodonClient client) : base(client, "/api/v1/notifications") { }
 
-        public async Task<Pagenator<Notification>> ListAsync(long? maxId = null, long? sinceId = null, int? limit = null, NotificationType? excludeTypes = null)
+        public async Task<Pagenator<Notification>> ListAsync(int? limit = null, long? sinceId = null, long? minId = null, long? maxId = null, NotificationType? excludeTypes = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
-            parameters.AddIfValidValue("max_id", maxId);
-            parameters.AddIfValidValue("since_id", sinceId);
             parameters.AddIfValidValue("limit", limit);
+            parameters.AddIfValidValue("since_id", sinceId);
+            parameters.AddIfValidValue("min_id", minId);
+            parameters.AddIfValidValue("max_id", maxId);
             if (excludeTypes.HasValue)
                 parameters.AddRangeOfValues("exclude_types[]", excludeTypes.Value.Separate());
 

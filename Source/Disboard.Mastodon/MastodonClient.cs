@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 
+using Disboard.Clients;
 using Disboard.Mastodon.Clients;
 using Disboard.Models;
 
@@ -7,17 +9,17 @@ namespace Disboard.Mastodon
 {
     public class MastodonClient : AppClient
     {
-        protected internal string Domain { get; }
+        public MastodonClient(string domain, HttpClientHandler innerHandler = null) : this(new Credential {Domain = domain}, innerHandler) { }
 
-        public MastodonClient(string domain) : base($"https://{domain}", AuthMode.OAuth2, RequestMode.FormUrlEncoded)
+        public MastodonClient(Credential credential, HttpClientHandler innerHandler = null) : base(credential, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
         {
-            Domain = domain;
             BinaryParameters = new List<string> {"avatar", "header", "file"};
 
             Account = new AccountsClient(this);
             Apps = new AppsClient(this);
             Auth = new AuthClient(this);
             Blocks = new BlocksClient(this);
+            Conversations = new ConversationsClient(this);
             CustomEmojis = new CustomEmojisClient(this);
             DomainBlocks = new DomainBlocksClient(this);
             Endorsements = new EndorsementsClient(this);
@@ -45,6 +47,7 @@ namespace Disboard.Mastodon
         public AppsClient Apps { get; }
         public AuthClient Auth { get; }
         public BlocksClient Blocks { get; }
+        public ConversationsClient Conversations { get; }
         public CustomEmojisClient CustomEmojis { get; }
         public DomainBlocksClient DomainBlocks { get; }
         public EndorsementsClient Endorsements { get; }

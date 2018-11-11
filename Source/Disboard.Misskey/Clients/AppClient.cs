@@ -11,7 +11,7 @@ namespace Disboard.Misskey.Clients
     {
         protected internal AppClient(MisskeyClient client) : base(client, "/api/app") { }
 
-        public async Task<Application> CreateAsync(string name, string description, string[] permissions, string callbackUrl)
+        public async Task<App> CreateAsync(string name, string description, string[] permissions, string callbackUrl)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -21,20 +21,20 @@ namespace Disboard.Misskey.Clients
                 new KeyValuePair<string, object>("permission", permissions)
             };
 
-            var response = await PostAsync<Application>("/create", parameters).Stay();
+            var response = await PostAsync<App>("/create", parameters).Stay();
             Client.ClientSecret = response.Secret;
 
             return response;
         }
 
-        public async Task<Application> ShowAsync(string appId)
+        public async Task<App> ShowAsync(string appId)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
                 new KeyValuePair<string, object>("appId", appId)
             };
 
-            return await PostAsync<Application>("/show", parameters).Stay();
+            return await PostAsync<App>("/show", parameters).Stay();
         }
     }
 }

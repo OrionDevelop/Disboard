@@ -1,4 +1,7 @@
-﻿using Disboard.Mastodon;
+﻿using System.Net.Http;
+
+using Disboard.Mastodon;
+using Disboard.Models;
 using Disboard.Pleroma.Clients;
 
 using PleromaApi = Disboard.Pleroma.Clients.PleromaClient;
@@ -10,9 +13,9 @@ namespace Disboard.Pleroma
         public PleromaApi Pleroma { get; }
         public new StreamingClient Streaming { get; }
 
-        public new string Domain => base.Domain;
+        public PleromaClient(string domain, HttpClientHandler innerHandler = null) : this(new Credential {Domain = domain}, innerHandler) { }
 
-        public PleromaClient(string domain) : base(domain)
+        public PleromaClient(Credential credential, HttpClientHandler innerHandler = null) : base(credential, innerHandler)
         {
             Pleroma = new PleromaApi(this);
             Streaming = new StreamingClient(this);

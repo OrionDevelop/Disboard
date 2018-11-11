@@ -6,7 +6,7 @@
 
 
 Misskey API wrapper for .NET Standard 2.0.  
-Based on Misskey 8.x.
+Based on Misskey 10.28.x.
 
 
 ## Note
@@ -16,6 +16,9 @@ If you want to contribute to this library, you SHOULD read [Misskey's source cod
 
 **This is a generic Misskey API wrapper**, we do not implement features unique to the instance.  
 
+Some Misskey endpoints require privilege permission (`secure: true`).  
+Disboard does not support these APIs.
+
 
 ## Usage
 
@@ -23,8 +26,20 @@ If you want to contribute to this library, you SHOULD read [Misskey's source cod
 var misskey = new MisskeyClient("misskey.xyz");
 
 // register app
-var permissions = new string[] {"account-read", "account-write", "note-write", "reaction-write", "following-write", "drive-read", "drive-write", "notification-write", "notification-read"};
-await misskey.App.CreateAsync("Orion", "Orion is generic microblogging client", permissions, "https://static.mochizuki.moe/callback.html");
+var permissions = new List<Permission> {
+    Permission.AccountRead, Permission.AccountRead2, 
+    Permission.AccountWrite, Permission.AccountWrite2,
+    Permission.DriveRead, Permission.DriveWrite,
+    Permission.FavoritesRead, Permission.FavoriteWrite,
+    Permission.FollowingRead, Permission.FollowingWrite,
+    Permission.MessagingRead, Permission.MessagingWrite,
+    Permission.NoteWrite,
+    Permission.NotificationWrite,
+    Permission.ReactionWrite,
+    Permission.VoteWrite,
+};
+// permission is "string[]", because Misskey's permission is very flexible and possibility that it will increase in the future.
+await misskey.App.CreateAsync("Orion", "Orion is generic microblogging client", permissions.Select(w => w.ToStr()).ToArray(), "https://static.mochizuki.moe/callback.html");
 
 // auth
 var session = await misskey.Auth.Session.Generate();
@@ -37,5 +52,12 @@ await misskey.Auth.Session.UserKeyAsync(session.Token);
 // If you want to call REST API, please use method that has "Async()" suffix.
 await misskey.I.VerifyAsync();
 
+// Streaming API
+var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
+    w.Dump();
+});
+
+await Task.Delay(1000 * 60);
+disposable.Dispose();
 ```
 

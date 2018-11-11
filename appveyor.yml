@@ -1,5 +1,8 @@
-version: 1.0.{build}
+version: 1.1.{build}
 image: Visual Studio 2017
+artifacts:
+  - path: Disboard.*.nupkg
+    name: NuGetPackage
 assembly_info:
   patch: true
   file: '**\Disboard*\**\AssemblyInfo.*'
@@ -19,7 +22,7 @@ deploy:
 - provider: NuGet
   api_key:
     secure: +a9+GBTx9qVZ/LD2Rj+kB8XOHGIqz7yCU9n3cOwFoamoT3MAb/ueKA3NQ4aqRKQE
-  artifact: /Disboard.*\nupkg/
+  artifact: NuGetPackage
   on:
     branch: /master/
 dotnet_csproj:
@@ -30,6 +33,13 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
+environment:
+  MISSKEY_CLIENT_SECRET:
+    secure: vtITEV22b63CoAoGxv2RVN67Y5dV3Wm4pR776daQfqu3qW4WbwhoUktnaqUzFxCT
+  MISSKEY_ACCESS_TOKEN:
+    secure: 6czWkQqZHuGV+nHrxeBTUn074btzVd0Udlh3qxVmhFtodDrXM3REoYx476ry1j9L
 nuget:
   disable_publish_on_pr: true
+pull_requests:
+  do_not_increment_build_number: true
 skip_tags: true

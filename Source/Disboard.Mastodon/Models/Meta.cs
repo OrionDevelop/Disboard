@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Mastodon.Models
 {
-    public class Meta
+    public class Meta : ApiResponse
     {
         /// <summary>
         ///     If meta type is "video", this property is filled.
@@ -69,6 +71,9 @@ namespace Disboard.Mastodon.Models
         /// </summary>
         [JsonProperty("rotate")]
         public double? Rotate { get; set; }
+
+        [JsonProperty("focus")]
+        public Focus Focus { get; set; }
 
         [JsonProperty("original")]
         public Metadata Original { get; set; }

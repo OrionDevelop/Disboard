@@ -13,7 +13,7 @@ namespace Disboard.Mastodon.Clients
     {
         protected internal StatusesClient(MastodonClient client) : base(client, "/api/v1/statuses") { }
 
-        public async Task<Pagenator<Account>> RebloggedBy(long id, long? limit = null, long? sinceId = null, long? maxId = null)
+        public async Task<Pagenator<Account>> RebloggedByAsync(long id, long? limit = null, long? sinceId = null, long? maxId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -23,7 +23,7 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Pagenator<Account>>($"/{id}/reblogged_by", parameters).Stay();
         }
 
-        public async Task<Pagenator<Account>> FavouritedBy(long id, long? limit = null, long? sinceId = null, long? maxId = null)
+        public async Task<Pagenator<Account>> FavouritedByAsync(long id, long? limit = null, long? sinceId = null, long? maxId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -83,7 +83,7 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Card>($"/{id}/card").Stay();
         }
 
-        public async Task<Status> UpdateAsync(string status, long? inReplyToId = null, List<long?> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
+        public async Task<Status> UpdateAsync(string status, long? inReplyToId = null, List<long> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
                                               VisibilityType? visibility = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
@@ -104,9 +104,9 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Status>($"/{id}").Stay();
         }
 
-        public async Task<Status> DestroyAsync(long id)
+        public async Task DestroyAsync(long id)
         {
-            return await DeleteAsync<Status>($"/{id}").Stay();
+            await DeleteAsync($"/{id}").Stay();
         }
     }
 }

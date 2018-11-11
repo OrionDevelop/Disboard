@@ -1,12 +1,13 @@
 ﻿using System;
 
 using Disboard.Converters;
+using Disboard.Models;
 
 using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
-    public class CountAggregation
+    public class CountAggregation : ApiResponse
     {
         [JsonProperty("date")]
         [JsonConverter(typeof(DateObjectToDateTimeConverter))]

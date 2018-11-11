@@ -40,6 +40,9 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("uri")]
         public Uri Uri { get; set; }
 
+        [JsonProperty("card")]
+        public Card Card { get; set; }
+
         [JsonProperty("content")]
         public string Content { get; set; }
 
@@ -77,15 +80,15 @@ namespace Disboard.Mastodon.Models
         public Account Account { get; set; }
 
         [JsonProperty("media_attachments")]
-        public List<Attachment> MediaAttachments { get; set; }
+        public IEnumerable<Attachment> MediaAttachments { get; set; }
 
         [JsonProperty("mentions")]
-        public List<Mention> Mentions { get; set; }
+        public IEnumerable<Mention> Mentions { get; set; }
 
         [JsonProperty("tags")]
-        public List<Tag> Tags { get; set; }
+        public IEnumerable<Tag> Tags { get; set; }
 
         [JsonProperty("emojis")]
-        public List<Emoji> Emojis { get; set; }
+        public IEnumerable<Emoji> Emojis { get; set; }
     }
 }
