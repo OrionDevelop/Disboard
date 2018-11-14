@@ -39,9 +39,10 @@ namespace Disboard.Misskey.Clients.Streaming
         // Hmm...
         internal async Task WaitForConnectionEstablished()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                while (WebSocketClient == null || WebSocketClient.State != WebSocketState.Open) { }
+                while (WebSocketClient == null || WebSocketClient.State != WebSocketState.Open)
+                    await Task.Delay(50);
             });
         }
 
