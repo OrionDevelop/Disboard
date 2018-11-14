@@ -24,7 +24,7 @@ namespace Disboard.Misskey.Clients
             var url = $"wss://{(string.IsNullOrWhiteSpace(host) ? Client.Domain : host)}/streaming";
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("i", Client.EncryptedAccessToken)};
             _connection = new StreamingConnection(Client, url, parameters);
-            _observable = _connection.Connect().Publish();
+            _observable = _connection.Connect();
             _disposable = _observable.Connect(); // start
             await _connection.WaitForConnectionEstablished();
         }
