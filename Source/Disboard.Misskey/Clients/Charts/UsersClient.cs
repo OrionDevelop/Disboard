@@ -20,7 +20,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartDriveData<IEnumerable<long>>>("/drive", parameters);
+            return await PostAsync<ChartDriveData<IEnumerable<long>>>("/drive", parameters).Stay();
         }
 
         public async Task<ChartLocation<ChartFollowingData>> FollowingAsync(string userId, string span, int? limit = null)
@@ -32,7 +32,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartLocation<ChartFollowingData>>("/following", parameters);
+            return await PostAsync<ChartLocation<ChartFollowingData>>("/following", parameters).Stay();
         }
 
         public async Task<ChartNoteData<IEnumerable<long>>> NotesAsync(string userId, string span, int? limit = null)
@@ -44,7 +44,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartNoteData<IEnumerable<long>>>("/notes", parameters);
+            return await PostAsync<ChartNoteData<IEnumerable<long>>>("/notes", parameters).Stay();
         }
 
         public async Task<ChartLocation<ChartCountData>> ReactionsAsync(string userId, string span, int? limit = null)
@@ -56,7 +56,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartLocation<ChartCountData>>("/reactions", parameters);
+            return await PostAsync<ChartLocation<ChartCountData>>("/reactions", parameters).Stay();
         }
     }
 }

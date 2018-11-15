@@ -95,14 +95,14 @@ namespace Disboard.Clients
                     // だいたいこっち来そうではある...
                     observer.OnError(e);
                 }
-                return async () => await Disconnect();
+                return async () => await Disconnect().Stay();
             });
         }
 
         public async Task Disconnect()
         {
-            if (WebSocketClient != null && WebSocketClient.State == WebSocketState.Open)
-                await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+            if (WebSocketClient?.State == WebSocketState.Open)
+                await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).Stay();
         }
 
         // Hmm...
@@ -126,7 +126,7 @@ namespace Disboard.Clients
 
         protected async Task<TU> SendAsync<TU>(string message) where TU : IStreamMessage
         {
-            await SendAsync(message);
+            await SendAsync(message).Stay();
             return await _observable.FirstAsync(w => IsMatchRequestAndResponse(message, w)).Cast<TU>().ToTask().Stay();
         }
 

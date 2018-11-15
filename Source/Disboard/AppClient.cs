@@ -80,10 +80,10 @@ namespace Disboard
 
             var links = SimpleWebLinkParser.Parse(response.Headers.GetValues("link").FirstOrDefault());
             pagenator.Client = this;
-            pagenator.First = links.FirstOrDefault(w => w.Rel == "first")?.Uri;
-            pagenator.Next = links.FirstOrDefault(w => w.Rel == "next")?.Uri;
-            pagenator.Prev = links.FirstOrDefault(w => w.Rel == "prev")?.Uri;
-            pagenator.Last = links.FirstOrDefault(w => w.Rel == "last")?.Uri;
+            pagenator.First = links.Find(w => w.Rel == "first")?.Uri;
+            pagenator.Next = links.Find(w => w.Rel == "next")?.Uri;
+            pagenator.Prev = links.Find(w => w.Rel == "prev")?.Uri;
+            pagenator.Last = links.Find(w => w.Rel == "last")?.Uri;
         }
 
         #region Utilities
@@ -106,7 +106,7 @@ namespace Disboard
                 if (reservedLetters.Contains(((char) b).ToString()))
                     sb.Append((char) b);
                 else
-                    sb.Append($"%{b:X2}");
+                    sb.Append("%").AppendFormat("{0:X2}", b);
             return sb.ToString();
         }
 
@@ -162,7 +162,7 @@ namespace Disboard
             var response = await _httpClient.GetAsync(_baseUrl + endpoint).Stay();
             if (response.IsSuccessStatusCode)
                 return response;
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Disboard
         /// <returns>API response</returns>
         public async Task<string> PutAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            return await SendAsync(HttpMethod.Put, endpoint, parameters);
+            return await SendAsync(HttpMethod.Put, endpoint, parameters).Stay();
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Disboard
             var response = await _httpClient.DeleteAsync(_baseUrl + endpoint).Stay();
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadAsStringAsync().Stay();
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Disboard
 
             if (response.IsSuccessStatusCode)
                 return response;
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
@@ -360,7 +360,7 @@ namespace Disboard
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             if (response.IsSuccessStatusCode)
                 return response;
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         #endregion
