@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 
 using Disboard.Clients;
+using Disboard.Extensions;
 using Disboard.Misskey.Models;
 using Disboard.Misskey.Models.Streaming;
 using Disboard.Models;
@@ -33,7 +34,7 @@ namespace Disboard.Misskey.Clients.Streaming
 
         public async Task SendAsync(WsRequest request)
         {
-            await SendAsync(JsonConvert.SerializeObject(request));
+            await SendAsync(JsonConvert.SerializeObject(request)).Stay();
         }
 
         // Hmm...
@@ -42,7 +43,7 @@ namespace Disboard.Misskey.Clients.Streaming
             await Task.Run(() =>
             {
                 while (WebSocketClient == null || WebSocketClient.State != WebSocketState.Open) { }
-            });
+            }).Stay();
         }
 
         protected override bool IsMatchRequestAndResponse(object request, IStreamMessage response)

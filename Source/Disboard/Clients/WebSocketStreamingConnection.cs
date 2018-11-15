@@ -99,7 +99,7 @@ namespace Disboard.Clients
                 throw new InvalidOperationException();
 
             var bytes = new ArraySegment<byte>(Encoding.UTF8.GetBytes(message));
-            await WebSocketClient.SendAsync(bytes, WebSocketMessageType.Text, true, new CancellationToken());
+            await WebSocketClient.SendAsync(bytes, WebSocketMessageType.Text, true, new CancellationToken()).Stay();
         }
 
         protected async Task<TU> SendAsync<TU>(string message) where TU : IStreamMessage
