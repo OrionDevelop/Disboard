@@ -59,10 +59,9 @@ namespace Disboard.Clients
                     await WebSocketClient.ConnectAsync(uri, CancellationToken.None).Stay();
 
                     var buffer = new ArraySegment<byte>(new byte[1024]);
-
                     observer.OnNext(new ConnectMessage());
 
-                    do
+                    while ((WebSocketClient.State == WebSocketState.Open || WebSocketClient.State == WebSocketState.CloseReceived) && !token.IsCancellationRequested)
                     {
                         var result = await WebSocketClient.ReceiveAsync(buffer, token).Stay();
                         if (result.MessageType == WebSocketMessageType.Close)
@@ -87,7 +86,8 @@ namespace Disboard.Clients
 
                         if (result.MessageType == WebSocketMessageType.Text)
                             observer.OnNext(ParseData(Encoding.UTF8.GetString(bytes)));
-                    } while (WebSocketClient.State == WebSocketState.Open && !token.IsCancellationRequested);
+                    }
+
                     observer.OnCompleted();
                 }
                 catch (Exception e)
@@ -121,7 +121,7 @@ namespace Disboard.Clients
                 throw new InvalidOperationException();
 
             var bytes = new ArraySegment<byte>(Encoding.UTF8.GetBytes(message));
-            await WebSocketClient.SendAsync(bytes, WebSocketMessageType.Text, true, new CancellationToken());
+            await WebSocketClient.SendAsync(bytes, WebSocketMessageType.Text, true, new CancellationToken()).Stay();
         }
 
         protected async Task<TU> SendAsync<TU>(string message) where TU : IStreamMessage

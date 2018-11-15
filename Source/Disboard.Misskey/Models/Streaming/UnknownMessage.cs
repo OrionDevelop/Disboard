@@ -6,6 +6,6 @@ namespace Disboard.Misskey.Models.Streaming
 {
     public class UnknownMessage : IStreamMessage
     {
-        public JObject Body { get; set; }
+        public JToken Body { get; set; }
     }
 }

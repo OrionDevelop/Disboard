@@ -13,7 +13,7 @@ namespace Disboard.Misskey
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<Chart>("/api/chart").Stay();
+            return await PostAsync<Chart>("/api/chart", parameters).Stay();
         }
 
         public async Task<Chart> ChartWsAsync(int? limit = null)

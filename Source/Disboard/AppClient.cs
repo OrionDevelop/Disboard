@@ -352,18 +352,10 @@ namespace Disboard
 
         private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            var dict = new Dictionary<string, object>();
-            if (parameters != null)
-                if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
-                    return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
-                else
-                    foreach (var kvp in parameters)
-                    {
-                        if (dict.ContainsKey(kvp.Key))
-                            throw new InvalidOperationException();
-                        dict.Add(kvp.Key, kvp.Value);
-                    }
-            var body = JsonConvert.SerializeObject(dict);
+            if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
+                return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
+
+            var body = JsonConvert.SerializeObject(parameters != null ? parameters.ToDictionary(w => w.Key, w => w.Value) : new Dictionary<string, object>());
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             if (response.IsSuccessStatusCode)
