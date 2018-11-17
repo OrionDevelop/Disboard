@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models.Streaming
 {
-    internal class WsResponse : IStreamMessage
+    public class WsResponse : IStreamMessage
     {
         [JsonProperty("type")]
         public string Type { get; set; }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Clients.Notes;
 using Disboard.Misskey.Models;
@@ -9,13 +8,13 @@ using Disboard.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class NotesClient : ApiClient<MisskeyClient>
+    public partial class NotesClient : MisskeyApiClient
     {
         public FavoritesClient FavoritesClient { get; }
         public PollsClient Polls { get; }
         public ReactionsClient Reactions { get; }
 
-        protected internal NotesClient(MisskeyClient client) : base(client, "/api/notes")
+        protected internal NotesClient(MisskeyClient client) : base(client, "notes")
         {
             FavoritesClient = new FavoritesClient(client);
             Polls = new PollsClient(client);
@@ -122,7 +121,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Note>>("/mentions", parameters);
+            return await PostAsync<List<Note>>("/mentions", parameters).Stay();
         }
 
         public async Task<List<NoteReaction>> ReactionsAsync(string noteId, int? limit = null, int? offset = null, string sort = null)
@@ -132,7 +131,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("sort", sort);
 
-            return await PostAsync<List<NoteReaction>>("/reactions", parameters);
+            return await PostAsync<List<NoteReaction>>("/reactions", parameters).Stay();
         }
 
         public async Task<List<Note>> RepliesAsync(string noteId, int? limit = null, int? offset = null)
@@ -141,7 +140,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<Note>>("/replies", parameters);
+            return await PostAsync<List<Note>>("/replies", parameters).Stay();
         }
 
         public async Task<List<Note>> RepostsAsync(string noteId, int? limit = null, string sinceId = null, string untilId = null)
@@ -151,7 +150,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Note>>("/reposts", parameters);
+            return await PostAsync<List<Note>>("/reposts", parameters).Stay();
         }
 
         public async Task<List<Note>> SearchByTagAsync(string tag = null, IEnumerable<string> query = null, IEnumerable<string> includeUserIds = null, IEnumerable<string> excludeUserIds = null,
@@ -178,7 +177,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<List<Note>>("/search_by_tag", parameters);
+            return await PostAsync<List<Note>>("/search_by_tag", parameters).Stay();
         }
 
         public async Task<List<Note>> SearchAsync(string query, int? limit = null, int? offset = null)
@@ -187,14 +186,14 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<Note>>("/search", parameters);
+            return await PostAsync<List<Note>>("/search", parameters).Stay();
         }
 
         public async Task<Note> ShowAsync(string noteId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            return await PostAsync<Note>("/show", parameters);
+            return await PostAsync<Note>("/show", parameters).Stay();
         }
 
         public async Task<List<Note>> TimelineAsync(int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null,
@@ -211,7 +210,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("includeLocalRenotes", includeLocalRenotes);
             parameters.AddIfValidValue("withFiles", withFiles);
 
-            return await PostAsync<List<Note>>("/timeline", parameters);
+            return await PostAsync<List<Note>>("/timeline", parameters).Stay();
         }
 
         public async Task<List<Note>> TrendAsync(int? limit = null, int? offset = null, bool? reply = null, bool? renote = null, bool? media = null, bool? poll = null)
@@ -224,7 +223,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("media", media);
             parameters.AddIfValidValue("poll", poll);
 
-            return await PostAsync<List<Note>>("/trend", parameters);
+            return await PostAsync<List<Note>>("/trend", parameters).Stay();
         }
 
         public async Task<List<Note>> UserListTimelineAsync(string listId, int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null,
@@ -241,7 +240,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("includeLocalRenotes", includeLocalRenotes);
             parameters.AddIfValidValue("withFiles", withFiles);
 
-            return await PostAsync<List<Note>>("/user-list-timeline", parameters);
+            return await PostAsync<List<Note>>("/user-list-timeline", parameters).Stay();
         }
     }
 }

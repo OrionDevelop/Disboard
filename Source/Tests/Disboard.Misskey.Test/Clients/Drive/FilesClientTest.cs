@@ -19,14 +19,14 @@ namespace Disboard.Misskey.Test.Clients.Drive
         [Fact]
         public async Task CheckExistenceInExists()
         {
-            var actual = await TestClient.Drive.Files.CheckExistence("bb84063ae69264a728e2825889adfa01");
+            var actual = await TestClient.Drive.Files.CheckExistenceAsync("bb84063ae69264a728e2825889adfa01");
             actual.CheckRecursively(IgnoreProperties);
         }
 
         [Fact]
         public async Task CheckExistenceInNotExists()
         {
-            var actual = await TestClient.Drive.Files.CheckExistence("bb84063ae69364a728e2825889adfa01");
+            var actual = await TestClient.Drive.Files.CheckExistenceAsync("bb84063ae69364a728e2825889adfa01");
             actual.IsNull();
         }
 
@@ -60,7 +60,7 @@ namespace Disboard.Misskey.Test.Clients.Drive
         [Fact]
         public async Task UploadFromUrl()
         {
-            var actual = await TestClient.Drive.Files.UploadFromUrl("https://static.mochizuki.moe/busy_banner.png");
+            var actual = await TestClient.Drive.Files.UploadFromUrlAsync("https://static.mochizuki.moe/busy_banner.png");
             actual.CheckRecursively(IgnoreProperties);
         }
     }

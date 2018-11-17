@@ -1,13 +1,12 @@
 ﻿using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 
 namespace Disboard.Misskey.Clients
 {
-    public class NotificationsClient : ApiClient<MisskeyClient>
+    public partial class NotificationsClient : MisskeyApiClient
     {
-        protected internal NotificationsClient(MisskeyClient client) : base(client, "/api/notifications") { }
+        protected internal NotificationsClient(MisskeyClient client) : base(client, "notifications") { }
 
         public async Task MarkAllAsReadAsync()
         {

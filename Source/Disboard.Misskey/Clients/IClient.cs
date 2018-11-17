@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
     // ReSharper disable once InconsistentNaming
-    public class IClient : ApiClient<MisskeyClient>
+    public partial class IClient : MisskeyApiClient
     {
-        protected internal IClient(MisskeyClient client) : base(client, "/api/i") { }
+        protected internal IClient(MisskeyClient client) : base(client, "i") { }
 
         public async Task<List<Note>> FavoritesAsync(int? limit = null, string sinceId = null, string untilId = null)
         {

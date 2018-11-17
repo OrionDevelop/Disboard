@@ -6,7 +6,7 @@
 
 
 Misskey API wrapper for .NET Standard 2.0.  
-Based on Misskey 10.28.x.
+Based on Misskey 10.38.x.
 
 
 ## Note
@@ -50,14 +50,29 @@ Console.ReadLine();
 await misskey.Auth.Session.UserKeyAsync(session.Token);
 
 // If you want to call REST API, please use method that has "Async()" suffix.
-await misskey.I.VerifyAsync();
+await misskey.IAsync();
 
-// Streaming API
-var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
-    w.Dump();
-});
+try
+{
+    // Streaming API
+    await misskey.Streaming.ConnectAsync();
+    var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
+        w.Dump();
+    });
 
-await Task.Delay(1000 * 60);
-disposable.Dispose();
+    await Task.Delay(1000 * 60);
+    disposable.Dispose();
+
+    // If you want to call REST API using WebSocket connection, please use method that has "WsAsync()" suffix.
+    await misskey.IWsAsync();
+}
+catch (Exception e)
+{
+    Debug.WriteLine(e);
+}
+finally
+{
+    misskey.Streaming.Disconnect();
+}
 ```
 

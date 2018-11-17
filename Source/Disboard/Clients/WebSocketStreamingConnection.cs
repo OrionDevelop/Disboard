@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading;
@@ -32,9 +33,21 @@ namespace Disboard.Clients
             ApiClient = client;
         }
 
+        protected IConnectableObservable<IStreamMessage> ConnectAsConnectable(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            _observable = ConnectInternal(endpoint, parameters).Publish();
+            return (IConnectableObservable<IStreamMessage>) _observable;
+        }
+
         protected IObservable<IStreamMessage> Connect(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            _observable = Observable.Create<IStreamMessage>(async (observer, token) =>
+            _observable = ConnectInternal(endpoint, parameters);
+            return _observable;
+        }
+
+        protected IObservable<IStreamMessage> ConnectInternal(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
+        {
+            return Observable.Create<IStreamMessage>(async (observer, token) =>
             {
                 if (parameters != null && parameters.Any())
                     endpoint += $"?{string.Join("&", AppClient.AsUrlParameter(parameters))}";
@@ -46,6 +59,7 @@ namespace Disboard.Clients
                     await WebSocketClient.ConnectAsync(uri, CancellationToken.None).Stay();
 
                     var buffer = new ArraySegment<byte>(new byte[1024]);
+                    observer.OnNext(new ConnectMessage());
 
                     while ((WebSocketClient.State == WebSocketState.Open || WebSocketClient.State == WebSocketState.CloseReceived) && !token.IsCancellationRequested)
                     {
@@ -81,16 +95,24 @@ namespace Disboard.Clients
                     // だいたいこっち来そうではある...
                     observer.OnError(e);
                 }
-                return async () => await Disconnect();
+                return async () => await Disconnect().Stay();
             });
-
-            return _observable;
         }
 
         public async Task Disconnect()
         {
-            if (WebSocketClient != null)
-                await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", new CancellationToken());
+            if (WebSocketClient?.State == WebSocketState.Open)
+                await WebSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).Stay();
+        }
+
+        // Hmm...
+        public async Task WaitForConnectionEstablished()
+        {
+            if (WebSocketClient == null)
+                throw new InvalidOperationException();
+
+            // TODO: type-check
+            await _observable.FirstAsync(w => w.GetType() == typeof(ConnectMessage)).ToTask().Stay();
         }
 
         protected async Task SendAsync(string message)
@@ -104,7 +126,7 @@ namespace Disboard.Clients
 
         protected async Task<TU> SendAsync<TU>(string message) where TU : IStreamMessage
         {
-            await SendAsync(message);
+            await SendAsync(message).Stay();
             return await _observable.FirstAsync(w => IsMatchRequestAndResponse(message, w)).Cast<TU>().ToTask().Stay();
         }
 

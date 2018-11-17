@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class BlockingClient : ApiClient<MisskeyClient>
+    public partial class BlockingClient : MisskeyApiClient
     {
-        protected internal BlockingClient(MisskeyClient client) : base(client, "/api/blocking") { }
+        protected internal BlockingClient(MisskeyClient client) : base(client, "blocking") { }
 
         public async Task<User> CreateAsync(string userId)
         {

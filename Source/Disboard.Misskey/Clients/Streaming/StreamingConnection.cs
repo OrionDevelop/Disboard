@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.WebSockets;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 
 using Disboard.Clients;
@@ -27,23 +27,14 @@ namespace Disboard.Misskey.Clients.Streaming
             _parameters = parameters;
         }
 
-        public IObservable<IStreamMessage> Connect()
+        public IConnectableObservable<IStreamMessage> Connect()
         {
-            return Connect(_endpoint, _parameters);
+            return ConnectAsConnectable(_endpoint, _parameters);
         }
 
         public async Task SendAsync(WsRequest request)
         {
             await SendAsync(JsonConvert.SerializeObject(request)).Stay();
-        }
-
-        // Hmm...
-        internal async Task WaitForConnectionEstablished()
-        {
-            await Task.Run(() =>
-            {
-                while (WebSocketClient == null || WebSocketClient.State != WebSocketState.Open) { }
-            }).Stay();
         }
 
         protected override bool IsMatchRequestAndResponse(object request, IStreamMessage response)
@@ -105,7 +96,10 @@ namespace Disboard.Misskey.Clients.Streaming
                     default:
                         if (json.Body == null)
                             throw new ArgumentOutOfRangeException(json.Body?.Type);
-                        json.Body.Decoded = new UnknownMessage {Body = json.Body.RawBody};
+                        if (json.Type.StartsWith("api"))
+                            json.Body = new WsRestResponseObject {Res = json.Body.Extends["res"]}; // API call
+                        else
+                            json.Body.Decoded = new UnknownMessage {Body = json.Body.RawBody};
                         break;
                 }
             }
