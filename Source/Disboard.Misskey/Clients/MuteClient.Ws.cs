@@ -6,32 +6,28 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public partial class BlockingClient : MisskeyApiClient
+    public partial class MuteClient
     {
-        protected internal BlockingClient(MisskeyClient client) : base(client, "blocking") { }
-
-        public async Task<User> CreateAsync(string userId)
+        public async Task CreateWsAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-
-            return await PostAsync<User>("/create", parameters).Stay();
+            await SendWsAsync("/create", parameters).Stay();
         }
 
-        public async Task<User> DeleteAsync(string userId)
+        public async Task DeleteWsAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-
-            return await PostAsync<User>("/delete", parameters).Stay();
+            await SendWsAsync("/delete", parameters).Stay();
         }
 
-        public async Task<List<Blocking>> ListAsync(int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<Muting>> ListWsAsync(int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Blocking>>("/list", parameters).Stay();
+            return await SendWsAsync<List<Muting>>("/list", parameters).Stay();
         }
     }
 }

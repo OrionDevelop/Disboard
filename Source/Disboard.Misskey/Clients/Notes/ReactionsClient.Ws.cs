@@ -7,11 +7,9 @@ using Disboard.Misskey.Extensions;
 
 namespace Disboard.Misskey.Clients.Notes
 {
-    public partial class ReactionsClient : MisskeyApiClient
+    public partial class ReactionsClient
     {
-        protected internal ReactionsClient(MisskeyClient client) : base(client, "notes/reactions") { }
-
-        public async Task CreateAsync(string noteId, Reaction reaction)
+        public async Task CreateWsAsync(string noteId, Reaction reaction)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -19,14 +17,14 @@ namespace Disboard.Misskey.Clients.Notes
                 new KeyValuePair<string, object>("reaction", reaction.ToStr())
             };
 
-            await PostAsync("/create", parameters).Stay();
+            await SendWsAsync("/create", parameters).Stay();
         }
 
-        public async Task DeleteAsync(string noteId)
+        public async Task DeleteWsAsync(string noteId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
 
-            await PostAsync("/delete", parameters).Stay();
+            await SendWsAsync("/delete", parameters).Stay();
         }
     }
 }

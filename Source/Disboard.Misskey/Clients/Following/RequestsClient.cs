@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Following
 {
-    public class RequestsClient : ApiClient<MisskeyClient>
+    public partial class RequestsClient : MisskeyApiClient
     {
-        protected internal RequestsClient(MisskeyClient client) : base(client, "/api/following/requests") { }
+        protected internal RequestsClient(MisskeyClient client) : base(client, "following/requests") { }
 
         public async Task AcceptAsync(string userId)
         {
@@ -20,7 +19,7 @@ namespace Disboard.Misskey.Clients.Following
         public async Task<User> CancelAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
-            return await PostAsync<User>("/cancel", parameters);
+            return await PostAsync<User>("/cancel", parameters).Stay();
         }
 
         public async Task<List<FollowRequest>> ListAsync()

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 using Disboard.Models;
@@ -10,9 +9,9 @@ using Credential = Disboard.Misskey.Models.Credential;
 
 namespace Disboard.Misskey.Clients.Auth
 {
-    public class SessionClient : ApiClient<MisskeyClient>
+    public partial class SessionClient : MisskeyApiClient
     {
-        protected internal SessionClient(MisskeyClient client) : base(client, "/api/auth/session") { }
+        protected internal SessionClient(MisskeyClient client) : base(client, "auth/session") { }
 
         public async Task<Session> GenerateAsync()
         {

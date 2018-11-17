@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Clients.Following;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class FollowingClient : ApiClient<MisskeyClient>
+    public partial class FollowingClient : MisskeyApiClient
     {
         public RequestsClient Requests { get; }
 
-        protected internal FollowingClient(MisskeyClient client) : base(client, "/api/following")
+        protected internal FollowingClient(MisskeyClient client) : base(client, "following")
         {
             Requests = new RequestsClient(client);
         }

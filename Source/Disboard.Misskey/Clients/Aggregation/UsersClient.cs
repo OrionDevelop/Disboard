@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Aggregation
 {
-    public class UsersClient : ApiClient<MisskeyClient>
+    public partial class UsersClient : MisskeyApiClient
     {
-        protected internal UsersClient(MisskeyClient client) : base(client, "/api/aggregation/users") { }
+        protected internal UsersClient(MisskeyClient client) : base(client, "aggregation/users") { }
 
         public async Task<List<PostAggregation>> ActivityAsync(string userId, int? limit = null)
         {

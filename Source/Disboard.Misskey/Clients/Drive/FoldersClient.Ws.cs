@@ -6,48 +6,46 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Drive
 {
-    public partial class FoldersClient : MisskeyApiClient
+    public partial class FoldersClient
     {
-        protected internal FoldersClient(MisskeyClient client) : base(client, "drive/folders") { }
-
-        public async Task<Folder> CreateAsync(string name = null, string parentId = null)
+        public async Task<Folder> CreateWsAsync(string name = null, string parentId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("name", name);
             parameters.AddIfValidValue("parentId", parentId);
 
-            return await PostAsync<Folder>("/create", parameters).Stay();
+            return await SendWsAsync<Folder>("/create", parameters).Stay();
         }
 
-        public async Task DeleteAsync(string folderId)
+        public async Task DeleteWsAsync(string folderId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("folderId", folderId)};
 
-            await PostAsync("/delete", parameters).Stay();
+            await SendWsAsync("/delete", parameters).Stay();
         }
 
-        public async Task<List<Folder>> FindAsync(string name, string parentId = null)
+        public async Task<List<Folder>> FindWsAsync(string name, string parentId = null)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("name", name)};
             parameters.AddIfValidValue("parentId", parentId);
 
-            return await PostAsync<List<Folder>>("/find", parameters).Stay();
+            return await SendWsAsync<List<Folder>>("/find", parameters).Stay();
         }
 
-        public async Task<FolderExtend> ShowAsync(string folderId)
+        public async Task<FolderExtend> ShowWsAsync(string folderId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("folderId", folderId)};
 
-            return await PostAsync<FolderExtend>("/show", parameters).Stay();
+            return await SendWsAsync<FolderExtend>("/show", parameters).Stay();
         }
 
-        public async Task<Folder> UpdateAsync(string folderId, string name = null, string parentId = null)
+        public async Task<Folder> UpdateWsAsync(string folderId, string name = null, string parentId = null)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("folderId", folderId)};
             parameters.AddIfValidValue("name", name);
             parameters.AddIfValidValue("parentId", parentId);
 
-            return await PostAsync<Folder>("/update", parameters).Stay();
+            return await SendWsAsync<Folder>("/update", parameters).Stay();
         }
     }
 }

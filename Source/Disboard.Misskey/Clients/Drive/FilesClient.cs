@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
@@ -9,9 +8,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Disboard.Misskey.Clients.Drive
 {
-    public class FilesClient : ApiClient<MisskeyClient>
+    public partial class FilesClient : MisskeyApiClient
     {
-        protected internal FilesClient(MisskeyClient client) : base(client, "/api/drive/files") { }
+        protected internal FilesClient(MisskeyClient client) : base(client, "drive/files") { }
 
         public async Task<List<Note>> AttachedNotesAsync(string fileId)
         {
@@ -20,7 +19,7 @@ namespace Disboard.Misskey.Clients.Drive
             return await PostAsync<List<Note>>("/attached_notes", parameters).Stay();
         }
 
-        public async Task<File> CheckExistence(string md5)
+        public async Task<File> CheckExistenceAsync(string md5)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("md5", md5)};
 
@@ -61,7 +60,7 @@ namespace Disboard.Misskey.Clients.Drive
             return await PostAsync<File>("/update", parameters).Stay();
         }
 
-        public async Task<File> UploadFromUrl(string url)
+        public async Task<File> UploadFromUrlAsync(string url)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("url", url)};
 

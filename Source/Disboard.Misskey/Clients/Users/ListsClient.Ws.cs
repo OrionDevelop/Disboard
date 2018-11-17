@@ -6,30 +6,28 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Users
 {
-    public partial class ListsClient : MisskeyApiClient
+    public partial class ListsClient
     {
-        protected internal ListsClient(MisskeyClient client) : base(client, "users/lists") { }
-
-        public async Task<List> CreateAsync(string title)
+        public async Task<List> CreateWsAsync(string title)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("title", title)};
 
-            return await PostAsync<List>("/create", parameters).Stay();
+            return await SendWsAsync<List>("/create", parameters).Stay();
         }
 
-        public async Task DeleteAsync(string listId)
+        public async Task DeleteWsAsync(string listId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("listId", listId)};
 
-            await PostAsync("/delete", parameters).Stay();
+            await SendWsAsync("/delete", parameters).Stay();
         }
 
-        public async Task<List<List>> ListAsync()
+        public async Task<List<List>> ListWsAsync()
         {
-            return await PostAsync<List<List>>("/list").Stay();
+            return await SendWsAsync<List<List>>("/list").Stay();
         }
 
-        public async Task PushAsync(string listId, string userId)
+        public async Task PushWsAsync(string listId, string userId)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -37,17 +35,17 @@ namespace Disboard.Misskey.Clients.Users
                 new KeyValuePair<string, object>("userId", userId)
             };
 
-            await PostAsync("/push", parameters).Stay();
+            await SendWsAsync("/push", parameters).Stay();
         }
 
-        public async Task<List> ShowAsync(string listId)
+        public async Task<List> ShowWsAsync(string listId)
         {
             var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("listId", listId)};
 
-            return await PostAsync<List>("/show", parameters).Stay();
+            return await SendWsAsync<List>("/show", parameters).Stay();
         }
 
-        public async Task<List> UpdateAsync(string listId, string title)
+        public async Task<List> UpdateWsAsync(string listId, string title)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -55,7 +53,7 @@ namespace Disboard.Misskey.Clients.Users
                 new KeyValuePair<string, object>("title", title)
             };
 
-            return await PostAsync<List>("/update", parameters).Stay();
+            return await SendWsAsync<List>("/update", parameters).Stay();
         }
     }
 }

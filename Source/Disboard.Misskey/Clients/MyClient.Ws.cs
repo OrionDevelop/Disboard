@@ -6,17 +6,15 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public partial class MyClient : MisskeyApiClient
+    public partial class MyClient
     {
-        protected internal MyClient(MisskeyClient client) : base(client, "my") { }
-
-        public async Task<List<App>> AppsAsync(int? limit = null, int? offset = null)
+        public async Task<List<App>> AppsWsAsync(int? limit = null, int? offset = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
-            return await PostAsync<List<App>>("/apps", parameters).Stay();
+            return await SendWsAsync<List<App>>("/apps", parameters).Stay();
         }
     }
 }

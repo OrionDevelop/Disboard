@@ -2,23 +2,13 @@
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
-using Disboard.Misskey.Clients.Drive;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public partial class DriveClient : MisskeyApiClient
+    public partial class DriveClient
     {
-        public FilesClient Files { get; }
-        public FoldersClient Folders { get; }
-
-        protected internal DriveClient(MisskeyClient client) : base(client, "drive")
-        {
-            Files = new FilesClient(client);
-            Folders = new FoldersClient(client);
-        }
-
-        public async Task<List<File>> FilesAsync(string folderId = null, string type = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<File>> FilesWsAsync(string folderId = null, string type = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("folderId", folderId);
@@ -27,10 +17,10 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<File>>("/files", parameters).Stay();
+            return await SendWsAsync<List<File>>("/files", parameters).Stay();
         }
 
-        public async Task<List<Folder>> FoldersAsync(string folderId = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<Folder>> FoldersWsAsync(string folderId = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("folderId", folderId);
@@ -38,10 +28,10 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<Folder>>("/folders", parameters).Stay();
+            return await SendWsAsync<List<Folder>>("/folders", parameters).Stay();
         }
 
-        public async Task<List<File>> StreamAsync(string type = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<File>> StreamWsAsync(string type = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("type", type);
@@ -49,7 +39,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<List<File>>("/stream", parameters).Stay();
+            return await SendWsAsync<List<File>>("/stream", parameters).Stay();
         }
     }
 }

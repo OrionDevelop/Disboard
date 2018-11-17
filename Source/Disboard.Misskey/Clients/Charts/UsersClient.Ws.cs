@@ -6,11 +6,9 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Charts
 {
-    public partial class UsersClient : MisskeyApiClient
+    public partial class UsersClient
     {
-        protected internal UsersClient(MisskeyClient client) : base(client, "charts/user") { }
-
-        public async Task<ChartDriveData<IEnumerable<long>>> DriveAsync(string userId, string span, int? limit = null)
+        public async Task<ChartDriveData<IEnumerable<long>>> DriveWsAsync(string userId, string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -19,10 +17,10 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartDriveData<IEnumerable<long>>>("/drive", parameters).Stay();
+            return await SendWsAsync<ChartDriveData<IEnumerable<long>>>("/drive", parameters).Stay();
         }
 
-        public async Task<ChartLocation<ChartFollowingData>> FollowingAsync(string userId, string span, int? limit = null)
+        public async Task<ChartLocation<ChartFollowingData>> FollowingWsAsync(string userId, string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -31,10 +29,10 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartLocation<ChartFollowingData>>("/following", parameters).Stay();
+            return await SendWsAsync<ChartLocation<ChartFollowingData>>("/following", parameters).Stay();
         }
 
-        public async Task<ChartNoteData<IEnumerable<long>>> NotesAsync(string userId, string span, int? limit = null)
+        public async Task<ChartNoteData<IEnumerable<long>>> NotesWsAsync(string userId, string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -43,10 +41,10 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartNoteData<IEnumerable<long>>>("/notes", parameters).Stay();
+            return await SendWsAsync<ChartNoteData<IEnumerable<long>>>("/notes", parameters).Stay();
         }
 
-        public async Task<ChartLocation<ChartCountData>> ReactionsAsync(string userId, string span, int? limit = null)
+        public async Task<ChartLocation<ChartCountData>> ReactionsWsAsync(string userId, string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -55,7 +53,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartLocation<ChartCountData>>("/reactions", parameters).Stay();
+            return await SendWsAsync<ChartLocation<ChartCountData>>("/reactions", parameters).Stay();
         }
     }
 }

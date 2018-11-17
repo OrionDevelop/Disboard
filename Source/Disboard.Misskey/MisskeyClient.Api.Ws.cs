@@ -1,0 +1,66 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Disboard.Extensions;
+using Disboard.Misskey.Models;
+
+namespace Disboard.Misskey
+{
+    public partial class MisskeyClient
+    {
+        public async Task<Chart> ChartWsAsync(int? limit = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("limit", limit);
+
+            return await SendWsAsync<Chart>("chart").Stay();
+        }
+
+        public async Task<Drive> DriveWsAsync()
+        {
+            return await SendWsAsync<Drive>("drive").Stay();
+        }
+
+        // ReSharper disable once InconsistentNaming
+        public async Task<User> IWsAsync()
+        {
+            return await SendWsAsync<User>("i").Stay();
+        }
+
+        public async Task<Instance> MetaWsAsync()
+        {
+            return await SendWsAsync<Instance>("meta").Stay();
+        }
+
+        public async Task<List<Note>> NotesWsAsync(bool? local = null, bool? reply = null, bool? renote = null, bool? withFiles = null,
+                                                   bool? poll = null, int? limit = null, string sinceId = null, string untilId = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("local", local);
+            parameters.AddIfValidValue("reply", reply);
+            parameters.AddIfValidValue("renote", renote);
+            parameters.AddIfValidValue("withFiles", withFiles);
+            parameters.AddIfValidValue("poll", poll);
+            parameters.AddIfValidValue("limit", limit);
+            parameters.AddIfValidValue("sinceId", sinceId);
+            parameters.AddIfValidValue("untilId", untilId);
+
+            return await SendWsAsync<List<Note>>("notes", parameters).Stay();
+        }
+
+        public async Task<Stats> StatsWsAsync()
+        {
+            return await SendWsAsync<Stats>("stats").Stay();
+        }
+
+        public async Task<List<User>> UsersWsAsync(int? limit = null, int? offset = null, string sort = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("limit", limit);
+            parameters.AddIfValidValue("offset", offset);
+            parameters.AddIfValidValue("sort", sort);
+
+            return await SendWsAsync<List<User>>("users", parameters).Stay();
+        }
+    }
+}
