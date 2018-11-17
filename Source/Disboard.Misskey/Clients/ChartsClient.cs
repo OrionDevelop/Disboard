@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 using Disboard.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class ChartsClient : ApiClient<MisskeyClient>
+    public partial class ChartsClient : MisskeyApiClient
     {
         public Charts.UsersClient Users { get; }
 
-        protected internal ChartsClient(MisskeyClient client) : base(client, "/api/charts")
+        protected internal ChartsClient(MisskeyClient client) : base(client, "charts")
         {
             Users = new Charts.UsersClient(client);
         }

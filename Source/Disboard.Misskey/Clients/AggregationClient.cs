@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class AggregationClient : ApiClient<MisskeyClient>
+    public partial class AggregationClient : MisskeyApiClient
     {
         public Aggregation.UsersClient Users { get; }
 
-        protected internal AggregationClient(MisskeyClient client) : base(client, "/api/aggregation")
+        protected internal AggregationClient(MisskeyClient client) : base(client, "aggregation")
         {
             Users = new Aggregation.UsersClient(client);
         }

@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Clients.Users;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class UsersClient : ApiClient<MisskeyClient>
+    public partial class UsersClient : MisskeyApiClient
     {
         public ListsClient Lists { get; }
 
-        protected internal UsersClient(MisskeyClient client) : base(client, "/api/users")
+        protected internal UsersClient(MisskeyClient client) : base(client, "users")
         {
             Lists = new ListsClient(client);
         }

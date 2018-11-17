@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Drive
 {
-    public class FoldersClient : ApiClient<MisskeyClient>
+    public partial class FoldersClient : MisskeyApiClient
     {
-        protected internal FoldersClient(MisskeyClient client) : base(client, "/api/drive/folders") { }
+        protected internal FoldersClient(MisskeyClient client) : base(client, "drive/folders") { }
 
         public async Task<Folder> CreateAsync(string name = null, string parentId = null)
         {

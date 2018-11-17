@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Enums;
 using Disboard.Misskey.Extensions;
 
 namespace Disboard.Misskey.Clients.Notes
 {
-    public class ReactionsClient : ApiClient<MisskeyClient>
+    public partial class ReactionsClient : MisskeyApiClient
     {
-        protected internal ReactionsClient(MisskeyClient client) : base(client, "/api/notes/reactions") { }
+        protected internal ReactionsClient(MisskeyClient client) : base(client, "notes/reactions") { }
 
         public async Task CreateAsync(string noteId, Reaction reaction)
         {

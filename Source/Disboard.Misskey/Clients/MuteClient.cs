@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class MuteClient : ApiClient<MisskeyClient>
+    public partial class MuteClient : MisskeyApiClient
     {
-        protected internal MuteClient(MisskeyClient client) : base(client, "/api/mute") { }
+        protected internal MuteClient(MisskeyClient client) : base(client, "mute") { }
 
         public async Task CreateAsync(string userId)
         {

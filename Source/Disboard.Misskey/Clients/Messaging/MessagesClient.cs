@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Messaging
 {
-    public class MessagesClient : ApiClient<MisskeyClient>
+    public partial class MessagesClient : MisskeyApiClient
     {
-        protected internal MessagesClient(MisskeyClient client) : base(client, "/api/messaging/messages") { }
+        protected internal MessagesClient(MisskeyClient client) : base(client, "messaging/messages") { }
 
         public async Task<Message> CreateAsync(string userId, string text = null, string fileId = null)
         {

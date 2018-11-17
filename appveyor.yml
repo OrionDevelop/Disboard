@@ -38,6 +38,14 @@ environment:
     secure: vtITEV22b63CoAoGxv2RVN67Y5dV3Wm4pR776daQfqu3qW4WbwhoUktnaqUzFxCT
   MISSKEY_ACCESS_TOKEN:
     secure: 6czWkQqZHuGV+nHrxeBTUn074btzVd0Udlh3qxVmhFtodDrXM3REoYx476ry1j9L
+notifications:
+- provider: Slack
+  incoming_webhook:
+    secure: IY0URIfO7RU35GI0Hz1uzZo6GjX5cZP1glxYAGwwpunZBW5LqfbfkpsafcuTcaC1fmPD+xXck4UmWp4RS4cUro2+Cpyi55Q2TKSp9kENiV+BLeD767QVWMO3Zz7PiqdYKpE1dmiYPTe8SAcYg0asM873SKkcJ8rhUan/mgpsluOAFF9qTxX6LKbJAd6p4Rb/
+  channel: ci
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: false
 nuget:
   disable_publish_on_pr: true
 pull_requests:

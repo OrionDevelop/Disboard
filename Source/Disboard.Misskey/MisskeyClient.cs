@@ -3,9 +3,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
+using Disboard.Extensions;
 using Disboard.Misskey.Clients;
 using Disboard.Misskey.Handlers;
+using Disboard.Misskey.Models.Streaming;
 using Disboard.Models;
 
 using MisskeyAppClient = Disboard.Misskey.Clients.AppClient;
@@ -57,6 +60,20 @@ namespace Disboard.Misskey
             Users = new UsersClient(this);
         }
 
+        #region WsWrapper for Misskey endpoints
+
+        public async Task<T> SendWsAsync<T>(string endpoint, List<KeyValuePair<string, object>> parameters = null)
+        {
+            return await Streaming.SendAsync<T>(WsRestRequestObject.CreateRestRequest(endpoint, parameters)).Stay();
+        }
+
+        public async Task SendWsAsync(string endpoint, List<KeyValuePair<string, object>> parameters = null)
+        {
+            await Streaming.SendAsync(WsRestRequestObject.CreateRestRequest(endpoint, parameters)).Stay();
+        }
+
+        #endregion
+
         #region EncryptedAccessToken
 
         private string _encryptedAccessToken;
@@ -71,7 +88,7 @@ namespace Disboard.Misskey
                 var bytes = Encoding.UTF8.GetBytes(AccessToken + ClientSecret);
                 var sha256 = new SHA256CryptoServiceProvider();
 
-                return _encryptedAccessToken = string.Join("", sha256.ComputeHash(bytes).Select(w => $"{w:x2}"));
+                return _encryptedAccessToken = string.Concat(sha256.ComputeHash(bytes).Select(w => $"{w:x2}"));
             }
         }
 
