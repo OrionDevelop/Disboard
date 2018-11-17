@@ -83,7 +83,7 @@ namespace Disboard.Misskey
                 var bytes = Encoding.UTF8.GetBytes(AccessToken + ClientSecret);
                 var sha256 = new SHA256CryptoServiceProvider();
 
-                return _encryptedAccessToken = string.Join("", sha256.ComputeHash(bytes).Select(w => $"{w:x2}"));
+                return _encryptedAccessToken = string.Concat(sha256.ComputeHash(bytes).Select(w => $"{w:x2}"));
             }
         }
 
