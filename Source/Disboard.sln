@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.Pleroma.Test", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.AutoDocs", "Disboard.AutoDocs\Disboard.AutoDocs.csproj", "{9FE95639-5356-4EC3-B30F-212AC7AACAF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Misskey.Test", "Tests\Disboard.Misskey.Test\Disboard.Misskey.Test.csproj", "{7E302D2F-988B-4EF7-BC29-77CF62EC72EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disboard.Misskey.Test", "Tests\Disboard.Misskey.Test\Disboard.Misskey.Test.csproj", "{7E302D2F-988B-4EF7-BC29-77CF62EC72EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disboard.Elchea", "Disboard.Elchea\Disboard.Elchea.csproj", "{207568DB-590A-4C5A-9D30-89FE7F039618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{7E302D2F-988B-4EF7-BC29-77CF62EC72EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E302D2F-988B-4EF7-BC29-77CF62EC72EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E302D2F-988B-4EF7-BC29-77CF62EC72EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{207568DB-590A-4C5A-9D30-89FE7F039618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{207568DB-590A-4C5A-9D30-89FE7F039618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{207568DB-590A-4C5A-9D30-89FE7F039618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{207568DB-590A-4C5A-9D30-89FE7F039618}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

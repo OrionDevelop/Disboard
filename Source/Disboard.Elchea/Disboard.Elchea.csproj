@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Fuyuno Mikazuki</Authors>
+    <Description>Elchea Federation</Description>
+    <Copyright />
+    <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mika-f/Disboard</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
