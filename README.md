@@ -31,7 +31,7 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 
 1. Fork it!
 2. Create your feature branch (`git checkout -b feature/foobar`)
-3. Commit your changes (`git commit -am'Add some foobar`)
+3. Commit your changes (`git commit -am'Add some foobar'`)
 4. Push to the branch (`git push origin feature/foobar`)
 5. Create a new Pull Request
 
