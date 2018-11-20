@@ -10,12 +10,11 @@ namespace Disboard.Utils
         public static List<WebLink> Parse(string linkHeader)
         {
             var links = new List<WebLink>();
-            var lines = linkHeader.Split(',');
-            foreach (var line in lines)
+            foreach (var line in linkHeader.Split(','))
             {
                 var link = new WebLink();
                 var attributes = line.Split(';').Select(w => w.Trim()).ToList();
-                var uri = attributes.First(); // first element is URI-Reference
+                var uri = attributes[0]; // first element is URI-Reference
                 link.Uri = uri.Substring(1, uri.Length - 2);
                 foreach (var attribute in attributes.Skip(1))
                 {
