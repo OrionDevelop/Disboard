@@ -67,7 +67,7 @@ namespace Disboard.Test.Handlers
         private string CalcMd5(string str)
         {
             var bytes = Encoding.UTF8.GetBytes(str + _salt);
-            var sha256 = new MD5CryptoServiceProvider();
+            var sha256 = new SHA512CryptoServiceProvider();
 
             return string.Join("", sha256.ComputeHash(bytes).Select(w => $"{w:x2}"));
         }
