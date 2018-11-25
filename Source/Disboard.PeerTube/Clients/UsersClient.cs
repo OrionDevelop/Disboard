@@ -23,7 +23,11 @@ namespace Disboard.PeerTube.Clients
                 new KeyValuePair<string, object>("password", password)
             };
 
-            return await PostAsync<Tokens>("/token", parameters).Stay();
+            var tokens = await PostAsync<Tokens>("/token", parameters).Stay();
+            Client.AccessToken = tokens.AccessToken;
+            Client.RefreshToken = tokens.RefreshToken;
+
+            return tokens;
         }
     }
 }
