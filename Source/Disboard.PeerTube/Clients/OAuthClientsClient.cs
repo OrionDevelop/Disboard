@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using Disboard.Clients;
+using Disboard.Extensions;
 using Disboard.PeerTube.Models;
 
 namespace Disboard.PeerTube.Clients
@@ -11,7 +12,11 @@ namespace Disboard.PeerTube.Clients
 
         public async Task<Client> LocalAsync()
         {
-            return await GetAsync<Client>("/local");
+            var client = await GetAsync<Client>("/local").Stay();
+            Client.ClientId = client.ClientId;
+            Client.ClientSecret = client.ClientSecret;
+
+            return client;
         }
     }
 }
