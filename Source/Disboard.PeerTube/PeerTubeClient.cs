@@ -11,7 +11,9 @@ namespace Disboard.PeerTube
         public OAuthClientsClient OAuthClients { get; }
         public UsersClient Users { get; }
 
-        public PeerTubeClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
+        public PeerTubeClient(string domain, HttpClientHandler innerHandler = null) : this(new Credential {Domain = domain}, innerHandler) { }
+
+        public PeerTubeClient(Credential credential, HttpClientHandler innerHandler = null) : base(credential, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
         {
             OAuthClients = new OAuthClientsClient(this);
             Users = new UsersClient(this);
