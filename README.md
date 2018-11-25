@@ -13,8 +13,8 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 | Service  | Version       | Project                                         | NuGet               | Nuget Version                                                                                                                                |
 | -------- | ------------- | ----------------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | N/A      | N/A           | [`Disboard`](Source/Disboard)                   | `Disboard`          | [![Disboard](https://img.shields.io/nuget/v/Disboard.svg?style=flat-square)](https://nuget.org/packages/Disboard)                            |
-| Mastodon | 2.5.0         | [`Disboard.Mastodon`](Source/Disboard.Mastodon) | `Disboard.Mastodon` | [![Disboard.Mastodon](https://img.shields.io/nuget/v/Disboard.Mastodon.svg?style=flat-square)](https://nuget.org/packages/Disboard.Mastodon) |
-| Misskey  | 10.28.0       | [`Disboard.Misskey`](Source/Disboard.Misskey)   | `Disboard.Misskey`  | [![Disboard.Misskey](https://img.shields.io/nuget/v/Disboard.Misskey.svg?style=flat-square)](https://nuget.org/packages/Disboard.Misskey)    |
+| Mastodon | 2.6.x         | [`Disboard.Mastodon`](Source/Disboard.Mastodon) | `Disboard.Mastodon` | [![Disboard.Mastodon](https://img.shields.io/nuget/v/Disboard.Mastodon.svg?style=flat-square)](https://nuget.org/packages/Disboard.Mastodon) |
+| Misskey  | 10.38.0       | [`Disboard.Misskey`](Source/Disboard.Misskey)   | `Disboard.Misskey`  | [![Disboard.Misskey](https://img.shields.io/nuget/v/Disboard.Misskey.svg?style=flat-square)](https://nuget.org/packages/Disboard.Misskey)    |
 | PeerTube | 1.1.0-alpha.2 | [`Disboard.PeerTube`](Source/Disboard.PeerTube) | `Disboard.PeerTube` | [![Disboard.PeerTube](https://img.shields.io/nuget/v/Disboard.PeerTube.svg?style=flat-square)](https://nuget.org/packages/Disboard.PeerTube) |
 | Pleroma  | `ad318189`    | [`Disboard.Pleroma`](Source/Disboard.Pleroma)   | `Disboard.Pleroma`  | [![Disboard.Pleroma](https://img.shields.io/nuget/v/Disboard.Pleroma.svg?style=flat-square)](https://nuget.org/packages/Disboard.Pleroma)    |
 
@@ -32,7 +32,7 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 
 1. Fork it!
 2. Create your feature branch (`git checkout -b feature/foobar`)
-3. Commit your changes (`git commit -am'Add some foobar`)
+3. Commit your changes (`git commit -am'Add some foobar'`)
 4. Push to the branch (`git push origin feature/foobar`)
 5. Create a new Pull Request
 

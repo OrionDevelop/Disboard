@@ -1,2 +1,6 @@
 - name: Introduction
   href: intro.md
+- name: Extend Disboard
+  href: extend.md
+- name: Misskey
+  href: misskey.md

@@ -10,13 +10,13 @@ using Newtonsoft.Json;
 
 namespace Disboard.Exceptions
 {
-    public class DisboardException : Exception
+    public sealed class DisboardException : Exception
     {
-        public HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; }
 
-        public Uri RequestUri { get; set; }
+        public Uri RequestUri { get; }
 
-        public string Response { get; set; }
+        public string Response { get; }
 
         private DisboardException(HttpStatusCode status, Uri uri, string response) : base(response)
         {

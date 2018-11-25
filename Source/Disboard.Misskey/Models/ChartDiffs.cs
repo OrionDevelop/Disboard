@@ -4,15 +4,15 @@ using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
-    public class ChartDiffs : ApiResponse
+    public class ChartDiffs<T> : ApiResponse
     {
         [JsonProperty("normal")]
-        public long Normal { get; set; }
+        public T Normal { get; set; }
 
         [JsonProperty("reply")]
-        public long Reply { get; set; }
+        public T Reply { get; set; }
 
         [JsonProperty("renote")]
-        public long Renote { get; set; }
+        public T Renote { get; set; }
     }
 }

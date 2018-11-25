@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Notes
 {
-    public class PollsClient : ApiClient<MisskeyClient>
+    public partial class PollsClient : MisskeyApiClient
     {
-        protected internal PollsClient(MisskeyClient client) : base(client, "/api/notes/polls") { }
+        protected internal PollsClient(MisskeyClient client) : base(client, "notes/polls") { }
 
         public async Task<List<Note>> RecommendationAsync(int? limit = null, int? offset = null)
         {

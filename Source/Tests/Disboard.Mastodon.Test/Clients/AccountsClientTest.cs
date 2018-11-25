@@ -87,10 +87,10 @@ namespace Disboard.Mastodon.Test.Clients
             actual.CheckRecursively();
         }
 
-        [Fact]
+        [Fact(Skip = "Test response is broken on 2.6.1")]
         public async Task StatusesAsync()
         {
-            var actual = await TestClient.Account.StatusesAsync(Id, 1, 1, 1000000, false, false, true);
+            var actual = await TestClient.Account.StatusesAsync(Id, 1, 1, 1, 1000000, false, false, true);
             actual.Count.Is(1);
             actual.First().CheckRecursively();
         }

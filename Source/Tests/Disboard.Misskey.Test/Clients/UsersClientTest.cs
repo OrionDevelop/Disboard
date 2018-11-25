@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Disboard.Test.Helpers;
@@ -47,6 +48,14 @@ namespace Disboard.Misskey.Test.Clients
             var actual = await TestClient.Users.RecommendationAsync(1);
             actual.Count.Is(1);
             actual.First().CheckRecursively(IgnoreProperties);
+        }
+
+        [Fact]
+        public async Task RelationAsync()
+        {
+            var actual = await TestClient.Users.RelationAsync(new List<string> {"5aa4f87517e79e32cef38397"});
+            actual.Count.IsNot(0);
+            actual.First().CheckRecursively();
         }
 
         [Fact]

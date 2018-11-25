@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class MuteClient : ApiClient<MisskeyClient>
+    public partial class MuteClient : MisskeyApiClient
     {
-        protected internal MuteClient(MisskeyClient client) : base(client, "/api/mute") { }
+        protected internal MuteClient(MisskeyClient client) : base(client, "mute") { }
 
         public async Task CreateAsync(string userId)
         {
@@ -23,14 +22,14 @@ namespace Disboard.Misskey.Clients
             await PostAsync("/delete", parameters).Stay();
         }
 
-        public async Task<MuteList> ListAsync(bool? iknow = null, int? limit = null, string cursor = null)
+        public async Task<List<Muting>> ListAsync(int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
-            parameters.AddIfValidValue("iknow", iknow);
             parameters.AddIfValidValue("limit", limit);
-            parameters.AddIfValidValue("cursor", cursor);
+            parameters.AddIfValidValue("sinceId", sinceId);
+            parameters.AddIfValidValue("untilId", untilId);
 
-            return await PostAsync<MuteList>("/list", parameters).Stay();
+            return await PostAsync<List<Muting>>("/list", parameters).Stay();
         }
     }
 }

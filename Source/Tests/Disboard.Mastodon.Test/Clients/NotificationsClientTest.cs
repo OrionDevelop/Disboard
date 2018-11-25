@@ -25,7 +25,7 @@ namespace Disboard.Mastodon.Test.Clients
         [Fact]
         public async Task ListAsync()
         {
-            var actual = await TestClient.Notifications.ListAsync(1, 1, 1000000, NotificationType.Reblog);
+            var actual = await TestClient.Notifications.ListAsync(1, 1, 1, 1000000, NotificationType.Reblog);
             actual.Count.Is(1);
             actual.First().CheckRecursively();
         }

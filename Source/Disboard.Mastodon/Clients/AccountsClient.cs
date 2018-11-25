@@ -60,12 +60,13 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<List<Relationship>>("/relationships", parameters).Stay();
         }
 
-        public async Task<Pagenator<Status>> StatusesAsync(long id, long? limit = null, long? sinceId = null, long? maxId = null, bool? isPinned = null, bool? isOnlyMedia = null,
+        public async Task<Pagenator<Status>> StatusesAsync(long id, long? limit = null, long? sinceId = null, long? minId = null, long? maxId = null, bool? isPinned = null, bool? isOnlyMedia = null,
                                                            bool? excludeReplies = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("since_id", sinceId);
+            parameters.AddIfValidValue("min_id", minId);
             parameters.AddIfValidValue("max_id", maxId);
             parameters.AddIfValidValue("pinned", isPinned);
             parameters.AddIfValidValue("only_media", isOnlyMedia);

@@ -31,6 +31,14 @@ namespace Disboard.Misskey.Test.Clients
         }
 
         [Fact]
+        public async Task FeaturedAsync()
+        {
+            var actual = await TestClient.Notes.FeaturedAsync(1);
+            actual.Count.Is(1);
+            actual.First().CheckRecursively(IgnoreProperties);
+        }
+
+        [Fact]
         public async Task GlobalTimelineAsync()
         {
             var actual = await TestClient.Notes.GlobalTimelineAsync(1, true);
