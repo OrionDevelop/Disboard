@@ -8,10 +8,10 @@ namespace Disboard.PeerTube.Test
 
         public PeerTubeTestClient()
         {
-            TestClient = new PeerTubeClient("peertube.social", new MockHttpClientHandler())
+            TestClient = new PeerTubeClient("peertube.fr", new MockHttpClientHandler())
             {
-                ClientId = "95oj3g3c2wcyjaj7gbwzyvwc6xblmull",
-                ClientSecret = "Qq7jprMvMZBSNJZ8pULAfaHPJkHsRE7H"
+                ClientId = "3kwswtkq376e1yazulftgkmt2zjw27fk",
+                ClientSecret = "X7tNQi7EYMbVkj6PhTJBJVYDxmRlSEQU"
             };
         }
     }
