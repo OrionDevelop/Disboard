@@ -8,6 +8,7 @@ namespace Disboard.PeerTube
 {
     public class PeerTubeClient : AppClient
     {
+        public AccountsClient Accounts { get; }
         public OAuthClientsClient OAuthClients { get; }
         public UsersClient Users { get; }
 
@@ -15,6 +16,7 @@ namespace Disboard.PeerTube
 
         public PeerTubeClient(Credential credential, HttpClientHandler innerHandler = null) : base(credential, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
         {
+            Accounts = new AccountsClient(this);
             OAuthClients = new OAuthClientsClient(this);
             Users = new UsersClient(this);
         }
