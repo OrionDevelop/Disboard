@@ -56,7 +56,7 @@ try
 {
     // Streaming API
     await misskey.Streaming.ConnectAsync();
-    var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscrive(w => {
+    var disposable = misskey.Streaming.LocalTimelineAsObservable().Subscribe(w => {
         w.Dump();
     });
 
