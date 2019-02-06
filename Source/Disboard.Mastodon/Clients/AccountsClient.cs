@@ -157,7 +157,7 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<CredentialAccount>("/verify_credentials").Stay();
         }
 
-        public async Task<Account> CreateAsync(string username, string email, string password, bool agreement, string locale)
+        public async Task<Tokens> CreateAsync(string username, string email, string password, bool agreement, string locale)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -168,7 +168,7 @@ namespace Disboard.Mastodon.Clients
                 new KeyValuePair<string, object>("locale", locale)
             };
 
-            return await PostAsync<Account>(parameters: parameters).Stay();
+            return await PostAsync<Tokens>(parameters: parameters).Stay();
         }
     }
 }
