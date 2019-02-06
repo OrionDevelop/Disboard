@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Disboard.Clients;
@@ -84,7 +85,7 @@ namespace Disboard.Mastodon.Clients
         }
 
         public async Task<Status> UpdateAsync(string status, long? inReplyToId = null, List<long> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
-                                              VisibilityType? visibility = null)
+                                              VisibilityType? visibility = null, DateTime? scheduledAt = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -95,6 +96,8 @@ namespace Disboard.Mastodon.Clients
             parameters.AddIfValidValue("sensitive", isSensitive);
             parameters.AddIfValidValue("spoiler_text", spoilerText);
             parameters.AddIfValidValue("visibility", visibility.ToString().ToLower());
+            if (scheduledAt.HasValue)
+                parameters.Add(new KeyValuePair<string, object>("scheduled_at", scheduledAt.Value.ToString("O")));
 
             return await PostAsync<Status>(parameters: parameters).Stay();
         }
