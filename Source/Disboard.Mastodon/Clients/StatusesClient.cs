@@ -96,8 +96,7 @@ namespace Disboard.Mastodon.Clients
             parameters.AddIfValidValue("sensitive", isSensitive);
             parameters.AddIfValidValue("spoiler_text", spoilerText);
             parameters.AddIfValidValue("visibility", visibility.ToString().ToLower());
-            if (scheduledAt.HasValue)
-                parameters.Add(new KeyValuePair<string, object>("scheduled_at", scheduledAt.Value.ToString("O")));
+            parameters.AddIfValidValue("scheduled_at", scheduledAt);
 
             return await PostAsync<Status>(parameters: parameters).Stay();
         }
