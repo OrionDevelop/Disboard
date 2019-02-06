@@ -18,7 +18,7 @@ namespace Disboard.Mastodon.Models
         public DateTime ScheduledAt { get; set; }
 
         [JsonProperty("params")]
-        public Status Params { get; set; }
+        public StatusParams Params { get; set; }
 
         [JsonProperty("media_attachments")]
         public List<Attachment> MediaAttachments { get; set; }
