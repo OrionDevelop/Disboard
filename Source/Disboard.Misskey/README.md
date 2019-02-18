@@ -6,7 +6,7 @@
 
 
 Misskey API wrapper for .NET Standard 2.0.  
-Based on Misskey 10.38.x.
+Based on Misskey 10.87.x.
 
 
 ## Note
@@ -16,7 +16,7 @@ If you want to contribute to this library, you SHOULD read [Misskey's source cod
 
 **This is a generic Misskey API wrapper**, we do not implement features unique to the instance.  
 
-Some Misskey endpoints require privilege permission (`secure: true`).  
+Some Misskey endpoints require privilege permission (`requireAdmin`, `requireModerator` or `secure` set to `true`).  
 Disboard does not support these APIs.
 
 
