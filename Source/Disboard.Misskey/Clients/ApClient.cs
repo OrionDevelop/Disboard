@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Disboard.Misskey.Clients
 {
-    public class ApClient : MisskeyApiClient
+    public partial class ApClient : MisskeyApiClient
     {
         protected internal ApClient(MisskeyClient client) : base(client, "ap") { }
 
