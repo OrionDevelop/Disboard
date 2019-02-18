@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
@@ -8,6 +9,7 @@ namespace Disboard.Misskey
 {
     public partial class MisskeyClient
     {
+        [Obsolete]
         public async Task<Chart> ChartAsync(int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
