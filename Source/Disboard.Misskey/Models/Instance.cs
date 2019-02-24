@@ -17,6 +17,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("clientVersion")]
         public string ClientVersion { get; set; }
 
+        [JsonProperty("emojis")]
+        public IEnumerable<ApiResponse> Emojis { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 

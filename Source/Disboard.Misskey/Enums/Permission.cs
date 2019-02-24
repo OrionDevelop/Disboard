@@ -14,9 +14,9 @@
 
         FavoriteWrite = 1 << 4,
 
-        FollowingWrite = 1 << 5,
+        FollowingRead = 1 << 5,
 
-        FollowingRead = 1 << 6,
+        FollowingWrite = 1 << 6,
 
         MessagingRead = 1 << 7,
 

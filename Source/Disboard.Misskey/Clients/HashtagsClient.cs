@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class HashtagsClient : ApiClient<MisskeyClient>
+    public partial class HashtagsClient : MisskeyApiClient
     {
-        protected internal HashtagsClient(MisskeyClient client) : base(client, "/api/hashtags") { }
+        protected internal HashtagsClient(MisskeyClient client) : base(client, "hashtags") { }
 
         public async Task<List<string>> SearchAsync(string query, int? limit = null, long? offset = null)
         {

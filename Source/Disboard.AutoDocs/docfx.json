@@ -10,7 +10,8 @@
           "exclude": [
             "**/obj/**",
             "**/bin/**",
-            "_site/**"
+            "_site/**",
+            "**/**.Test.csproj"
           ]
         }
       ],
@@ -28,7 +29,7 @@
       {
         "files": [
           "api/*.md",
-          "articles/**.md",
+          "articles/**.{md,yml}",
           "toc.yml",
           "*.md"
         ],

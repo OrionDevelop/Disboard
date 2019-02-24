@@ -9,14 +9,17 @@ namespace Disboard.Mastodon
 {
     public class MastodonClient : AppClient
     {
-        public MastodonClient(string domain, HttpClientHandler innerHandler = null) : base(domain, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
+        public MastodonClient(string domain, HttpClientHandler innerHandler = null) : this(new Credential { Domain = domain }, innerHandler) { }
+
+        public MastodonClient(Credential credential, HttpClientHandler innerHandler = null) : base(credential, new OAuth2HttpClientHandler(innerHandler), RequestMode.FormUrlEncoded)
         {
-            BinaryParameters = new List<string> {"avatar", "header", "file"};
+            BinaryParameters = new List<string> { "avatar", "header", "file" };
 
             Account = new AccountsClient(this);
             Apps = new AppsClient(this);
             Auth = new AuthClient(this);
             Blocks = new BlocksClient(this);
+            Conversations = new ConversationsClient(this);
             CustomEmojis = new CustomEmojisClient(this);
             DomainBlocks = new DomainBlocksClient(this);
             Endorsements = new EndorsementsClient(this);
@@ -30,6 +33,7 @@ namespace Disboard.Mastodon
             Notifications = new NotificationsClient(this);
             Push = new PushClient(this);
             Reports = new ReportsClient(this);
+            ScheduledStatuses = new ScheduledStatusesClient(this);
             SearchV1 = new SearchV1Client(this);
             SearchV2 = new SearchV2Client(this);
             Statuses = new StatusesClient(this);
@@ -44,6 +48,7 @@ namespace Disboard.Mastodon
         public AppsClient Apps { get; }
         public AuthClient Auth { get; }
         public BlocksClient Blocks { get; }
+        public ConversationsClient Conversations { get; }
         public CustomEmojisClient CustomEmojis { get; }
         public DomainBlocksClient DomainBlocks { get; }
         public EndorsementsClient Endorsements { get; }
@@ -57,6 +62,7 @@ namespace Disboard.Mastodon
         public NotificationsClient Notifications { get; }
         public PushClient Push { get; }
         public ReportsClient Reports { get; }
+        public ScheduledStatusesClient ScheduledStatuses { get; }
         public SearchV1Client SearchV1 { get; }
         public SearchV2Client SearchV2 { get; }
         public StatusesClient Statuses { get; }

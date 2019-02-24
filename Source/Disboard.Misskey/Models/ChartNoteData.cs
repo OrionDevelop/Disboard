@@ -2,18 +2,18 @@
 
 namespace Disboard.Misskey.Models
 {
-    public class ChartNoteData : ChartData
+    public class ChartNoteData<T> : ChartData
     {
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public T Total { get; set; }
 
         [JsonProperty("inc")]
-        public long Inc { get; set; }
+        public T Inc { get; set; }
 
         [JsonProperty("dec")]
-        public long Dec { get; set; }
+        public T Dec { get; set; }
 
         [JsonProperty("diffs")]
-        public ChartDiffs Diffs { get; set; }
+        public ChartDiffs<T> Diffs { get; set; }
     }
 }

@@ -29,6 +29,6 @@ namespace Disboard.Models
         public string Type { get; set; }
 
         // others (extensions)
-        public Dictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Extensions { get; } = new Dictionary<string, string>();
     }
 }

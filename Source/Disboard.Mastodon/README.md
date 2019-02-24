@@ -6,13 +6,13 @@
 
 
 Mastodon API wrapper for .NET Standard 2.0.  
-Based on Mastodon 2.5.0.
+Based on Mastodon 2.7.x.
 
 
 ## Note
 
-[Mastodon's documentation](https://github.com/tootsuite/documentation) is not trustworthy.  
-If you want to contribute to this library, you SHOULD read [Mastodon's source code implementation](https://github.com/tootsuite/mastodon).
+Disboard is based on [Mastodon's documentation](https://docs.joinmastodon.org/).  
+If there is something that not mentioned in the document, Disboard does not support it.  
 
 **This is a generic Mastodon API wrapper**, we do not implement features unique to the instance.  
 For example, pixiv's instance "pawoo.net" implements unique features, we do not support one.

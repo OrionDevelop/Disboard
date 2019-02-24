@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Clients.Users;
 using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class UsersClient : ApiClient<MisskeyClient>
+    public partial class UsersClient : MisskeyApiClient
     {
         public ListsClient Lists { get; }
 
-        protected internal UsersClient(MisskeyClient client) : base(client, "/api/users")
+        protected internal UsersClient(MisskeyClient client) : base(client, "users")
         {
             Lists = new ListsClient(client);
         }
@@ -76,6 +75,16 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("offset", offset);
 
             return await PostAsync<List<User>>("/recommendation", parameters).Stay();
+        }
+
+        public async Task<List<Relation>> RelationAsync(List<string> userIds)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("userId", userIds)
+            };
+
+            return await PostAsync<List<Relation>>("/relation", parameters).Stay();
         }
 
         public async Task<List<User>> SearchAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null)

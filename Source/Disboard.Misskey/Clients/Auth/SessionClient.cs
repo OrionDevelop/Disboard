@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 using Disboard.Models;
 
+using Credential = Disboard.Misskey.Models.Credential;
+
 namespace Disboard.Misskey.Clients.Auth
 {
-    public class SessionClient : ApiClient<MisskeyClient>
+    public partial class SessionClient : MisskeyApiClient
     {
-        protected internal SessionClient(MisskeyClient client) : base(client, "/api/auth/session") { }
+        protected internal SessionClient(MisskeyClient client) : base(client, "auth/session") { }
 
         public async Task<Session> GenerateAsync()
         {
@@ -24,7 +25,7 @@ namespace Disboard.Misskey.Clients.Auth
 
         public async Task<ApiResponse> ShowAsync(string token)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("token", token)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("token", token) };
 
             return await PostAsync<ApiResponse>("/show", parameters).Stay();
         }

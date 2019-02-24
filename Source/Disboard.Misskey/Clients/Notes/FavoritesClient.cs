@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 
 namespace Disboard.Misskey.Clients.Notes
 {
-    public class FavoritesClient : ApiClient<MisskeyClient>
+    public partial class FavoritesClient : MisskeyApiClient
     {
-        protected internal FavoritesClient(MisskeyClient client) : base(client, "/api/notes/favorites") { }
+        protected internal FavoritesClient(MisskeyClient client) : base(client, "notes/favorites") { }
 
         public async Task CreateAsync(string noteId)
         {

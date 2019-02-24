@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 
 using Disboard.Clients;
 using Disboard.Mastodon.Models.Streaming;
@@ -22,7 +23,7 @@ namespace Disboard.Pleroma.Clients.Streaming
 
         public IObservable<IStreamMessage> Connect()
         {
-            return Connect(_endpoint, _parameters);
+            return Connect(_endpoint, _parameters).Where(w => w.GetType() != typeof(ConnectMessage));
         }
 
         protected override bool IsMatchRequestAndResponse(object request, IStreamMessage response)

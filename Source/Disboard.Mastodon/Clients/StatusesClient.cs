@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Disboard.Clients;
@@ -83,6 +84,8 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Card>($"/{id}/card").Stay();
         }
 
+        #region UpdateAsync
+
         public async Task<Status> UpdateAsync(string status, long? inReplyToId = null, List<long> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
                                               VisibilityType? visibility = null)
         {
@@ -98,6 +101,25 @@ namespace Disboard.Mastodon.Clients
 
             return await PostAsync<Status>(parameters: parameters).Stay();
         }
+
+        public async Task<ScheduledStatus> UpdateAsync(string status, long? inReplyToId = null, List<long> mediaIds = null, bool? isSensitive = null, string spoilerText = null,
+                                              VisibilityType? visibility = null, DateTime? scheduledAt = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("status", status)
+            };
+            parameters.AddIfValidValue("in_reply_to_id", inReplyToId);
+            mediaIds?.ForEach(w => parameters.Add(new KeyValuePair<string, object>("media_ids[]", w)));
+            parameters.AddIfValidValue("sensitive", isSensitive);
+            parameters.AddIfValidValue("spoiler_text", spoilerText);
+            parameters.AddIfValidValue("visibility", visibility.ToString().ToLower());
+            parameters.AddIfValidValue("scheduled_at", scheduledAt);
+
+            return await PostAsync<ScheduledStatus>(parameters: parameters).Stay();
+        }
+
+        #endregion
 
         public async Task<Status> ShowAsync(long id)
         {

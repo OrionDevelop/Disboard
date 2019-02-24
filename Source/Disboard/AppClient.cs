@@ -28,31 +28,27 @@ namespace Disboard
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
         private readonly RequestMode _requestMode;
-        public static string Version => "1.0";
+        public static string Version => "1.1";
 
         /// <summary>
         ///     Keys that send as binary data.
         /// </summary>
         protected List<string> BinaryParameters { get; set; } = new List<string>();
 
-        #region Other Properties
-
-        public string Domain { get; }
-
-        #endregion
+        public Credential Credential { get; }
 
         /// <summary>
-        ///     Constructor
+        ///     Constructor with existing credentials
         /// </summary>
-        /// <param name="domain">Domain name</param>
-        /// <param name="handler">DisboardHttpHandler implementation instance</param>
-        /// <param name="requestMode">Serialization mode</param>
-        protected AppClient(string domain, DisboardHttpHandler handler, RequestMode requestMode)
+        /// <param name="credential"></param>
+        /// <param name="handler"></param>
+        /// <param name="requestMode"></param>
+        public AppClient(Credential credential, DisboardHttpHandler handler, RequestMode requestMode)
         {
-            Domain = domain;
-            _baseUrl = $"https://{domain}";
+            Credential = credential;
+            _baseUrl = $"https://{Credential.Domain}";
             _requestMode = requestMode;
-            handler.Client = this; // これしか思いつかなかった...
+            handler.Client = this;
 
             _httpClient = new HttpClient(handler);
             _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
@@ -67,10 +63,10 @@ namespace Disboard
 
             var links = SimpleWebLinkParser.Parse(response.Headers.GetValues("link").FirstOrDefault());
             pagenator.Client = this;
-            pagenator.First = links.FirstOrDefault(w => w.Rel == "first")?.Uri;
-            pagenator.Next = links.FirstOrDefault(w => w.Rel == "next")?.Uri;
-            pagenator.Prev = links.FirstOrDefault(w => w.Rel == "prev")?.Uri;
-            pagenator.Last = links.FirstOrDefault(w => w.Rel == "last")?.Uri;
+            pagenator.First = links.Find(w => w.Rel == "first")?.Uri;
+            pagenator.Next = links.Find(w => w.Rel == "next")?.Uri;
+            pagenator.Prev = links.Find(w => w.Rel == "prev")?.Uri;
+            pagenator.Last = links.Find(w => w.Rel == "last")?.Uri;
         }
 
         #region Utilities
@@ -93,7 +89,7 @@ namespace Disboard
                 if (reservedLetters.Contains(((char) b).ToString()))
                     sb.Append((char) b);
                 else
-                    sb.Append($"%{b:X2}");
+                    sb.Append("%").AppendFormat("{0:X2}", b);
             return sb.ToString();
         }
 
@@ -149,7 +145,7 @@ namespace Disboard
             var response = await _httpClient.GetAsync(_baseUrl + endpoint).Stay();
             if (response.IsSuccessStatusCode)
                 return response;
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         /// <summary>
@@ -209,7 +205,7 @@ namespace Disboard
         /// <returns>API response</returns>
         public async Task<string> PutAsync(string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            return await SendAsync(HttpMethod.Put, endpoint, parameters);
+            return await SendAsync(HttpMethod.Put, endpoint, parameters).Stay();
         }
 
         /// <summary>
@@ -238,7 +234,7 @@ namespace Disboard
             var response = await _httpClient.DeleteAsync(_baseUrl + endpoint).Stay();
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadAsStringAsync().Stay();
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         /// <summary>
@@ -334,43 +330,52 @@ namespace Disboard
 
             if (response.IsSuccessStatusCode)
                 return response;
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         private async Task<HttpResponseMessage> SendAsJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters = null)
         {
-            var dict = new Dictionary<string, object>();
-            if (parameters != null)
-                if (parameters.Any(w => BinaryParameters.Contains(w.Key)))
-                    return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
-                else
-                    foreach (var kvp in parameters)
-                    {
-                        if (dict.ContainsKey(kvp.Key))
-                            throw new InvalidOperationException();
-                        dict.Add(kvp.Key, kvp.Value);
-                    }
-            var body = JsonConvert.SerializeObject(dict);
+            if (parameters != null && parameters.Any(w => BinaryParameters.Contains(w.Key)))
+                return await SendAsFormDataAsync(method, endpoint, parameters).Stay();
+
+            var body = JsonConvert.SerializeObject(parameters != null ? parameters.ToDictionary(w => w.Key, w => w.Value) : new Dictionary<string, object>());
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage(method, _baseUrl + endpoint) {Content = content}).Stay();
             if (response.IsSuccessStatusCode)
                 return response;
-            throw await DisboardException.Create(response, _baseUrl + endpoint);
+            throw await DisboardException.Create(response, _baseUrl + endpoint).Stay();
         }
 
         #endregion
 
-        #region Application Keys
+        #region Aliases
+
+        /// <summary>
+        ///     Domain
+        /// </summary>
+        public string Domain
+        {
+            get => Credential.Domain;
+            set => Credential.Domain = value;
+        }
 
         /// <summary>
         ///     Client ID
         /// </summary>
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get => Credential.ClientId;
+            set => Credential.ClientId = value;
+        }
 
         /// <summary>
         ///     Client Secret
         /// </summary>
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get => Credential.ClientSecret;
+            set => Credential.ClientSecret = value;
+        }
 
         /// <summary>
         ///     Consumer Key (alias of <see cref="ClientId" />)
@@ -397,17 +402,29 @@ namespace Disboard
         /// <summary>
         ///     Access Token
         /// </summary>
-        public string AccessToken { get; set; }
+        public string AccessToken
+        {
+            get => Credential.AccessToken;
+            set => Credential.AccessToken = value;
+        }
 
         /// <summary>
         ///     Access Token Secret
         /// </summary>
-        public string AccessTokenSecret { get; set; }
+        public string AccessTokenSecret
+        {
+            get => Credential.AccessTokenSecret;
+            set => Credential.AccessTokenSecret = value;
+        }
 
         /// <summary>
         ///     Refresh Token (OAuth 2.0)
         /// </summary>
-        public string RefreshToken { get; set; }
+        public string RefreshToken
+        {
+            get => Credential.RefreshToken;
+            set => Credential.RefreshToken = value;
+        }
 
         #endregion
     }

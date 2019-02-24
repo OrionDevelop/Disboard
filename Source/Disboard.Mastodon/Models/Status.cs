@@ -40,6 +40,9 @@ namespace Disboard.Mastodon.Models
         [JsonProperty("uri")]
         public Uri Uri { get; set; }
 
+        [JsonProperty("card")]
+        public Card Card { get; set; }
+
         [JsonProperty("content")]
         public string Content { get; set; }
 
