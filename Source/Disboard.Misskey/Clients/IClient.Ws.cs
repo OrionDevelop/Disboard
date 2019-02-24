@@ -33,14 +33,14 @@ namespace Disboard.Misskey.Clients
 
         public async Task<User> PinWsAsync(string noteId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
 
             return await SendWsAsync<User>("/pin", parameters).Stay();
         }
 
         public async Task<User> UnpinWsAsync(string noteId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
 
             return await SendWsAsync<User>("/unpin", parameters).Stay();
         }

@@ -23,7 +23,7 @@ namespace Disboard.Misskey.Clients
         public async Task ConnectAsync(string host = null)
         {
             var url = $"wss://{(string.IsNullOrWhiteSpace(host) ? Client.Domain : host)}/streaming";
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("i", Client.EncryptedAccessToken)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("i", Client.EncryptedAccessToken) };
             _connection = new StreamingConnection(Client, url, parameters);
             _observable = _connection.Connect();
             _disposable = _observable.Connect(); // start
@@ -38,7 +38,7 @@ namespace Disboard.Misskey.Clients
         public IObservable<IStreamMessage> MainAsObservable()
         {
             var id = Guid.NewGuid().ToString();
-            var body = new WsRequest {Body = new Connection {Channel = "main", Id = id}, Type = "connect"};
+            var body = new WsRequest { Body = new Connection { Channel = "main", Id = id }, Type = "connect" };
             SendAsync(body).Wait();
             return ApplyStreamFilter(_observable, id);
         }
@@ -46,7 +46,7 @@ namespace Disboard.Misskey.Clients
         public IObservable<IStreamMessage> HomeTimelineAsObservable()
         {
             var id = Guid.NewGuid().ToString();
-            var body = new WsRequest {Body = new Connection {Channel = "homeTimeline", Id = id}, Type = "connect"};
+            var body = new WsRequest { Body = new Connection { Channel = "homeTimeline", Id = id }, Type = "connect" };
             SendAsync(body).Wait();
             return ApplyStreamFilter(_observable, id);
         }
@@ -54,7 +54,15 @@ namespace Disboard.Misskey.Clients
         public IObservable<IStreamMessage> LocalTimelineAsObservable()
         {
             var id = Guid.NewGuid().ToString();
-            var body = new WsRequest {Body = new Connection {Channel = "localTimeline", Id = id}, Type = "connect"};
+            var body = new WsRequest { Body = new Connection { Channel = "localTimeline", Id = id }, Type = "connect" };
+            SendAsync(body).Wait();
+            return ApplyStreamFilter(_observable, id);
+        }
+
+        public IObservable<IStreamMessage> HybridTimelineAsObservable()
+        {
+            var id = Guid.NewGuid().ToString();
+            var body = new WsRequest { Body = new Connection { Channel = "hybridTimeline", Id = id }, Type = "connect" };
             SendAsync(body).Wait();
             return ApplyStreamFilter(_observable, id);
         }
@@ -62,7 +70,7 @@ namespace Disboard.Misskey.Clients
         public IObservable<IStreamMessage> GlobalTimelineAsObservable()
         {
             var id = Guid.NewGuid().ToString();
-            var body = new WsRequest {Body = new Connection {Channel = "globalTimeline", Id = id}, Type = "connect"};
+            var body = new WsRequest { Body = new Connection { Channel = "globalTimeline", Id = id }, Type = "connect" };
             SendAsync(body).Wait();
             return ApplyStreamFilter(_observable, id);
         }
@@ -88,7 +96,7 @@ namespace Disboard.Misskey.Clients
         private IObservable<IStreamMessage> ApplyStreamFilter(IObservable<IStreamMessage> stream, string id)
         {
             return stream.Cast<WsResponse>().Where(w => Passable(w, id)).Select(w => w.Body.Decoded)
-                         .Finally(async () => await SendAsync(new WsRequest {Type = "disconnect", Body = new WsRequestObject {Id = id}}).Stay());
+                         .Finally(async () => await SendAsync(new WsRequest { Type = "disconnect", Body = new WsRequestObject { Id = id } }).Stay());
         }
 
         private static bool Passable(WsResponse response, string id)

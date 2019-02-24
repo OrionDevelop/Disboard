@@ -11,7 +11,7 @@ namespace Disboard.Misskey.Clients
     {
         public async Task<List<Note>> ConversationWsAsync(string noteId, int? limit = null, int? offset = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
@@ -39,7 +39,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task DeleteWsAsync(string noteId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
 
             await SendWsAsync("/delete", parameters).Stay();
         }
@@ -114,7 +114,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<NoteReaction>> ReactionsWsAsync(string noteId, int? limit = null, int? offset = null, string sort = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("sort", sort);
@@ -124,7 +124,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<Note>> RepliesWsAsync(string noteId, int? limit = null, int? offset = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
@@ -133,7 +133,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<Note>> RepostsWsAsync(string noteId, int? limit = null, string sinceId = null, string untilId = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
@@ -170,7 +170,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<Note>> SearchWsAsync(string query, int? limit = null, int? offset = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("query", query)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("query", query) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
 
@@ -179,7 +179,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<Note> ShowWsAsync(string noteId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
 
             return await SendWsAsync<Note>("/show", parameters).Stay();
         }
@@ -217,7 +217,7 @@ namespace Disboard.Misskey.Clients
         public async Task<List<Note>> UserListTimelineWsAsync(string listId, int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null,
                                                               bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null, bool? withFiles = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("listId", listId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("listId", listId) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("sinceId", sinceId);
             parameters.AddIfValidValue("untilId", untilId);
