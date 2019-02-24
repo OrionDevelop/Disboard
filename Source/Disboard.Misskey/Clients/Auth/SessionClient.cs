@@ -25,7 +25,7 @@ namespace Disboard.Misskey.Clients.Auth
 
         public async Task<ApiResponse> ShowAsync(string token)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("token", token)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("token", token) };
 
             return await PostAsync<ApiResponse>("/show", parameters).Stay();
         }
