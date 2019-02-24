@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Disboard.Clients;
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
 
@@ -15,14 +14,14 @@ namespace Disboard.Misskey.Clients.Drive
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("fileId", fileId) };
 
-            return await SendWsAsync<List<Note>>("/attached_notes", parameters).Stay();
+            return await SendWsAsync<List<Note>>("/attached-notes", parameters).Stay();
         }
 
         public async Task<File> CheckExistenceWsAsync(string md5)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("md5", md5) };
 
-            var response = await SendWsAsync<JObject>("/check_existence", parameters).Stay();
+            var response = await SendWsAsync<JObject>("/check-existence", parameters).Stay();
             return response.ContainsKey("file") ? response["file"].ToObject<File>() : null;
         }
 
@@ -63,7 +62,7 @@ namespace Disboard.Misskey.Clients.Drive
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("url", url) };
 
-            return await SendWsAsync<File>("/upload_from_url", parameters).Stay();
+            return await SendWsAsync<File>("/upload-from-url", parameters).Stay();
         }
     }
 }

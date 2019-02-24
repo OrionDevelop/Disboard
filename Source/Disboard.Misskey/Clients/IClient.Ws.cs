@@ -47,7 +47,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task ReadAllUnreadNotesWsAsync()
         {
-            await SendWsAsync("/read_all_unread_notes").Stay();
+            await SendWsAsync("/read-all-unread-notes").Stay();
         }
 
         public async Task<User> UpdateWsAsync(string name = null, string description = null, string location = null, string birthday = null, string avatarId = null, string bannerId = null,

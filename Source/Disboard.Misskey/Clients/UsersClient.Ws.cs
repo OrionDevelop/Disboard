@@ -10,7 +10,7 @@ namespace Disboard.Misskey.Clients
     {
         public async Task<UserWithCursor> FollowersWsAsync(string userId, bool? iknow = null, int? limit = null, string cursor = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
             parameters.AddIfValidValue("iknow", iknow);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
@@ -20,7 +20,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<UserWithCursor> FollowingWsAsync(string userId, bool? iknow = null, int? limit = null, string cursor = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
             parameters.AddIfValidValue("iknow", iknow);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
@@ -30,10 +30,10 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<FrequentlyRepliedUser>> GetFrequentlyRepliedUsersWsAsync(string userId, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
             parameters.AddIfValidValue("limit", limit);
 
-            return await SendWsAsync<List<FrequentlyRepliedUser>>("/get_frequently_replied_users", parameters).Stay();
+            return await SendWsAsync<List<FrequentlyRepliedUser>>("/get-frequently-replied-users", parameters).Stay();
         }
 
         public async Task<List<Note>> NotesWsAsync(string userId = null, string username = null, string host = null, bool? includeReplies = null, int? limit = null,
@@ -81,7 +81,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<User>> SearchWsAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("query", query)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("query", query) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("localOnly", localOnly);
@@ -99,7 +99,7 @@ namespace Disboard.Misskey.Clients
 
             if (userIds != null)
                 return await SendWsAsync<List<User>>("/show", parameters).Stay();
-            return new List<User> {await SendWsAsync<User>("/show", parameters).Stay()};
+            return new List<User> { await SendWsAsync<User>("/show", parameters).Stay() };
         }
     }
 }

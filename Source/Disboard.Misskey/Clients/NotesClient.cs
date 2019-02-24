@@ -179,7 +179,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<List<Note>>("/search_by_tag", parameters).Stay();
+            return await PostAsync<List<Note>>("/search-by-tag", parameters).Stay();
         }
 
         public async Task<List<Note>> SearchAsync(string query, int? limit = null, int? offset = null)

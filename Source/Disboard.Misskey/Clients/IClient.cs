@@ -35,21 +35,21 @@ namespace Disboard.Misskey.Clients
 
         public async Task<User> PinAsync(string noteId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
 
             return await PostAsync<User>("/pin", parameters).Stay();
         }
 
         public async Task<User> UnpinAsync(string noteId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("noteId", noteId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
 
             return await PostAsync<User>("/unpin", parameters).Stay();
         }
 
         public async Task ReadAllUnreadNotesAsync()
         {
-            await PostAsync("/read_all_unread_notes").Stay();
+            await PostAsync("/read-all-unread-notes").Stay();
         }
 
         public async Task<User> UpdateAsync(string name = null, string description = null, string location = null, string birthday = null, string avatarId = null, string bannerId = null,

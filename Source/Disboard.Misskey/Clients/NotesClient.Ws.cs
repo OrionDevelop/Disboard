@@ -165,7 +165,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("limit", limit);
 
-            return await SendWsAsync<List<Note>>("/search_by_tag", parameters).Stay();
+            return await SendWsAsync<List<Note>>("/search-by-tag", parameters).Stay();
         }
 
         public async Task<List<Note>> SearchWsAsync(string query, int? limit = null, int? offset = null)
