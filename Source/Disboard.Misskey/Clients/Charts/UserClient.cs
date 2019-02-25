@@ -10,7 +10,7 @@ namespace Disboard.Misskey.Clients.Charts
     {
         protected internal UserClient(MisskeyClient client) : base(client, "charts/user") { }
 
-        public async Task<ChartDriveData<IEnumerable<long>>> DriveAsync(string userId, string span, int? limit = null)
+        public async Task<ChartDriveData1<IEnumerable<long>>> DriveAsync(string userId, string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -19,7 +19,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartDriveData<IEnumerable<long>>>("/drive", parameters).Stay();
+            return await PostAsync<ChartDriveData1<IEnumerable<long>>>("/drive", parameters).Stay();
         }
 
         public async Task<ChartLocation<ChartFollowingData>> FollowingAsync(string userId, string span, int? limit = null)

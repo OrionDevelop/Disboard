@@ -8,7 +8,7 @@ namespace Disboard.Misskey.Clients.Charts
 {
     public partial class UserClient
     {
-        public async Task<ChartDriveData<IEnumerable<long>>> DriveWsAsync(string userId, string span, int? limit = null)
+        public async Task<ChartDriveData1<IEnumerable<long>>> DriveWsAsync(string userId, string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -17,7 +17,7 @@ namespace Disboard.Misskey.Clients.Charts
             };
             parameters.AddIfValidValue("limit", limit);
 
-            return await SendWsAsync<ChartDriveData<IEnumerable<long>>>("/drive", parameters).Stay();
+            return await SendWsAsync<ChartDriveData1<IEnumerable<long>>>("/drive", parameters).Stay();
         }
 
         public async Task<ChartLocation<ChartFollowingData>> FollowingWsAsync(string userId, string span, int? limit = null)

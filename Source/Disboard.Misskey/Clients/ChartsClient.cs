@@ -17,12 +17,20 @@ namespace Disboard.Misskey.Clients
             User = new UserClient(client);
         }
 
-        public async Task<ChartLocation<ChartDriveData<IEnumerable<long>>>> DriveAsync(string span, int? limit = null)
+        public async Task<ChartLocation<ChartCountData>> ActiveUsersAsync(string span, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
             parameters.AddIfValidValue("limit", limit);
 
-            return await PostAsync<ChartLocation<ChartDriveData<IEnumerable<long>>>>("/drive", parameters).Stay();
+            return await PostAsync<ChartLocation<ChartCountData>>("/active-users", parameters);
+        }
+
+        public async Task<ChartLocation<ChartDriveData1<IEnumerable<long>>>> DriveAsync(string span, int? limit = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
+            parameters.AddIfValidValue("limit", limit);
+
+            return await PostAsync<ChartLocation<ChartDriveData1<IEnumerable<long>>>>("/drive", parameters).Stay();
         }
 
         public async Task<ChartBasicData<IEnumerable<long>>> FederationAsync(string span, int? limit = null)
@@ -44,6 +52,18 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("limit", limit);
 
             return await PostAsync<ChartLocation<ChartCountData>>("/hashtag", parameters).Stay();
+        }
+
+        public async Task<ChartInstanceData> InstanceAsync(string host, string span, int? limit = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("host", host),
+                new KeyValuePair<string, object>("span", span)
+            };
+            parameters.AddIfValidValue("limit", limit);
+
+            return await PostAsync<ChartInstanceData>("/instance", parameters).Stay();
         }
 
         public async Task<ChartNetworkData<IEnumerable<long>>> NetworkAsync(string span, int? limit = null)

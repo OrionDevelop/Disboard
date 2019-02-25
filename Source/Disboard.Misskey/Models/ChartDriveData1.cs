@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
-    public class ChartDriveData<T> : ApiResponse
+    public class ChartDriveData1<T> : ApiResponse
     {
         [JsonProperty("totalCount")]
         public T TotalCount { get; set; }

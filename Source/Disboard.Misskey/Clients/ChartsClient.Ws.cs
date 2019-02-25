@@ -9,17 +9,25 @@ namespace Disboard.Misskey.Clients
 {
     public partial class ChartsClient
     {
-        public async Task<ChartLocation<ChartDriveData<IEnumerable<long>>>> DriveWsAsync(string span, int? limit = null)
+        public async Task<ChartLocation<ChartCountData>> ActiveUsersWsAsync(string span, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("span", span)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
             parameters.AddIfValidValue("limit", limit);
 
-            return await SendWsAsync<ChartLocation<ChartDriveData<IEnumerable<long>>>>("/drive", parameters).Stay();
+            return await SendWsAsync<ChartLocation<ChartCountData>>("/active-users", parameters);
+        }
+
+        public async Task<ChartLocation<ChartDriveData1<IEnumerable<long>>>> DriveWsAsync(string span, int? limit = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
+            parameters.AddIfValidValue("limit", limit);
+
+            return await SendWsAsync<ChartLocation<ChartDriveData1<IEnumerable<long>>>>("/drive", parameters).Stay();
         }
 
         public async Task<ChartBasicData<IEnumerable<long>>> FederationWsAsync(string span, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("span", span)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
             parameters.AddIfValidValue("limit", limit);
 
             var response = await SendWsAsync<ApiResponse>("/federation", parameters).Stay();
@@ -38,9 +46,21 @@ namespace Disboard.Misskey.Clients
             return await SendWsAsync<ChartLocation<ChartCountData>>("/hashtag", parameters).Stay();
         }
 
+        public async Task<ChartInstanceData> InstanceWsAsync(string host, string span, int? limit = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("host", host),
+                new KeyValuePair<string, object>("span", span)
+            };
+            parameters.AddIfValidValue("limit", limit);
+
+            return await SendWsAsync<ChartInstanceData>("/instance", parameters).Stay();
+        }
+
         public async Task<ChartNetworkData<IEnumerable<long>>> NetworkWsAsync(string span, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("span", span)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
             parameters.AddIfValidValue("limit", limit);
 
             return await SendWsAsync<ChartNetworkData<IEnumerable<long>>>("/network", parameters).Stay();
@@ -48,7 +68,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<ChartLocation<ChartNoteData<IEnumerable<long>>>> NoteWsAsync(string span, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("span", span)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
             parameters.AddIfValidValue("limit", limit);
 
             return await SendWsAsync<ChartLocation<ChartNoteData<IEnumerable<long>>>>("/notes", parameters).Stay();
@@ -56,7 +76,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task<ChartLocation<ChartBasicData<IEnumerable<long>>>> UsersWsAsync(string span, int? limit = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("span", span)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("span", span) };
             parameters.AddIfValidValue("limit", limit);
 
             return await SendWsAsync<ChartLocation<ChartBasicData<IEnumerable<long>>>>("/users", parameters).Stay();
