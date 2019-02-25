@@ -6,7 +6,7 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients.Charts
 {
-    public partial class UsersClient
+    public partial class UserClient
     {
         public async Task<ChartDriveData<IEnumerable<long>>> DriveWsAsync(string userId, string span, int? limit = null)
         {
