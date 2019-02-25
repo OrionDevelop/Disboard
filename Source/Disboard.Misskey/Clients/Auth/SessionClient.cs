@@ -3,9 +3,6 @@ using System.Threading.Tasks;
 
 using Disboard.Extensions;
 using Disboard.Misskey.Models;
-using Disboard.Models;
-
-using Credential = Disboard.Misskey.Models.Credential;
 
 namespace Disboard.Misskey.Clients.Auth
 {
@@ -23,11 +20,11 @@ namespace Disboard.Misskey.Clients.Auth
             return await PostAsync<Session>("/generate", parameters).Stay();
         }
 
-        public async Task<ApiResponse> ShowAsync(string token)
+        public async Task<AuthSession> ShowAsync(string token)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("token", token) };
 
-            return await PostAsync<ApiResponse>("/show", parameters).Stay();
+            return await PostAsync<AuthSession>("/show", parameters).Stay();
         }
 
         public async Task<Credential> UserKeyAsync(string token)
