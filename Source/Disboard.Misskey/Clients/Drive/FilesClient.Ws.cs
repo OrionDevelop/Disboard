@@ -25,11 +25,12 @@ namespace Disboard.Misskey.Clients.Drive
             return response.ContainsKey("file") ? response["file"].ToObject<File>() : null;
         }
 
-        public async Task<File> CreateWsAsync(string file, string folderId = null, bool? isSensitive = null)
+        public async Task<File> CreateWsAsync(string file, string folderId = null, bool? isSensitive = null, bool? force = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("file", file) };
             parameters.AddIfValidValue("folderId", folderId);
             parameters.AddIfValidValue("isSensitive", isSensitive); // Not work?
+            parameters.AddIfValidValue("force", force);
 
             return await SendWsAsync<File>("/create", parameters).Stay();
         }
@@ -41,9 +42,19 @@ namespace Disboard.Misskey.Clients.Drive
             await SendWsAsync("/delete", parameters).Stay();
         }
 
-        public async Task<FileExtend> ShowWsAsync(string fileId)
+        public async Task<List<File>> FindWsAsync(string name, string folderId = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("fileId", fileId) };
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("name", name) };
+            parameters.AddIfValidValue("folderId", folderId);
+
+            return await SendWsAsync<List<File>>("/find", parameters).Stay();
+        }
+
+        public async Task<FileExtend> ShowWsAsync(string fileId = null, string url = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("fileId", fileId);
+            parameters.AddIfValidValue("url", url);
 
             return await SendWsAsync<FileExtend>("/show", parameters).Stay();
         }
@@ -58,9 +69,12 @@ namespace Disboard.Misskey.Clients.Drive
             return await SendWsAsync<File>("/update", parameters).Stay();
         }
 
-        public async Task<File> UploadFromUrlWsAsync(string url)
+        public async Task<File> UploadFromUrlWsAsync(string url, string folderId = null, bool? isSensitive = null, bool? force = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("url", url) };
+            parameters.AddIfValidValue("folderId", folderId);
+            parameters.AddIfValidValue("isSensitive", isSensitive); // Not work?
+            parameters.AddIfValidValue("force", force);
 
             return await SendWsAsync<File>("/upload-from-url", parameters).Stay();
         }

@@ -27,11 +27,12 @@ namespace Disboard.Misskey.Clients.Drive
             return response.ContainsKey("file") ? response["file"].ToObject<File>() : null;
         }
 
-        public async Task<File> CreateAsync(string file, string folderId = null, bool? isSensitive = null)
+        public async Task<File> CreateAsync(string file, string folderId = null, bool? isSensitive = null, bool? force = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("file", file) };
             parameters.AddIfValidValue("folderId", folderId);
             parameters.AddIfValidValue("isSensitive", isSensitive); // Not work?
+            parameters.AddIfValidValue("force", force);
 
             return await PostAsync<File>("/create", parameters).Stay();
         }
@@ -43,9 +44,19 @@ namespace Disboard.Misskey.Clients.Drive
             await PostAsync("/delete", parameters).Stay();
         }
 
-        public async Task<FileExtend> ShowAsync(string fileId)
+        public async Task<List<File>> FindAsync(string name, string folderId = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("fileId", fileId) };
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("name", name) };
+            parameters.AddIfValidValue("folderId", folderId);
+
+            return await PostAsync<List<File>>("/find", parameters).Stay();
+        }
+
+        public async Task<FileExtend> ShowAsync(string fileId = null, string url = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("fileId", fileId);
+            parameters.AddIfValidValue("url", url);
 
             return await PostAsync<FileExtend>("/show", parameters).Stay();
         }
@@ -60,9 +71,12 @@ namespace Disboard.Misskey.Clients.Drive
             return await PostAsync<File>("/update", parameters).Stay();
         }
 
-        public async Task<File> UploadFromUrlAsync(string url)
+        public async Task<File> UploadFromUrlAsync(string url, string folderId = null, bool? isSensitive = null, bool? force = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("url", url) };
+            parameters.AddIfValidValue("folderId", folderId);
+            parameters.AddIfValidValue("isSensitive", isSensitive); // Not work?
+            parameters.AddIfValidValue("force", force);
 
             return await PostAsync<File>("/upload-from-url", parameters).Stay();
         }
