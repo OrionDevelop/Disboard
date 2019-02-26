@@ -24,6 +24,7 @@ namespace Disboard.Misskey
         public BlockingClient Blocking { get; }
         public ChartsClient Charts { get; }
         public DriveClient Drive { get; }
+        public FederationClient Federation { get; }
         public FollowingClient Following { get; }
         public HashtagsClient Hashtags { get; }
         public IClient I { get; }
@@ -49,6 +50,7 @@ namespace Disboard.Misskey
             Blocking = new BlockingClient(this);
             Charts = new ChartsClient(this);
             Drive = new DriveClient(this);
+            Federation = new FederationClient(this);
             Following = new FollowingClient(this);
             Hashtags = new HashtagsClient(this);
             I = new IClient(this);

@@ -29,9 +29,9 @@ namespace Disboard.Misskey
             return await PostAsync<User>("/api/i").Stay();
         }
 
-        public async Task<Instance> MetaAsync()
+        public async Task<Metadata> MetaAsync()
         {
-            return await PostAsync<Instance>("/api/meta").Stay();
+            return await PostAsync<Metadata>("/api/meta").Stay();
         }
 
         public async Task<List<Note>> NotesAsync(bool? local = null, bool? reply = null, bool? renote = null, bool? withFiles = null,

@@ -27,9 +27,9 @@ namespace Disboard.Misskey
             return await SendWsAsync<User>("i").Stay();
         }
 
-        public async Task<Instance> MetaWsAsync()
+        public async Task<Metadata> MetaWsAsync()
         {
-            return await SendWsAsync<Instance>("meta").Stay();
+            return await SendWsAsync<Metadata>("meta").Stay();
         }
 
         public async Task<List<Note>> NotesWsAsync(bool? local = null, bool? reply = null, bool? renote = null, bool? withFiles = null,

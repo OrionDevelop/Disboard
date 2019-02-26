@@ -1,74 +1,67 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 using Disboard.Models;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Disboard.Misskey.Models
 {
     public class Instance : ApiResponse
     {
-        [JsonProperty("maintainer")]
-        public Maintainer Maintainer { get; set; }
+        [JsonProperty("_id")]
+        public string Id { get; set; }
 
-        [JsonProperty("version")]
-        public string Version { get; set; }
+        [JsonProperty("host")]
+        public string Host { get; set; }
 
-        [JsonProperty("clientVersion")]
-        public string ClientVersion { get; set; }
+        [JsonProperty("caughtAt")]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        public DateTime CaughtAt { get; set; }
 
-        [JsonProperty("emojis")]
-        public IEnumerable<ApiResponse> Emojis { get; set; }
+        [JsonProperty("system")]
+        public string System { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        [JsonProperty("usersCount")]
+        public long UsersCount { get; set; }
 
-        [JsonProperty("description")]
-        public string Description { get; set; }
+        [JsonProperty("notesCount")]
+        public long NotesCount { get; set; }
 
-        [JsonProperty("secure")]
-        public bool IsSecure { get; set; }
+        [JsonProperty("followingCount")]
+        public long FollowingCount { get; set; }
 
-        [JsonProperty("machine")]
-        public string Machine { get; set; }
+        [JsonProperty("followersCount")]
+        public long FollowersCount { get; set; }
 
-        [JsonProperty("os")]
-        public string Os { get; set; }
+        [JsonProperty("driveUsage")]
+        public long DriveUsage { get; set; }
 
-        [JsonProperty("node")]
-        public string Node { get; set; }
+        [JsonProperty("driveFiles")]
+        public long DriveFiles { get; set; }
 
-        [JsonProperty("cpu")]
-        public Cpu Cpu { get; set; }
+        [JsonProperty("latestRequestSentAt")]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        public DateTime? LatestRequestSentAt { get; set; }
 
-        [JsonProperty("broadcasts")]
-        public IEnumerable<Broadcast> Broadcasts { get; set; }
+        [JsonProperty("latestStatus")]
+        public int? LatestStatus { get; set; }
 
-        [JsonProperty("disableRegistration")]
-        public bool DisableRegistration { get; set; }
+        [JsonProperty("latestRequestReceivedAt")]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        public DateTime? LatestRequestReceivedAt { get; set; }
 
-        [JsonProperty("disableLocalTimeline")]
-        public bool DisableLocalTimeline { get; set; }
+        [JsonProperty("isNotResponding")]
+        public bool IsNotResponding { get; set; }
 
-        [JsonProperty("driveCapacityPerLocalUserMb")]
-        public long DriveCapacityPerLocalUserMb { get; set; }
+        [JsonProperty("lastCommunicatedAt")]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        public DateTime LastCommunicatedAt { get; set; }
 
-        [JsonProperty("recaptchaSitekey")]
-        public string RecaptchaSitekey { get; set; }
+        [JsonProperty("isBlocked")]
+        public bool IsBlocked { get; set; }
 
-        [JsonProperty("swPublickey")]
-        public string SwPublickey { get; set; }
-
-        [JsonProperty("hidedTags")]
-        public bool? HidedTags { get; set; }
-
-        [JsonProperty("bannerUrl")]
-        public string BannerUrl { get; set; }
-
-        [JsonProperty("maxNoteTextLength")]
-        public int MaxNoteTextLength { get; set; }
-
-        [JsonProperty("features")]
-        public Features Features { get; set; }
+        [JsonProperty("isMarkedAsClosed")]
+        public bool IsMarkedAtClosed { get; set; }
     }
 }
