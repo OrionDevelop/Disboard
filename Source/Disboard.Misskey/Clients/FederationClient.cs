@@ -6,7 +6,7 @@ using Disboard.Misskey.Models;
 
 namespace Disboard.Misskey.Clients
 {
-    public class FederationClient : MisskeyApiClient
+    public partial class FederationClient : MisskeyApiClient
     {
         protected internal FederationClient(MisskeyClient client) : base(client, "federation") { }
 
