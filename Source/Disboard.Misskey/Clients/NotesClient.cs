@@ -33,8 +33,8 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<Note>>("/conversation", parameters).Stay();
         }
 
-        public async Task<Note> CreateAsync(string text = null, string visibility = null, List<string> visibleUserIds = null, string cw = null, bool? viaMobile = null, Geo geo = null,
-                                            List<string> fileIds = null, string replyId = null, string renoteId = null, Poll poll = null)
+        public async Task<Note> CreateAsync(string text = null, string visibility = null, List<string> visibleUserIds = null, string cw = null, bool? viaMobile = null, Geo geo = null, List<string> fileIds = null, string replyId = null, string renoteId = null, Poll poll = null, bool? localOnly = null,
+                                            bool? noExtractMentions = null, bool? noExtractHashtags = null, bool? noExtractEmojis = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("text", text);
@@ -47,6 +47,10 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("replyId", replyId);
             parameters.AddIfValidValue("renoteId", renoteId);
             parameters.AddIfValidValue("poll", poll);
+            parameters.AddIfValidValue("localOnly", localOnly);
+            parameters.AddIfValidValue("noExtractMentions", noExtractMentions);
+            parameters.AddIfValidValue("noExtractHashtags", noExtractHashtags);
+            parameters.AddIfValidValue("noExtractEmojis", noExtractEmojis);
 
             var response = await PostAsync<ApiResponse>("/create", parameters).Stay();
             return response.Extends["createdNote"].ToObject<Note>();
@@ -67,8 +71,7 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<Note>>("/featured", parameters).Stay();
         }
 
-        public async Task<List<Note>> GlobalTimelineAsync(int? limit = null, bool? withFiles = null, string sinceId = null, string untilId = null,
-                                                          long? sinceDate = null, long? untilDate = null)
+        public async Task<List<Note>> GlobalTimelineAsync(int? limit = null, bool? withFiles = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -81,9 +84,7 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<Note>>("/global-timeline", parameters).Stay();
         }
 
-        public async Task<List<Note>> HybridTimelineAsync(int? limit = null, bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null,
-                                                          bool? includeLocalRenotes = null, bool? withFiles = null,
-                                                          string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null)
+        public async Task<List<Note>> HybridTimelineAsync(int? limit = null, bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null, bool? withFiles = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -99,8 +100,7 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<Note>>("/hybrid-timeline", parameters).Stay();
         }
 
-        public async Task<List<Note>> LocalTimelineAsync(int? limit = null, bool? withFiles = null, string fileType = null, bool? excludeNswf = null,
-                                                         string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null)
+        public async Task<List<Note>> LocalTimelineAsync(int? limit = null, bool? withFiles = null, string fileType = null, bool? excludeNswf = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -137,6 +137,16 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<NoteReaction>>("/reactions", parameters).Stay();
         }
 
+        public async Task<List<Note>> RenotesAsync(string noteId, int? limit = null, string sinceId = null, string untilId = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
+            parameters.AddIfValidValue("limit", limit);
+            parameters.AddIfValidValue("sinceId", sinceId);
+            parameters.AddIfValidValue("untilId", untilId);
+
+            return await PostAsync<List<Note>>("/renotes", parameters).Stay();
+        }
+
         public async Task<List<Note>> RepliesAsync(string noteId, int? limit = null, int? offset = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
@@ -157,18 +167,12 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<Note>>("/reposts", parameters).Stay();
         }
 
-        public async Task<List<Note>> SearchByTagAsync(string tag = null, IEnumerable<string> query = null, IEnumerable<string> includeUserIds = null, IEnumerable<string> excludeUserIds = null,
-                                                       IEnumerable<string> includeUserUsernames = null, IEnumerable<string> excludeUserUsernames = null,
-                                                       bool? following = null, string mute = null, bool? reply = null, bool? renote = null, bool? withFiles = null,
-                                                       bool? poll = null, string untilId = null, long? sinceDate = null, long? untilDate = null, int? offset = null, int? limit = null)
+        public async Task<List<Note>> SearchByTagAsync(string tag = null, IEnumerable<string> query = null, bool? following = null, string mute = null, bool? reply = null, bool? renote = null, bool? withFiles = null, bool? poll = null, string untilId = null, long? sinceDate = null,
+                                                       long? untilDate = null, int? offset = null, int? limit = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("tag", tag);
             parameters.AddIfValidValue("query", query);
-            parameters.AddIfValidValue("includeUserIds", includeUserIds);
-            parameters.AddIfValidValue("excludeUserIds", excludeUserIds);
-            parameters.AddIfValidValue("includeUserUsernames", includeUserUsernames);
-            parameters.AddIfValidValue("excludeUserUsernames", excludeUserUsernames);
             parameters.AddIfValidValue("following", following);
             parameters.AddIfValidValue("mute", mute);
             parameters.AddIfValidValue("reply", reply);
@@ -200,8 +204,14 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<Note>("/show", parameters).Stay();
         }
 
-        public async Task<List<Note>> TimelineAsync(int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null,
-                                                    bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null, bool? withFiles = null)
+        public async Task<State> StateAsync(string noteId)
+        {
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("noteId", noteId) };
+
+            return await PostAsync<State>("/state", parameters).Stay();
+        }
+
+        public async Task<List<Note>> TimelineAsync(int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null, bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null, bool? withFiles = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -231,8 +241,8 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<Note>>("/trend", parameters).Stay();
         }
 
-        public async Task<List<Note>> UserListTimelineAsync(string listId, int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null,
-                                                            bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null, bool? withFiles = null)
+        public async Task<List<Note>> UserListTimelineAsync(string listId, int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null, bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null,
+                                                            bool? withFiles = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("listId", listId) };
             parameters.AddIfValidValue("limit", limit);
