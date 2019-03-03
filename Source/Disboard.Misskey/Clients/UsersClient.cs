@@ -16,22 +16,28 @@ namespace Disboard.Misskey.Clients
             Lists = new ListsClient(client);
         }
 
-        public async Task<UserWithCursor> FollowersAsync(string userId, bool? iknow = null, int? limit = null, string cursor = null)
+        public async Task<UserWithCursor> FollowersAsync(string userId = null, string username = null, bool? iknow = null, int? limit = null, string cursor = null, string host = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("userId", userId);
+            parameters.AddIfValidValue("username", username);
             parameters.AddIfValidValue("iknow", iknow);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
+            parameters.AddIfValidValue("host", host);
 
             return await PostAsync<UserWithCursor>("/followers", parameters).Stay();
         }
 
-        public async Task<UserWithCursor> FollowingAsync(string userId, bool? iknow = null, int? limit = null, string cursor = null)
+        public async Task<UserWithCursor> FollowingAsync(string userId, string username = null, bool? iknow = null, int? limit = null, string cursor = null, string host = null)
         {
-            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("userId", userId);
+            parameters.AddIfValidValue("username", username);
             parameters.AddIfValidValue("iknow", iknow);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("cursor", cursor);
+            parameters.AddIfValidValue("host", host);
 
             return await PostAsync<UserWithCursor>("/following", parameters).Stay();
         }
@@ -44,15 +50,11 @@ namespace Disboard.Misskey.Clients
             return await PostAsync<List<FrequentlyRepliedUser>>("/get-frequently-replied-users", parameters).Stay();
         }
 
-        public async Task<List<Note>> NotesAsync(string userId = null, string username = null, string host = null, bool? includeReplies = null, int? limit = null,
-                                                 string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null,
-                                                 bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null, bool? includeLocalRenotes = null,
-                                                 bool? withFiles = null, string fileType = null)
+        public async Task<List<Note>> NotesAsync(string userId = null, bool? includeReplies = null, int? limit = null, string sinceId = null, string untilId = null, long? sinceDate = null, long? untilDate = null, bool? includeMyRenotes = null, bool? includeRenotedMyNotes = null,
+                                                 bool? includeLocalRenotes = null, bool? withFiles = null, string fileType = null, bool? excludeNsfw = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("userId", userId);
-            parameters.AddIfValidValue("username", username);
-            parameters.AddIfValidValue("host", host);
             parameters.AddIfValidValue("includeReplies", includeReplies);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("sinceId", sinceId);
@@ -64,6 +66,7 @@ namespace Disboard.Misskey.Clients
             parameters.AddIfValidValue("includeLocalRenotes", includeLocalRenotes);
             parameters.AddIfValidValue("withFiles", withFiles);
             parameters.AddIfValidValue("fileType", fileType);
+            parameters.AddIfValidValue("excludeNsfw", excludeNsfw);
 
             return await PostAsync<List<Note>>("/notes", parameters).Stay();
         }
@@ -79,20 +82,29 @@ namespace Disboard.Misskey.Clients
 
         public async Task<List<Relation>> RelationAsync(List<string> userIds)
         {
-            var parameters = new List<KeyValuePair<string, object>>
-            {
-                new KeyValuePair<string, object>("userId", userIds)
-            };
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userIds) };
 
             return await PostAsync<List<Relation>>("/relation", parameters).Stay();
         }
 
-        public async Task<List<User>> SearchAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null)
+        public async Task ReportAbuseAsync(string userId, string comment)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("userId", userId),
+                new KeyValuePair<string, object>("comment", comment)
+            };
+
+            await PostAsync("/report-abuse", parameters).Stay();
+        }
+
+        public async Task<List<User>> SearchAsync(string query, int? limit = null, int? offset = null, bool? localOnly = null, bool? detail = null)
         {
             var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("query", query) };
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("localOnly", localOnly);
+            parameters.AddIfValidValue("detail", detail);
 
             return await PostAsync<List<User>>("/search", parameters).Stay();
         }
