@@ -14,12 +14,14 @@ namespace Disboard.Misskey.Clients
         public FavoritesClient FavoritesClient { get; }
         public PollsClient Polls { get; }
         public ReactionsClient Reactions { get; }
+        public WatchingClient Watching { get; }
 
         protected internal NotesClient(MisskeyClient client) : base(client, "notes")
         {
             FavoritesClient = new FavoritesClient(client);
             Polls = new PollsClient(client);
             Reactions = new ReactionsClient(client);
+            Watching = new WatchingClient(client);
         }
 
         public async Task<List<Note>> ConversationAsync(string noteId, int? limit = null, int? offset = null)
