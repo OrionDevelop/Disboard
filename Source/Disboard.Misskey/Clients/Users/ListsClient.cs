@@ -12,14 +12,14 @@ namespace Disboard.Misskey.Clients.Users
 
         public async Task<List> CreateAsync(string title)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("title", title)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("title", title) };
 
             return await PostAsync<List>("/create", parameters).Stay();
         }
 
         public async Task DeleteAsync(string listId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("listId", listId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("listId", listId) };
 
             await PostAsync("/delete", parameters).Stay();
         }
@@ -27,6 +27,17 @@ namespace Disboard.Misskey.Clients.Users
         public async Task<List<List>> ListAsync()
         {
             return await PostAsync<List<List>>("/list").Stay();
+        }
+
+        public async Task PullAsync(string listId, string userId)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("listId", listId),
+                new KeyValuePair<string, object>("userId", userId)
+            };
+
+            await PostAsync("/pull", parameters).Stay();
         }
 
         public async Task PushAsync(string listId, string userId)
@@ -42,7 +53,7 @@ namespace Disboard.Misskey.Clients.Users
 
         public async Task<List> ShowAsync(string listId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("listId", listId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("listId", listId) };
 
             return await PostAsync<List>("/show", parameters).Stay();
         }
