@@ -14,7 +14,7 @@ Collection of fediverse client libraries for .NET Standard 2.0.
 | -------- | ---------- | ----------------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | N/A      | N/A        | [`Disboard`](Source/Disboard)                   | `Disboard`          | [![Disboard](https://img.shields.io/nuget/v/Disboard.svg?style=flat-square)](https://nuget.org/packages/Disboard)                            |
 | Mastodon | 2.7.x      | [`Disboard.Mastodon`](Source/Disboard.Mastodon) | `Disboard.Mastodon` | [![Disboard.Mastodon](https://img.shields.io/nuget/v/Disboard.Mastodon.svg?style=flat-square)](https://nuget.org/packages/Disboard.Mastodon) |
-| Misskey  | 10.89.0    | [`Disboard.Misskey`](Source/Disboard.Misskey)   | `Disboard.Misskey`  | [![Disboard.Misskey](https://img.shields.io/nuget/v/Disboard.Misskey.svg?style=flat-square)](https://nuget.org/packages/Disboard.Misskey)    |
+| Misskey  | 10.90.0    | [`Disboard.Misskey`](Source/Disboard.Misskey)   | `Disboard.Misskey`  | [![Disboard.Misskey](https://img.shields.io/nuget/v/Disboard.Misskey.svg?style=flat-square)](https://nuget.org/packages/Disboard.Misskey)    |
 | Pleroma  | `ad318189` | [`Disboard.Pleroma`](Source/Disboard.Pleroma)   | `Disboard.Pleroma`  | [![Disboard.Pleroma](https://img.shields.io/nuget/v/Disboard.Pleroma.svg?style=flat-square)](https://nuget.org/packages/Disboard.Pleroma)    |
 
 
