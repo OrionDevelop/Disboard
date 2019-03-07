@@ -24,7 +24,7 @@ namespace Disboard.Mastodon.Clients
             parameters.AddIfValidValue("locked", isLocked);
             parameters.AddIfValidValue("bot", isBot);
             if (fields != null)
-                foreach (var tuple in fields.Select((w, i) => new {Index = i, Field = w}))
+                foreach (var tuple in fields.Select((w, i) => new { Index = i, Field = w }))
                 {
                     parameters.AddIfValidValue($"fields_attributes[{tuple.Index}][name]", tuple.Field.Name);
                     parameters.AddIfValidValue($"fields_attributes[{tuple.Index}][value]", tuple.Field.Value);
@@ -61,7 +61,7 @@ namespace Disboard.Mastodon.Clients
         }
 
         public async Task<Pagenator<Status>> StatusesAsync(long id, long? limit = null, long? sinceId = null, long? minId = null, long? maxId = null, bool? isPinned = null, bool? isOnlyMedia = null,
-                                                           bool? excludeReplies = null)
+                                                           bool? excludeReplies = null, bool? excludeReblogs = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
@@ -71,6 +71,7 @@ namespace Disboard.Mastodon.Clients
             parameters.AddIfValidValue("pinned", isPinned);
             parameters.AddIfValidValue("only_media", isOnlyMedia);
             parameters.AddIfValidValue("exclude_replies", excludeReplies);
+            parameters.AddIfValidValue("exclude_reblogs", excludeReblogs);
 
             return await GetAsync<Pagenator<Status>>($"/{id}/statuses", parameters).Stay();
         }
@@ -154,6 +155,20 @@ namespace Disboard.Mastodon.Clients
         public async Task<CredentialAccount> VerifyCredentialsAsync()
         {
             return await GetAsync<CredentialAccount>("/verify_credentials").Stay();
+        }
+
+        public async Task<Tokens> CreateAsync(string username, string email, string password, bool agreement, string locale)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("username", username),
+                new KeyValuePair<string, object>("email", email),
+                new KeyValuePair<string, object>("password", password),
+                new KeyValuePair<string, object>("agreement", agreement),
+                new KeyValuePair<string, object>("locale", locale)
+            };
+
+            return await PostAsync<Tokens>(parameters: parameters).Stay();
         }
     }
 }

@@ -27,13 +27,15 @@ namespace Disboard.Misskey
             return await SendWsAsync<User>("i").Stay();
         }
 
-        public async Task<Instance> MetaWsAsync()
+        public async Task<Metadata> MetaWsAsync(bool? detail = null)
         {
-            return await SendWsAsync<Instance>("meta").Stay();
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("detail", detail);
+
+            return await SendWsAsync<Metadata>("meta", parameters).Stay();
         }
 
-        public async Task<List<Note>> NotesWsAsync(bool? local = null, bool? reply = null, bool? renote = null, bool? withFiles = null,
-                                                   bool? poll = null, int? limit = null, string sinceId = null, string untilId = null)
+        public async Task<List<Note>> NotesWsAsync(bool? local = null, bool? reply = null, bool? renote = null, bool? withFiles = null, bool? poll = null, int? limit = null, string sinceId = null, string untilId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("local", local);
@@ -53,12 +55,14 @@ namespace Disboard.Misskey
             return await SendWsAsync<Stats>("stats").Stay();
         }
 
-        public async Task<List<User>> UsersWsAsync(int? limit = null, int? offset = null, string sort = null)
+        public async Task<List<User>> UsersWsAsync(int? limit = null, int? offset = null, string sort = null, string state = null, string origin = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("offset", offset);
             parameters.AddIfValidValue("sort", sort);
+            parameters.AddIfValidValue("state", state);
+            parameters.AddIfValidValue("origin", origin);
 
             return await SendWsAsync<List<User>>("users", parameters).Stay();
         }

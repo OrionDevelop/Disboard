@@ -1,4 +1,0 @@
-{
-  "StatusCode": "OK",
-  "Body": "{\"access_token\":\"ACCESS_TOKEN\",\"token_type\":\"Bearer\",\"scope\":\"read write follow\",\"created_at\":1540247358}"
-}

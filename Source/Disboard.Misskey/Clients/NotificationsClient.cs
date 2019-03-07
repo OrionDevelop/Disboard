@@ -10,7 +10,7 @@ namespace Disboard.Misskey.Clients
 
         public async Task MarkAllAsReadAsync()
         {
-            await PostAsync("/mark_all_as_read").Stay();
+            await PostAsync("/mark-all-as-read").Stay();
         }
     }
 }

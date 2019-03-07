@@ -38,23 +38,6 @@ namespace Disboard
         public Credential Credential { get; }
 
         /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="domain">Domain name</param>
-        /// <param name="handler">DisboardHttpHandler implementation instance</param>
-        /// <param name="requestMode">Serialization mode</param>
-        protected AppClient(string domain, DisboardHttpHandler handler, RequestMode requestMode)
-        {
-            Credential = new Credential {Domain = domain};
-            _baseUrl = $"https://{domain}";
-            _requestMode = requestMode;
-            handler.Client = this; // これしか思いつかなかった...
-
-            _httpClient = new HttpClient(handler);
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Disboard/{Version}");
-        }
-
-        /// <summary>
         ///     Constructor with existing credentials
         /// </summary>
         /// <param name="credential"></param>

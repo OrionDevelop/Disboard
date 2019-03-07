@@ -1,4 +1,0 @@
-{
-  "StatusCode": "OK",
-  "Body": "{\"id\":\"1\",\"following\":false,\"showing_reblogs\":false,\"followed_by\":false,\"blocking\":true,\"muting\":false,\"muting_notifications\":false,\"requested\":false,\"domain_blocking\":false,\"endorsed\":false}"
-}

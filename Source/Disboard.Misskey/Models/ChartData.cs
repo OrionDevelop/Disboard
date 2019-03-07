@@ -20,7 +20,7 @@ namespace Disboard.Misskey.Models
         public ChartLocation<ChartNoteData<long>> Notes { get; set; }
 
         [JsonProperty("drive")]
-        public ChartLocation<ChartDriveData<long>> Drive { get; set; }
+        public ChartLocation<ChartDriveData1<long>> Drive { get; set; }
 
         [JsonProperty("network")]
         public ChartNetworkData<long> Network { get; set; }

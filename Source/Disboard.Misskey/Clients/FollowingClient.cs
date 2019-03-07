@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Disboard.Extensions;
@@ -18,28 +19,30 @@ namespace Disboard.Misskey.Clients
 
         public async Task<User> CreateAsync(string userId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
 
             return await PostAsync<User>("/create", parameters).Stay();
         }
 
         public async Task<User> DeleteAsync(string userId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
 
             return await PostAsync<User>("/delete", parameters).Stay();
         }
 
+        [Obsolete]
         public async Task StalkAsync(string userId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
 
             await PostAsync<User>("/stalk", parameters).Stay();
         }
 
+        [Obsolete]
         public async Task UnstalkAsync(string userId)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("userId", userId)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("userId", userId) };
 
             await PostAsync<User>("/unstalk", parameters).Stay();
         }

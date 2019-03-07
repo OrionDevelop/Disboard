@@ -45,6 +45,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("driveCapacity")]
         public long? DriveCapacity { get; set; }
 
+        [JsonProperty("emojis")]
+        public List<Emoji> Emojis { get; set; }
+
         [JsonProperty("endpoints")]
         public Endpoints Endpoints { get; set; }
 

@@ -18,11 +18,13 @@ namespace Disboard.Misskey
     public partial class MisskeyClient : AppClient
     {
         public AggregationClient Aggregation { get; }
+        public ApClient Ap { get; }
         public MisskeyAppClient App { get; }
         public AuthClient Auth { get; }
         public BlockingClient Blocking { get; }
         public ChartsClient Charts { get; }
         public DriveClient Drive { get; }
+        public FederationClient Federation { get; }
         public FollowingClient Following { get; }
         public HashtagsClient Hashtags { get; }
         public IClient I { get; }
@@ -35,18 +37,20 @@ namespace Disboard.Misskey
         public UsernameClient Username { get; }
         public UsersClient Users { get; }
 
-        public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : this(new Credential {Domain = domain}, innerHandler) { }
+        public MisskeyClient(string domain, HttpClientHandler innerHandler = null) : this(new Credential { Domain = domain }, innerHandler) { }
 
         public MisskeyClient(Credential credential, HttpClientHandler innerHandler = null) : base(credential, new MisskeyAuthenticationHandler(innerHandler), RequestMode.Json)
         {
-            BinaryParameters = new List<string> {"file"};
+            BinaryParameters = new List<string> { "file" };
 
             Aggregation = new AggregationClient(this);
+            Ap = new ApClient(this);
             App = new MisskeyAppClient(this);
             Auth = new AuthClient(this);
             Blocking = new BlockingClient(this);
             Charts = new ChartsClient(this);
             Drive = new DriveClient(this);
+            Federation = new FederationClient(this);
             Following = new FollowingClient(this);
             Hashtags = new HashtagsClient(this);
             I = new IClient(this);

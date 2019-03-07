@@ -12,7 +12,7 @@ namespace Disboard.Misskey.Clients.Auth
 
         public async Task<ApiResponse> ShowWsAsync(string token)
         {
-            var parameters = new List<KeyValuePair<string, object>> {new KeyValuePair<string, object>("token", token)};
+            var parameters = new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("token", token) };
 
             return await SendWsAsync<ApiResponse>("/show", parameters).Stay();
         }
