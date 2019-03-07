@@ -26,6 +26,9 @@ namespace Disboard.Misskey.Models
         [JsonProperty("deletedAt")]
         public DateTime DeletedAt { get; set; }
 
+        [JsonProperty("emojis")]
+        public List<Emoji> Emojis { get; set; }
+
         [JsonProperty("files")]
         public List<Media> Files { get; set; }
 
@@ -40,6 +43,12 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("isFavorited")]
         public bool? IsFavorited { get; set; }
+
+        [JsonProperty("localOnly")]
+        public bool? IsLocalOnly { get; set; }
+
+        [JsonProperty("isHidden")]
+        public bool? IsHidden { get; set; }
 
         [JsonProperty("media")]
         public List<Media> Media { get; set; }

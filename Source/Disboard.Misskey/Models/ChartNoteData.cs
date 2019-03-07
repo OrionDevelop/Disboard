@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Disboard.Models;
+
+using Newtonsoft.Json;
 
 namespace Disboard.Misskey.Models
 {
-    public class ChartNoteData<T> : ChartData
+    public class ChartNoteData<T> : ApiResponse
     {
         [JsonProperty("total")]
         public T Total { get; set; }

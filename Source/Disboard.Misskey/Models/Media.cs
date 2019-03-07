@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Disboard.Models;
 
@@ -9,6 +10,9 @@ namespace Disboard.Misskey.Models
 {
     public class Media : ApiResponse
     {
+        [JsonProperty("attachedNoteIds")]
+        public List<string> AttachedNoteIds { get; set; }
+
         [JsonProperty("comment")]
         public string Comment { get; set; }
 

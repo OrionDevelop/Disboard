@@ -55,5 +55,8 @@ namespace Disboard.Misskey.Models
 
         [JsonProperty("userId")]
         public string UserId { get; set; }
+
+        [JsonProperty("webpublicUrl")]
+        public string WebPublicUrl { get; set; }
     }
 }
