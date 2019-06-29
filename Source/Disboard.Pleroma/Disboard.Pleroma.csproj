@@ -5,8 +5,8 @@
     <Description>Pleroma Client Library for .NET Standard 2.0.</Description>
     <Authors>Fuyuno Mikazuki</Authors>
     <PackageLicenseUrl>https://github.com/mika-f/Disboard/blob/develop/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/mika-f/Disboard</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/mika-f/Disboard</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/OrionDevelop/Disboard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OrionDevelop/Disboard</RepositoryUrl>
     <Version>1.0.0</Version>
   </PropertyGroup>
 
