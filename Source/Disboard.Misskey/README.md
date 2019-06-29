@@ -41,6 +41,7 @@ var permissions = new List<Permission> {
     Permission.UserGroupsRead, Permission.UserGroupsWrite,
     Permission.VotesWrite,
 };
+
 // permission is "string[]", because Misskey's permission is very flexible and possibility that it will increase in the future.
 await misskey.App.CreateAsync("Orion", "Orion is generic microblogging client", permissions.Select(w => w.ToStr()).ToArray(), "https://static.mochizuki.moe/callback.html");
 
