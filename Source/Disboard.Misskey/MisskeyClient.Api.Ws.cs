@@ -8,12 +8,19 @@ namespace Disboard.Misskey
 {
     public partial class MisskeyClient
     {
-        public async Task<Chart> ChartWsAsync(int? limit = null)
+        public async Task<Endpoint> EndpointWsAsync(string endpoint)
         {
-            var parameters = new List<KeyValuePair<string, object>>();
-            parameters.AddIfValidValue("limit", limit);
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("endpoint", endpoint)
+            };
 
-            return await SendWsAsync<Chart>("chart").Stay();
+            return await SendWsAsync<Endpoint>("endpoint", parameters).Stay();
+        }
+
+        public async Task<IEnumerable<string>> EndpointsWsAsync()
+        {
+            return await SendWsAsync<IEnumerable<string>>("endpoints").Stay();
         }
 
         public async Task<Drive> DriveWsAsync()
