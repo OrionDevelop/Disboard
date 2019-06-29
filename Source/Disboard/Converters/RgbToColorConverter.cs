@@ -9,7 +9,7 @@ namespace Disboard.Converters
     /// <summary>
     ///     [r, g, b] to Color
     /// </summary>
-    public class RgbArrayToColorConverter : JsonConverter
+    public class RgbToColorConverter : JsonConverter
     {
         private readonly Regex _color = new Regex(@"rgb\((?<red>\w{1,3}),(?<green>\w{1,3}),(?<blue>\w{1,3})\)", RegexOptions.Compiled);
 

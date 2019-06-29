@@ -13,7 +13,7 @@ namespace Disboard.Misskey.Models
     public class User : ApiResponse
     {
         [JsonProperty("avatarColor")]
-        [JsonConverter(typeof(RgbArrayToColorConverter))]
+        [JsonConverter(typeof(RgbToColorConverter))]
         public Color? AvatarColor { get; set; }
 
         [JsonProperty("avatarId")]
@@ -23,7 +23,7 @@ namespace Disboard.Misskey.Models
         public string AvatarUrl { get; set; }
 
         [JsonProperty("bannerColor")]
-        [JsonConverter(typeof(RgbArrayToColorConverter))]
+        [JsonConverter(typeof(RgbToColorConverter))]
         public Color? BannerColor { get; set; }
 
         [JsonProperty("bannerId")]
@@ -186,7 +186,7 @@ namespace Disboard.Misskey.Models
         public string UsernameLower { get; set; }
 
         [JsonProperty("wallpaperColor")]
-        [JsonConverter(typeof(RgbArrayToColorConverter))]
+        [JsonConverter(typeof(RgbToColorConverter))]
         public Color? WallpaperColor { get; set; }
 
         [JsonProperty("wallpaperId")]
