@@ -28,10 +28,10 @@ namespace Disboard.Misskey.Extensions
                 case Permission.DriveWrite:
                     return "write:drive";
 
-                case Permission.FavoritedRead:
+                case Permission.FavoritesRead:
                     return "read:favorites";
 
-                case Permission.FavoritedWrite:
+                case Permission.FavoritesWrite:
                     return "write:favorites";
 
                 case Permission.FollowingRead:

@@ -14,9 +14,9 @@
 
         DriveWrite = 1 << 5,
 
-        FavoritedRead = 1 << 6,
+        FavoritesRead = 1 << 6,
 
-        FavoritedWrite = 1 << 7,
+        FavoritesWrite = 1 << 7,
 
         FollowingRead = 1 << 8,
 
