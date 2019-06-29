@@ -5,7 +5,7 @@
 [![CircleCI branch](https://img.shields.io/circleci/project/github/OrionDevelop/Disboard.svg?style=flat-square)](https://circleci.com/gh/OrionDevelop/Disboard/tree/develop)
 
 
-Collection of fediverse API wrapper libraries for .NET Standard 2.0.
+Collection of fediverse fully-typed client API wrapper libraries for .NET Standard 2.0.
 
 
 ## Projects
