@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 
@@ -12,6 +11,8 @@ namespace Disboard.Converters
     /// </summary>
     public class RgbArrayToColorConverter : JsonConverter
     {
+        private readonly Regex _color = new Regex(@"rgb\((?<red>\w{1,3}),(?<green>\w{1,3}),(?<blue>\w{1,3})\)", RegexOptions.Compiled);
+
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
@@ -21,19 +22,16 @@ namespace Disboard.Converters
         {
             if (reader.TokenType == JsonToken.Null)
                 return null;
-            if (reader.TokenType != JsonToken.StartArray)
+            if (reader.TokenType != JsonToken.String)
                 throw new NotSupportedException();
 
-            var array = new List<int>();
-            while (reader.Read() && reader.TokenType == JsonToken.Integer)
-                if (reader.Value is long l)
-                    array.Add((int) l);
-                else
-                    throw new NotSupportedException();
+            var color = reader.Value as string;
+            if (!_color.IsMatch(color ?? throw new InvalidOperationException()))
+                throw new NotSupportedException();
 
-            // XXX: たまーに 255 の範囲を超えるものが来る
-            array = array.Select(w => w >= 255 ? 255 : w).ToList();
-            return Color.FromArgb(array[0], array[1], array[2]);
+            var match = _color.Match(color);
+            var (r, g, b) = (int.Parse(match.Groups["red"].Value), int.Parse(match.Groups["green"].Value), int.Parse(match.Groups["blue"].Value));
+            return Color.FromArgb(r, g, b);
         }
 
         public override bool CanConvert(Type objectType)
