@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 namespace Disboard.Converters
 {
     /// <summary>
-    ///     [r, g, b] to Color
+    ///     rgb(r,g,b) / rgba(r,g,b,a) to Color
     /// </summary>
     public class RgbToColorConverter : JsonConverter
     {
-        private readonly Regex _color = new Regex(@"rgba?\((?<red>\w{1,3}),(?<green>\w{1,3}),(?<blue>\w{1,3})(,(?<alpha>\w{1,3}))?\)", RegexOptions.Compiled);
+        private readonly Regex _color = new Regex(@"rgba?\((?<red>\w{1,3}),\s+(?<green>\w{1,3}),\s+(?<blue>\w{1,3})(,\s+(?<alpha>\w{1,3}))?\)", RegexOptions.Compiled);
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
