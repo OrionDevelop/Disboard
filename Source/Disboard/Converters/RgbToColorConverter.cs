@@ -11,7 +11,7 @@ namespace Disboard.Converters
     /// </summary>
     public class RgbToColorConverter : JsonConverter
     {
-        private readonly Regex _color = new Regex(@"rgba?\((?<red>\w{1,3}),\s+(?<green>\w{1,3}),\s+(?<blue>\w{1,3})(,\s+(?<alpha>\w{1,3}))?\)", RegexOptions.Compiled);
+        private readonly Regex _color = new Regex(@"rgba?\((?<red>\w{1,3}),\s?(?<green>\w{1,3}),\s?(?<blue>\w{1,3})(,\s?(?<alpha>\w{1,3}))?\)", RegexOptions.Compiled);
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

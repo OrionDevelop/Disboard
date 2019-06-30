@@ -18,19 +18,41 @@ namespace Disboard.Test.Converters
         }
 
         [Fact]
-        public void ReadJsonInvalidColor()
+        public void ReadJsonValidRgbaColor()
         {
-            const string json = "{\"color\":\"rgb(0,255,255)\"}";
+            const string json = "{\"color\":\"rgba(125,255,63,128)\"}";
             var r = JsonConvert.DeserializeObject<ExpectObject>(json);
-            r.Color.R.Is((byte) 0);
+            r.Color.R.Is((byte) 125);
             r.Color.G.Is((byte) 255);
-            r.Color.B.Is((byte) 255);
+            r.Color.B.Is((byte) 63);
+            r.Color.A.Is((byte) 128);
         }
 
         [Fact]
-        public void ReadJsonValidColor()
+        public void ReadJsonValidRgbaColorIncludingSpaces()
+        {
+            const string json = "{\"color\":\"rgba(125, 255, 63, 128)\"}";
+            var r = JsonConvert.DeserializeObject<ExpectObject>(json);
+            r.Color.R.Is((byte) 125);
+            r.Color.G.Is((byte) 255);
+            r.Color.B.Is((byte) 63);
+            r.Color.A.Is((byte) 128);
+        }
+
+        [Fact]
+        public void ReadJsonValidRgbColor()
         {
             const string json = "{\"color\":\"rgb(125,172,253)\"}";
+            var r = JsonConvert.DeserializeObject<ExpectObject>(json);
+            r.Color.R.Is((byte) 125);
+            r.Color.G.Is((byte) 172);
+            r.Color.B.Is((byte) 253);
+        }
+
+        [Fact]
+        public void ReadJsonValidRgbColorIncludingSpaces()
+        {
+            const string json = "{\"color\":\"rgb(125, 172, 253)\"}";
             var r = JsonConvert.DeserializeObject<ExpectObject>(json);
             r.Color.R.Is((byte) 125);
             r.Color.G.Is((byte) 172);
