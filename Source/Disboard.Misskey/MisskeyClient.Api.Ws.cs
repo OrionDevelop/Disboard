@@ -23,6 +23,19 @@ namespace Disboard.Misskey
             return await SendWsAsync<IEnumerable<string>>("endpoints").Stay();
         }
 
+        public async Task<Metadata> MetaWsAsync(bool? detail = null)
+        {
+            var parameters = new List<KeyValuePair<string, object>>();
+            parameters.AddIfValidValue("detail", detail);
+
+            return await SendWsAsync<Metadata>("meta", parameters).Stay();
+        }
+
+        public async Task<IEnumerable<User>> PinnedUsersWsAsync()
+        {
+            return await SendWsAsync<IEnumerable<User>>("pinned-users").Stay();
+        }
+
         public async Task<Drive> DriveWsAsync()
         {
             return await SendWsAsync<Drive>("drive").Stay();
@@ -32,14 +45,6 @@ namespace Disboard.Misskey
         public async Task<User> IWsAsync()
         {
             return await SendWsAsync<User>("i").Stay();
-        }
-
-        public async Task<Metadata> MetaWsAsync(bool? detail = null)
-        {
-            var parameters = new List<KeyValuePair<string, object>>();
-            parameters.AddIfValidValue("detail", detail);
-
-            return await SendWsAsync<Metadata>("meta", parameters).Stay();
         }
 
         public async Task<List<Note>> NotesWsAsync(bool? local = null, bool? reply = null, bool? renote = null, bool? withFiles = null, bool? poll = null, int? limit = null, string sinceId = null, string untilId = null)

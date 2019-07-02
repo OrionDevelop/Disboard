@@ -31,6 +31,11 @@ namespace Disboard.Misskey
             return await PostAsync<Metadata>("/api/meta", parameters).Stay();
         }
 
+        public async Task<IEnumerable<User>> PinnedUsersAsync()
+        {
+            return await PostAsync<IEnumerable<User>>("/api/pinned-users").Stay();
+        }
+
         public async Task<Drive> DriveAsync()
         {
             return await PostAsync<Drive>("/api/drive").Stay();
