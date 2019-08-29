@@ -25,10 +25,9 @@ namespace Disboard.Mastodon.Clients
             return await GetAsync<Pagenator<Status>>("/direct", parameters).Stay();
         }
 
-        public async Task<Pagenator<Status>> HomeAsync(bool? isLocal = null, long? limit = null, long? sinceId = null, long? minId = null, long? maxId = null)
+        public async Task<Pagenator<Status>> HomeAsync(long? limit = null, long? sinceId = null, long? minId = null, long? maxId = null)
         {
             var parameters = new List<KeyValuePair<string, object>>();
-            parameters.AddIfValidValue("local", isLocal);
             parameters.AddIfValidValue("limit", limit);
             parameters.AddIfValidValue("since_id", sinceId);
             parameters.AddIfValidValue("min_id", minId);
