@@ -96,7 +96,7 @@ namespace Disboard.Models
         // https://example.com/api/v1/... を /api/v1/... にするあれ
         private static string AsEndpoint(string str)
         {
-            return new Uri(str).AbsolutePath;
+            return new Uri(str).PathAndQuery;
         }
     }
 }
