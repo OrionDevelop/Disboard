@@ -11,7 +11,7 @@ namespace Disboard.Mastodon.Models
     public class ScheduledStatus : ApiResponse
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("scheduled_at")]
         [JsonConverter(typeof(IsoDateTimeConverter))]

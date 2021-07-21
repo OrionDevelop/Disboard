@@ -12,7 +12,7 @@ namespace Disboard.Mastodon.Models
     public class Notification : ApiResponse
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("type")]
         [JsonConverter(typeof(StringEnumConverter))]
